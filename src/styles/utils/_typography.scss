@@ -1,0 +1,90 @@
+@use 'mixins';
+@use 'variables' as var;
+
+%h1 {
+  font-family: Mont-Bold, Helvetica, sans-serif;
+  font-size: var.$font-size-2xl;
+  font-weight: 800;
+  line-height: 41px;
+  letter-spacing: var.$letter-spacing-tight;
+
+  @include mixins.on-tablet {
+    font-size: var.$font-size-3xl;
+    line-height: 56px;
+  }
+}
+
+%h2 {
+  font-family: Mont-Bold, Helvetica, sans-serif;
+  font-size: var.$font-size-xl;
+  font-weight: 800;
+  line-height: 31px;
+  letter-spacing: var.$letter-spacing-normal;
+
+  @include mixins.on-tablet {
+    font-size: var.$font-size-2xl;
+    line-height: 41px;
+    letter-spacing: var.$letter-spacing-tight;
+  }
+}
+
+%h3 {
+  font-family: Mont-Semibold, Helvetica, sans-serif;
+  font-size: var.$font-size-lg;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: var.$letter-spacing-normal;
+
+  @include mixins.on-tablet {
+    font-family: Mont-Bold, Helvetica, sans-serif;
+    font-size: var.$font-size-xl;
+    font-weight: 800;
+    line-height: 31px;
+  }
+}
+
+%h4 {
+  font-family: Mont-Semibold, Helvetica, sans-serif;
+  font-size: var.$font-size-md;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: var.$letter-spacing-normal;
+
+  @include mixins.on-tablet {
+    font-size: var.$font-size-lg;
+    line-height: 26px;
+  }
+}
+
+%uppercase {
+  font-family: Mont-Bold, Helvetica, sans-serif;
+  font-size: var.$font-size-xs;
+  font-weight: 700;
+  line-height: 11px;
+  text-transform: uppercase;
+  letter-spacing: var.$letter-spacing-wide;
+}
+
+%buttons {
+  font-family: Mont-Semibold, Helvetica, sans-serif;
+  font-size: var.$font-size-sm;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: var.$letter-spacing-normal;
+}
+
+%body {
+  font-family: Mont-Regular, Helvetica, sans-serif;
+  font-size: var.$font-size-sm;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: var.$letter-spacing-normal;
+}
+
+%small {
+  font-family: Mont-Semibold, Helvetica, sans-serif;
+  font-size: var.$font-size-sm;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: var.$letter-spacing-normal;
+}

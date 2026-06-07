@@ -1,0 +1,12 @@
+@use 'variables' as var;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color: var.$color-primary;
+}
