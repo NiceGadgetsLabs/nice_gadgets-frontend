@@ -1,0 +1,13 @@
+@use '../../../styles/utils/variables' as var;
+
+.footer {
+  display: flex;
+  align-items: center; // Центрує елементи по вертикалі
+  justify-content: space-between; // Розносить лого та інші елементи по краях
+  box-sizing: border-box;
+  width: 100%;
+  height: 96px;
+  padding: 32px 152px;
+  background-color: var.$color-white;
+  box-shadow: 0 -1px 0 0 var.$color-elements;
+}
