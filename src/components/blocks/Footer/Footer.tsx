@@ -10,9 +10,33 @@ export const Footer = () => {
     <footer className="footer">
       <Logo type="footer" />
       <ul className="footer__list">
-        <li className="footer__item">GitHub</li>
-        <li className="footer__item">Contacts</li>
-        <li className="footer__item">Rights</li>
+        <li className="footer__item">
+          <a
+            href="https://github.com/NiceGadgetsLabs/nice_gadgets-frontend"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+        </li>
+        <li className="footer__item">
+          <a
+            href="https://github.com/NiceGadgetsLabs/nice_gadgets-frontend"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Contacts
+          </a>
+        </li>
+        <li className="footer__item">
+          <a
+            href="https://github.com/NiceGadgetsLabs/nice_gadgets-frontend"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Rights
+          </a>
+        </li>
       </ul>
       <button onClick={scrollToTop} className="footer__top-button">
         Back to top (temp)

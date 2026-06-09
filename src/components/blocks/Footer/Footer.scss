@@ -37,6 +37,15 @@
 
     cursor: pointer;
     color: var.$color-secondary;
+
+    a {
+      color: var.$color-secondary;
+      text-decoration: none !important;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   &__top-button {
