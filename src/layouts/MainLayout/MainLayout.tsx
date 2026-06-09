@@ -1,47 +1,21 @@
-import { Link, Outlet } from 'react-router';
-import { Logo } from '../../components/atoms/Logo/Logo';
+import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { Header } from '../../components/organisms/Header/Header';
+import { BurgerMenu } from '../../components/organisms/BurgerMenu/BurgerMenu';
 import { Footer } from '../../components/organisms/Footer';
+import './MainLayout.scss';
 
 export const MainLayout = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <>
-      <header>
-        <Logo type="header" />
-        <nav>
-          <ul>
-            <li>
-              <Link to="/phones">phones</Link>
-            </li>
-
-            <li>
-              <Link to="/tablets">tablets</Link>
-            </li>
-
-            <li>
-              <Link to="/accessories">accessories</Link>
-            </li>
-
-            <li>
-              <Link to="/favorites">favorites</Link>
-            </li>
-
-            <li>
-              <Link to="/cart">cart</Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
-
-      <br />
-
-      <main>
-        <p>Current Page:</p>
+    <div className="layout">
+      <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      {isMenuOpen && <BurgerMenu setIsMenuOpen={setIsMenuOpen} />}
+      <main className="main">
         <Outlet />
       </main>
-
-      <br />
-
       <Footer />
-    </>
+    </div>
   );
 };
