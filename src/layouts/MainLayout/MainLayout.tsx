@@ -8,16 +8,20 @@ export const MainLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <>
+    <div
+      style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}
+    >
+      {/* Test style for footer delete after adding product */}
+
       <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       {isMenuOpen && <BurgerMenu setIsMenuOpen={setIsMenuOpen} />}
-      <main>
+
+      {/* Test style for footer delete after adding product */}
+      <main style={{ flex: 1 }}>
         <Outlet />
       </main>
 
-      <br />
-
       <Footer />
-    </>
+    </div>
   );
 };
