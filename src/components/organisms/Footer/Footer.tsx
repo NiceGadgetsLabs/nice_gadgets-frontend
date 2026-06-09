@@ -8,7 +8,9 @@ export const Footer = () => {
   };
   return (
     <footer className="footer">
-      <Logo type="footer" />
+      <div className="footer__logo">
+        <Logo type="footer" />
+      </div>
       <ul className="footer__list">
         <li className="footer__item">
           <a

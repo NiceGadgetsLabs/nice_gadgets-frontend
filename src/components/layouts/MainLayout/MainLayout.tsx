@@ -1,6 +1,6 @@
 import { Link, Outlet } from 'react-router';
 import { Logo } from '../../ui/Logo/Logo';
-import { Footer } from '../../blocks/Footer';
+import { Footer } from '../../organisms/Footer';
 
 export const MainLayout = () => {
   return (
