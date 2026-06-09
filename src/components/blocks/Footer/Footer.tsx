@@ -9,10 +9,10 @@ export const Footer = () => {
   return (
     <footer className="footer">
       <Logo type="footer" />
-      <ul>
-        <li>GitHub</li>
-        <li>Contacts</li>
-        <li>Rights</li>
+      <ul className="footer__list">
+        <li className="footer__item">GitHub</li>
+        <li className="footer__item">Contacts</li>
+        <li className="footer__item">Rights</li>
       </ul>
       <button onClick={scrollToTop} className="footer__top-button">
         Back to top (temp)

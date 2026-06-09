@@ -21,6 +21,24 @@
     padding: 32px 152px;
   }
 
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @include mix.on-tablet {
+      flex-direction: row;
+      gap: 64px;
+    }
+  }
+
+  &__item {
+    @extend %uppercase;
+
+    cursor: pointer;
+    color: var.$color-secondary;
+  }
+
   &__top-button {
     @extend %buttons;
   }
