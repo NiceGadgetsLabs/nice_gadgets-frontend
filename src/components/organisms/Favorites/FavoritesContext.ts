@@ -1,14 +1,14 @@
 import { createContext } from 'react';
 import type { Product } from '../../../types/Products';
 
-export type FavouritesContextType = {
+export type FavoritesContextType = {
   fav: Product[];
-  toggleFavourite: (product: Product) => void;
-  isFavourite: (id: string) => boolean;
+  toggleFavorite: (product: Product) => void;
+  isFavorite: (id: string) => boolean;
 };
 
-export const FavouritesContext = createContext<FavouritesContextType>({
+export const FavoritesContext = createContext<FavoritesContextType>({
   fav: [],
-  toggleFavourite: () => {},
-  isFavourite: () => false,
+  toggleFavorite: () => {},
+  isFavorite: () => false,
 });

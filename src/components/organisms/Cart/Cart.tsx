@@ -53,9 +53,7 @@ export function CartProvider({ children }: Props) {
   const increaseQuantity = (id: string) => {
     setCart((prev) =>
       prev.map((cartItem) =>
-        cartItem.itemId === id
-          ? { ...cartItem, quantity: cartItem.quantity + 1 }
-          : cartItem,
+        cartItem.itemId === id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
       ),
     );
   };
@@ -64,9 +62,7 @@ export function CartProvider({ children }: Props) {
     setCart((prev) =>
       prev
         .map((cartItem) =>
-          cartItem.itemId === id
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem,
+          cartItem.itemId === id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem,
         )
         .filter((cartItem) => cartItem.quantity > 0),
     );

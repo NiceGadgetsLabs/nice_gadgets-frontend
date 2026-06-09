@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from 'react-router';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import { MainLayout } from './layouts/MainLayout/MainLayout';
 import { HomePage } from './pages/HomePage';
 import { CatalogPage } from './pages/CatalogPage';
@@ -6,7 +6,7 @@ import { FavoritesPage } from './pages/FavoritesPage';
 import { CartPage } from './pages/CartPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { ProductPage } from './pages/ProductPage';
-import type { RouteObject } from 'react-router';
+import type { RouteObject } from 'react-router-dom';
 
 const routes: RouteObject[] = [
   {

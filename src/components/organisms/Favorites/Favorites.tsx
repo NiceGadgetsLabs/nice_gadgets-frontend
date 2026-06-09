@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { Product } from '../../../types/Products';
 
-import { FavouritesContext } from './FavoritesContext';
+import { FavoritesContext } from './FavoritesContext';
 
 type Props = {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ type Props = {
 
 const STORAGE_KEY = 'favorites';
 
-export function FavouritesProvider({ children }: Props) {
+export function FavoritesProvider({ children }: Props) {
   const [fav, setFav] = useState<Product[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
 
@@ -28,33 +28,29 @@ export function FavouritesProvider({ children }: Props) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(fav));
   }, [fav]);
 
-  const toggleFavourite = (product: Product) => {
+  const toggleFavorite = (product: Product) => {
     const id = product.itemId;
 
     setFav((prev) => {
-      const exists = prev.some((p) => p.itemId === id);
+      const exists = prev.some((product) => product.itemId === id);
 
       if (exists) {
-        return prev.filter((p) => p.itemId !== id);
+        return prev.filter((product) => product.itemId !== id);
       }
 
       return [...prev, product];
     });
   };
 
-  const isFavourite = (id: string) => {
-    return fav.some((p) => p.itemId === id);
+  const isFavorite = (id: string) => {
+    return fav.some((product) => product.itemId === id);
   };
 
   const value = {
     fav,
-    toggleFavourite,
-    isFavourite,
+    toggleFavorite,
+    isFavorite,
   };
 
-  return (
-    <FavouritesContext.Provider value={value}>
-      {children}
-    </FavouritesContext.Provider>
-  );
+  return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>;
 }

@@ -1,0 +1,199 @@
+@use '../../../styles/utils/variables' as *;
+@use '../../../styles/utils/mixins' as *;
+
+.header {
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: $header-height-mobile-or-tablet;
+  padding: 0;
+  background-color: $color-white;
+  box-shadow: 0 1px 0 0 $color-elements;
+
+  @include on-desktop {
+    height: $header-height-desktop;
+  }
+
+  &__logo {
+    margin: 13px 16px;
+
+    @include on-desktop {
+      margin: 18px 24px;
+    }
+  }
+
+  &__logo-img {
+    width: 64px;
+    height: 22px;
+
+    @include on-desktop {
+      width: 80px;
+      height: 28px;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    min-width: 0;
+  }
+
+  &__nav-list {
+    display: none;
+    align-items: center;
+    list-style: none;
+
+    @include on-tablet {
+      display: flex;
+    }
+  }
+
+  &__nav-item {
+    margin-right: 32px;
+
+    @include on-desktop {
+      margin-right: 64px;
+    }
+  }
+
+  &__nav-link {
+    position: relative;
+    display: flex;
+    font-family: Mont, sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 48px;
+    color: $color-secondary;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    @include on-desktop {
+      line-height: 64px;
+    }
+
+    &--active {
+      color: $color-primary;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: $color-primary;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    margin-left: auto;
+  }
+
+  &__actions-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+  }
+
+  &__actions-item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__actions-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: -1px 0 0 0 $color-elements;
+
+    @include on-desktop {
+      width: 64px;
+      height: 64px;
+    }
+
+    &--active {
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: $color-primary;
+      }
+    }
+
+    &--favorites {
+      display: none;
+      background-image: url('/src/assets/icons/Favorites.svg');
+
+      @include on-tablet {
+        display: flex;
+      }
+    }
+
+    &--cart {
+      display: none;
+      background-image: url('/src/assets/icons/Cart.svg');
+
+      @include on-tablet {
+        display: flex;
+      }
+    }
+
+    &--menu {
+      border: none;
+      text-decoration: none;
+      background-color: $color-background;
+      background-image: url('/src/assets/icons/Menu.svg');
+
+      @include on-tablet {
+        display: none;
+      }
+
+      &-open {
+        background-image: url('/src/assets/icons/Close.svg');
+      }
+    }
+  }
+
+  &__counter {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 28px;
+    height: 28px;
+  }
+
+  &__counter-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid $color-background;
+    border-radius: 14px;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 100%;
+    color: $color-background;
+    letter-spacing: 0;
+    background-color: $color-red;
+  }
+}

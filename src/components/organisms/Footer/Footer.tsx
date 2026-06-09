@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Container } from '../../atoms/Container/Container';
 import { Logo } from '../../atoms/Logo/Logo';
 import { Icon } from '../../atoms/Icon/Icon';

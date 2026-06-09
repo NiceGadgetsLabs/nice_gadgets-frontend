@@ -1,26 +1,20 @@
-import { Outlet } from 'react-router';
+import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
 import { Header } from '../../components/organisms/Header/Header';
 import { BurgerMenu } from '../../components/organisms/BurgerMenu/BurgerMenu';
-import { useState } from 'react';
 import { Footer } from '../../components/organisms/Footer';
+import './MainLayout.scss';
 
 export const MainLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div
-      style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}
-    >
-      {/* Test style for footer delete after adding product */}
-
+    <div className="layout">
       <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       {isMenuOpen && <BurgerMenu setIsMenuOpen={setIsMenuOpen} />}
-
-      {/* Test style for footer delete after adding product */}
-      <main style={{ flex: 1 }}>
+      <main className="main">
         <Outlet />
       </main>
-
       <Footer />
     </div>
   );

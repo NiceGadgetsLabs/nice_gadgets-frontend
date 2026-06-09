@@ -2,19 +2,16 @@
 @use '../../../styles/utils/mixins' as *;
 
 .burger-menu {
+  position: fixed;
+  z-index: 99;
+  top: $header-height-mobile-or-tablet;
+  left: 0;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - $header-height-mobile-or-tablet);
-
-  @include on-mobile {
-    padding-top: $header-height-mobile-or-tablet;
-  }
-
-  &__content {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
+  width: 100%;
+  height: calc(100dvh - $header-height-mobile-or-tablet);
+  background-color: $color-white;
 
   &__nav {
     box-sizing: border-box;
@@ -22,10 +19,8 @@
     margin-top: 24px;
     padding: 0;
   }
-}
 
-.nav {
-  &__list {
+  &__nav-list {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -36,11 +31,11 @@
     list-style: none;
   }
 
-  &__item {
+  &__nav-item {
     display: flex;
   }
 
-  &__link {
+  &__nav-link {
     position: relative;
     display: flex;
     font-family: Mont, sans-serif;
@@ -51,9 +46,9 @@
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 4%;
+    letter-spacing: 0.04em;
 
-    &__active {
+    &--active {
       color: $color-primary;
 
       &::after {
@@ -68,14 +63,14 @@
       }
     }
   }
-}
 
-.actions {
-  display: flex;
-  margin-top: auto;
-  border: 1px solid $color-elements;
+  &__actions {
+    display: flex;
+    margin-top: auto;
+    border-top: 1px solid $color-elements;
+  }
 
-  &__list {
+  &__actions-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -83,11 +78,11 @@
     list-style: none;
   }
 
-  &__item {
+  &__actions-item {
     grid-column: span 1;
   }
 
-  &__link {
+  &__actions-link {
     position: relative;
     display: flex;
     align-items: center;
@@ -98,19 +93,7 @@
     background-size: 16px;
     box-shadow: -1px 0 0 0 $color-elements;
 
-    @include on-mobile {
-      height: 64px;
-    }
-
-    &__cart {
-      background-image: url('/src/assets/icons/Cart.svg');
-    }
-
-    &__fav {
-      background-image: url('/src/assets/icons/Favorites-filled.svg');
-    }
-
-    &__active {
+    &--active {
       &::after {
         content: '';
         position: absolute;
@@ -122,11 +105,17 @@
         background-color: $color-primary;
       }
     }
-  }
-}
 
-.counter {
-  &__container {
+    &--fav {
+      background-image: url('/src/assets/icons/Favorites-filled.svg');
+    }
+
+    &--cart {
+      background-image: url('/src/assets/icons/Cart.svg');
+    }
+  }
+
+  &__counter {
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
@@ -134,7 +123,7 @@
     height: 28px;
   }
 
-  &__value {
+  &__counter-value {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,7 +137,7 @@
     font-weight: 700;
     line-height: 100%;
     color: $color-background;
-    letter-spacing: 0%;
+    letter-spacing: 0;
     background-color: $color-red;
   }
 }

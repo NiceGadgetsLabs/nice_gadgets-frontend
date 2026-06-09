@@ -1,119 +1,82 @@
 import { useContext } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import cn from 'classnames';
+import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 
-import BM from './BurgerMenu.module.scss';
-import { FavouritesContext } from '../Favorites/FavoritesContext';
+import './BurgerMenu.scss';
+import { FavoritesContext } from '../Favorites/FavoritesContext';
 import { CartContext } from '../Cart/CartContext';
+
+const navItems = [
+  { to: '/', label: 'Home' },
+  { to: '/phones', label: 'Phones' },
+  { to: '/tablets', label: 'Tablets' },
+  { to: '/accessories', label: 'Accessories' },
+];
 
 type Props = {
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export function BurgerMenu({ setIsMenuOpen }: Props) {
-  const { fav } = useContext(FavouritesContext);
+  const { fav } = useContext(FavoritesContext);
   const { cart } = useContext(CartContext);
 
   return (
-    <aside className={BM['burger-menu']}>
-      <div className="container">
-        <div className={BM['burger-menu__content']}>
-          <nav className={BM['burger-menu__nav']}>
-            <ul className={BM.nav__list}>
-              <li className={BM.nav__item}>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    cn(BM.nav__link, {
-                      [BM.nav__link__active]: isActive,
-                    })
-                  }
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Home
-                </NavLink>
-              </li>
+    <aside className="burger-menu">
+      <nav className="burger-menu__nav">
+        <ul className="burger-menu__nav-list">
+          {navItems.map(({ to, label }) => (
+            <li key={to} className="burger-menu__nav-item">
+              <NavLink
+                to={to}
+                className={({ isActive }) =>
+                  clsx('burger-menu__nav-link', {
+                    'burger-menu__nav-link--active': isActive,
+                  })
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-              <li className={BM.nav__item}>
-                <NavLink
-                  to="/phones"
-                  className={({ isActive }) =>
-                    cn(BM.nav__link, {
-                      [BM.nav__link__active]: isActive,
-                    })
-                  }
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Phones
-                </NavLink>
-              </li>
-
-              <li className={BM.nav__item}>
-                <NavLink
-                  to="/tablets"
-                  className={({ isActive }) =>
-                    cn(BM.nav__link, {
-                      [BM.nav__link__active]: isActive,
-                    })
-                  }
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Tablets
-                </NavLink>
-              </li>
-
-              <li className={BM.nav__item}>
-                <NavLink
-                  to="/accessories"
-                  className={({ isActive }) =>
-                    cn(BM.nav__link, {
-                      [BM.nav__link__active]: isActive,
-                    })
-                  }
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Accessories
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <div className={BM.actions}>
-        <ul className={BM.actions__list}>
-          <li className={BM.actions__item}>
+      <div className="burger-menu__actions">
+        <ul className="burger-menu__actions-list">
+          <li className="burger-menu__actions-item">
             <NavLink
               to="/favorites"
               className={({ isActive }) =>
-                cn(BM.actions__link, BM.actions__link__fav, {
-                  [BM.actions__link__active]: isActive,
+                clsx('burger-menu__actions-link', 'burger-menu__actions-link--fav', {
+                  'burger-menu__actions-link--active': isActive,
                 })
               }
               onClick={() => setIsMenuOpen(false)}
             >
               {fav.length > 0 && (
-                <div className={BM.counter__container}>
-                  <p className={BM.counter__value}>{fav.length}</p>
+                <div className="burger-menu__counter">
+                  <p className="burger-menu__counter-value">{fav.length}</p>
                 </div>
               )}
             </NavLink>
           </li>
 
-          <li className={BM.actions__item}>
+          <li className="burger-menu__actions-item">
             <NavLink
               to="/cart"
               className={({ isActive }) =>
-                cn(BM.actions__link, BM.actions__link__cart, {
-                  [BM.actions__link__active]: isActive,
+                clsx('burger-menu__actions-link', 'burger-menu__actions-link--cart', {
+                  'burger-menu__actions-link--active': isActive,
                 })
               }
               onClick={() => setIsMenuOpen(false)}
             >
               {cart.length > 0 && (
-                <div className={BM.counter__container}>
-                  <p className={BM.counter__value}>
+                <div className="burger-menu__counter">
+                  <p className="burger-menu__counter-value">
                     {cart.reduce((sum, item) => sum + item.quantity, 0)}
                   </p>
                 </div>

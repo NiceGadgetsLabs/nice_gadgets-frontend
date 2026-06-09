@@ -1,14 +1,14 @@
-import { RouterProvider } from 'react-router/dom';
+import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import { CartProvider } from './components/organisms/Cart/Cart';
-import { FavouritesProvider } from './components/organisms/Favorites/Favorites';
+import { FavoritesProvider } from './components/organisms/Favorites/Favorites';
 
 export const App = () => {
   return (
     <CartProvider>
-      <FavouritesProvider>
+      <FavoritesProvider>
         <RouterProvider router={router} />
-      </FavouritesProvider>
+      </FavoritesProvider>
     </CartProvider>
   );
 };
