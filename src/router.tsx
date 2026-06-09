@@ -1,5 +1,5 @@
 import { Navigate, createBrowserRouter } from 'react-router';
-import { MainLayout } from './components/layouts/MainLayout/MainLayout';
+import { MainLayout } from './layouts/MainLayout/MainLayout';
 import { HomePage } from './pages/HomePage';
 import { CatalogPage } from './pages/CatalogPage';
 import { FavoritesPage } from './pages/FavoritesPage';

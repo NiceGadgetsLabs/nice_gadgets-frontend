@@ -1,5 +1,6 @@
 import { Link, Outlet } from 'react-router';
-import { Logo } from '../../ui/Logo/Logo';
+import { Logo } from '../../components/atoms/Logo/Logo';
+import { Footer } from '../../components/organisms/Footer';
 
 export const MainLayout = () => {
   return (
@@ -40,14 +41,7 @@ export const MainLayout = () => {
 
       <br />
 
-      <footer>
-        <Logo type="footer" />
-        <ul>
-          <li>GitHub</li>
-          <li>Contacts</li>
-          <li>Rights</li>
-        </ul>
-      </footer>
+      <Footer />
     </>
   );
 };
