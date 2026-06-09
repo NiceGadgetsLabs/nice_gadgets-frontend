@@ -1,0 +1,22 @@
+.error-notification {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.error-notification__button {
+  width: 176px;
+  height: 40px;
+  padding: 8px 16px;
+  border: 1px solid #313237;
+  font-family: Mont-Semibold, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  color: #fff;
+  letter-spacing: 0;
+  background: #313237;
+}
