@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 
 import './BurgerMenu.scss';
-import { FavoritesContext } from '../Favorites/FavoritesContext';
-import { CartContext } from '../Cart/CartContext';
+import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
+import { CartContext } from '../../../contexts/cart/CartContext';
 
 const navItems = [
   { to: '/', label: 'Home' },

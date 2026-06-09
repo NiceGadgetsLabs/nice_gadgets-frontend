@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import type { Product } from '../../../types/Products';
+import type { Product } from '../../types/Products';
 
 import { CartContext, type CartItem } from './CartContext';
 

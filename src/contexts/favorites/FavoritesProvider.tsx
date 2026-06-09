@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import type { Product } from '../../../types/Products';
+import type { Product } from '../../types/Products';
 
 import { FavoritesContext } from './FavoritesContext';
 

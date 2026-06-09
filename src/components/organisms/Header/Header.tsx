@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import clsx from 'clsx';
-import { FavoritesContext } from '../Favorites/FavoritesContext';
-import { CartContext } from '../Cart/CartContext';
+import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
+import { CartContext } from '../../../contexts/cart/CartContext';
 import './Header.scss';
 import { Logo } from '../../atoms/Logo/Logo';
 
