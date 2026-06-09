@@ -1,11 +1,10 @@
 import { useContext } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
-
-import './BurgerMenu.scss';
+import clsx from 'clsx';
 import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
 import { CartContext } from '../../../contexts/cart/CartContext';
+import './BurgerMenu.scss';
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -49,6 +48,7 @@ export function BurgerMenu({ setIsMenuOpen }: Props) {
           <li className="burger-menu__actions-item">
             <NavLink
               to="/favorites"
+              aria-label="Favorites"
               className={({ isActive }) =>
                 clsx('burger-menu__actions-link', 'burger-menu__actions-link--fav', {
                   'burger-menu__actions-link--active': isActive,
@@ -67,6 +67,7 @@ export function BurgerMenu({ setIsMenuOpen }: Props) {
           <li className="burger-menu__actions-item">
             <NavLink
               to="/cart"
+              aria-label="Cart"
               className={({ isActive }) =>
                 clsx('burger-menu__actions-link', 'burger-menu__actions-link--cart', {
                   'burger-menu__actions-link--active': isActive,

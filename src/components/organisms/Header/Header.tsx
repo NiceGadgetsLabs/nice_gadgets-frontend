@@ -55,6 +55,7 @@ export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
           <li className="header__actions-item">
             <NavLink
               to="/favorites"
+              aria-label="Favorites"
               className={({ isActive }) =>
                 clsx('header__actions-link', 'header__actions-link--favorites', {
                   'header__actions-link--active': isActive,
@@ -72,6 +73,7 @@ export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
           <li className="header__actions-item">
             <NavLink
               to="/cart"
+              aria-label="Cart"
               className={({ isActive }) =>
                 clsx('header__actions-link', 'header__actions-link--cart', {
                   'header__actions-link--active': isActive,
@@ -89,6 +91,8 @@ export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
           <li className="header__actions-item">
             <button
               type="button"
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
               className={clsx('header__actions-link', 'header__actions-link--menu', {
                 'header__actions-link--menu-open': isMenuOpen,
               })}
