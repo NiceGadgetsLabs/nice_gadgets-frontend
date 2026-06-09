@@ -1,5 +1,6 @@
-@use '../../../styles/utils/variables' as *;
-@use '../../../styles/utils/mixins' as *;
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/mixins';
+@use '../../../styles/utils/typography';
 
 .header {
   position: fixed;
@@ -10,30 +11,20 @@
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  height: $header-height-mobile-or-tablet;
+  height: var.$header-height-mobile-or-tablet;
   padding: 0;
-  background-color: $color-white;
-  box-shadow: 0 1px 0 0 $color-elements;
+  background-color: var.$color-white;
+  box-shadow: 0 1px 0 0 var.$color-elements;
 
-  @include on-desktop {
-    height: $header-height-desktop;
+  @include mixins.on-desktop {
+    height: var.$header-height-desktop;
   }
 
   &__logo {
     margin: 13px 16px;
 
-    @include on-desktop {
+    @include mixins.on-desktop {
       margin: 18px 24px;
-    }
-  }
-
-  &__logo-img {
-    width: 64px;
-    height: 22px;
-
-    @include on-desktop {
-      width: 80px;
-      height: 28px;
     }
   }
 
@@ -47,7 +38,7 @@
     align-items: center;
     list-style: none;
 
-    @include on-tablet {
+    @include mixins.on-tablet {
       display: flex;
     }
   }
@@ -55,29 +46,21 @@
   &__nav-item {
     margin-right: 32px;
 
-    @include on-desktop {
+    @include mixins.on-desktop {
       margin-right: 64px;
     }
   }
 
   &__nav-link {
+    @extend %uppercase;
+
     position: relative;
     display: flex;
-    font-family: Mont, sans-serif;
-    font-size: 12px;
-    font-weight: 800;
     line-height: 48px;
-    color: $color-secondary;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-
-    @include on-desktop {
-      line-height: 64px;
-    }
+    color: var.$color-secondary;
 
     &--active {
-      color: $color-primary;
+      color: var.$color-primary;
 
       &::after {
         content: '';
@@ -87,8 +70,12 @@
         display: block;
         width: 100%;
         height: 3px;
-        background-color: $color-primary;
+        background-color: var.$color-primary;
       }
+    }
+
+    @include mixins.on-desktop {
+      line-height: 64px;
     }
   }
 
@@ -117,9 +104,9 @@
     height: 48px;
     background-repeat: no-repeat;
     background-position: center;
-    box-shadow: -1px 0 0 0 $color-elements;
+    box-shadow: -1px 0 0 0 var.$color-elements;
 
-    @include on-desktop {
+    @include mixins.on-desktop {
       width: 64px;
       height: 64px;
     }
@@ -133,7 +120,7 @@
         display: block;
         width: 100%;
         height: 3px;
-        background-color: $color-primary;
+        background-color: var.$color-primary;
       }
     }
 
@@ -141,7 +128,7 @@
       display: none;
       background-image: url('/src/assets/icons/Favorites.svg');
 
-      @include on-tablet {
+      @include mixins.on-tablet {
         display: flex;
       }
     }
@@ -150,7 +137,7 @@
       display: none;
       background-image: url('/src/assets/icons/Cart.svg');
 
-      @include on-tablet {
+      @include mixins.on-tablet {
         display: flex;
       }
     }
@@ -158,10 +145,10 @@
     &--menu {
       border: none;
       text-decoration: none;
-      background-color: $color-background;
+      background-color: var.$color-background;
       background-image: url('/src/assets/icons/Menu.svg');
 
-      @include on-tablet {
+      @include mixins.on-tablet {
         display: none;
       }
 
@@ -187,13 +174,13 @@
     height: 14px;
     margin: 0;
     padding: 0;
-    border: 1px solid $color-background;
+    border: 1px solid var.$color-background;
     border-radius: 14px;
     font-size: 9px;
     font-weight: 700;
     line-height: 100%;
-    color: $color-background;
+    color: var.$color-background;
     letter-spacing: 0;
-    background-color: $color-red;
+    background-color: var.$color-red;
   }
 }

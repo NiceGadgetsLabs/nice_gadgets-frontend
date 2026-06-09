@@ -1,5 +1,6 @@
 @use '../../../styles/utils/variables' as *;
 @use '../../../styles/utils/mixins' as *;
+@use '../../../styles/utils/typography';
 
 .burger-menu {
   position: fixed;
@@ -36,17 +37,13 @@
   }
 
   &__nav-link {
+    @extend %uppercase;
+
     position: relative;
     display: flex;
-    font-family: Mont, sans-serif;
-    font-size: 12px;
-    font-weight: 800;
     line-height: 27px;
     color: $color-secondary;
     text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
 
     &--active {
       color: $color-primary;

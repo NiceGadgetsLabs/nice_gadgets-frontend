@@ -11,6 +11,6 @@ interface Props {
 
 export const Logo = ({ type }: Props) => (
   <Link to="/" className={clsx('logo', `logo--${type}`)} aria-label="Go to home">
-    <Icon type="logo" />
+    <Icon type="logo" width="100%" height="100%" />
   </Link>
 );

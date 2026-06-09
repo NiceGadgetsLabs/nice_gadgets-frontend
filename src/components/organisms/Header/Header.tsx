@@ -1,12 +1,11 @@
-import { Link, NavLink } from 'react-router-dom';
-import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-
+import clsx from 'clsx';
 import { FavoritesContext } from '../Favorites/FavoritesContext';
 import { CartContext } from '../Cart/CartContext';
-import logo from '../../../assets/icons/Logo.svg';
 import './Header.scss';
+import { Logo } from '../../atoms/Logo/Logo';
 
 type HeaderProps = {
   isMenuOpen: boolean;
@@ -28,9 +27,9 @@ export function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
 
   return (
     <header className="header">
-      <Link to="/" className="header__logo">
-        <img src={logo} alt="Nice Gadgets logo" className="header__logo-img" />
-      </Link>
+      <div className="header__logo">
+        <Logo type="header" />
+      </div>
 
       <nav className="header__nav">
         <ul className="header__nav-list">
