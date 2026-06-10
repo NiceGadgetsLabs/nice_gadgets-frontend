@@ -1,0 +1,14 @@
+.product-actions {
+  display: flex;
+  gap: 8px;
+
+  &__add {
+    flex-grow: 1;
+  }
+
+  &__like {
+    flex-shrink: 0;
+    aspect-ratio: 1;
+    width: 40px;
+  }
+}
