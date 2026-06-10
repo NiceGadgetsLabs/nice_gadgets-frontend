@@ -1,0 +1,23 @@
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/typography';
+
+.product-price {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+
+  &__current {
+    @extend %h3;
+
+    color: var.$color-primary;
+  }
+
+  &__old {
+    @extend %small;
+
+    font-size: var.$font-size-xl;
+    color: var.$color-secondary;
+    text-decoration: line-through;
+  }
+}
