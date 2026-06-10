@@ -14,13 +14,6 @@
 
     @include mixins.on-tablet {
       flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    @include mixins.on-desktop {
-      flex-direction: row;
-      align-items: center;
       justify-content: space-between;
     }
   }
@@ -31,10 +24,6 @@
     justify-content: flex-start;
 
     @include mixins.on-tablet {
-      justify-content: center;
-    }
-
-    @include mixins.on-desktop {
       justify-content: center;
     }
   }
@@ -51,9 +40,6 @@
     }
 
     @include mixins.on-desktop {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
       min-width: 400px;
     }
   }

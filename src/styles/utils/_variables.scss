@@ -17,14 +17,11 @@ $letter-spacing-tight: -0.01em;
 $letter-spacing-normal: 0;
 $letter-spacing-wide: 0.04em;
 $transition-default: 0.3s;
-
-// Header
+$transition-smooth: 0.5s;
 $desktop-min-width: 1200px;
+$tablet-min-width: 640px;
 $header-height-desktop: 64px;
 $header-height-mobile-or-tablet: 48px;
-$tablet-min-width: 640px;
-
-// Container
 $container-padding-inline-mobile: 16px;
 $container-padding-inline-tablet: 24px;
 $container-padding-inline-desktop: 32px;
