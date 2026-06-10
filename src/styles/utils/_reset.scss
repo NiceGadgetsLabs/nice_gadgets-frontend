@@ -38,3 +38,17 @@ textarea {
   color: inherit;
   background: none;
 }
+
+dl {
+  margin-block: 0;
+}
+
+dd {
+  margin-inline-start: 0;
+}
+
+hr {
+  margin: 0;
+  border: 0;
+  color: inherit;
+}

@@ -1,0 +1,24 @@
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/typography';
+
+.product-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-block: 8px;
+
+  &__row {
+    @extend %small;
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    color: var.$color-secondary;
+  }
+
+  &__value {
+    color: var.$color-primary;
+  }
+}
