@@ -8,22 +8,20 @@ interface Props {
 }
 
 export const ProductSpecs: FC<Props> = ({ screen, capacity, ram }) => {
+  const specs = [
+    { title: 'Screen', value: screen },
+    { title: capacity.includes('mm') ? 'Case size' : 'Capacity', value: capacity },
+    { title: 'RAM', value: ram },
+  ];
+
   return (
     <dl className="product-specs">
-      <div className="product-specs__row">
-        <dt className="product-specs__title">Screen</dt>
-        <dd className="product-specs__value">{screen}</dd>
-      </div>
-
-      <div className="product-specs__row">
-        <dt className="product-specs__title">Capacity</dt>
-        <dd className="product-specs__value">{capacity}</dd>
-      </div>
-
-      <div className="product-specs__row">
-        <dt className="product-specs__title">RAM</dt>
-        <dd className="product-specs__value">{ram}</dd>
-      </div>
+      {specs.map((spec) => (
+        <div key={spec.title} className="product-specs__row">
+          <dt className="product-specs__title">{spec.title}</dt>
+          <dd className="product-specs__value">{spec.value}</dd>
+        </div>
+      ))}
     </dl>
   );
 };

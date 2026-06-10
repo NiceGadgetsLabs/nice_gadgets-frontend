@@ -12,7 +12,8 @@
   &-primary {
     @extend %buttons;
 
-    padding-block: 9.5px;
+    padding-block: 8.5px;
+    border: 1px solid transparent;
     color: #fff;
     background-color: var.$color-primary;
 
