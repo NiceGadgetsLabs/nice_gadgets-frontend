@@ -16,5 +16,5 @@ export const CatalogPage: FC<Props> = ({ category }) => {
 
   const visibleProducts = products.filter((product) => product.category === category);
 
-  return <ProductList products={visibleProducts}></ProductList>;
+  return <ProductList products={visibleProducts} />;
 };
