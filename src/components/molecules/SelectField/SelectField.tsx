@@ -23,7 +23,7 @@ export function SelectField({
   value,
   onValueChange,
   label,
-  placeholder = 'Виберіть...',
+  placeholder = 'Select an option',
   className,
 }: CustomSelectProps) {
   const selectedLabel = options.find((option) => option.value === value)?.label ?? placeholder;
