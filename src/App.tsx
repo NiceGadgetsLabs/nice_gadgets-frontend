@@ -1,5 +1,14 @@
-const App = () => {
-  return <h1>Hello, world!</h1>;
-};
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
+import { CartProvider } from './contexts/cart/CartProvider';
+import { FavoritesProvider } from './contexts/favorites/FavoritesProvider';
 
-export default App;
+export const App = () => {
+  return (
+    <CartProvider>
+      <FavoritesProvider>
+        <RouterProvider router={router} />
+      </FavoritesProvider>
+    </CartProvider>
+  );
+};

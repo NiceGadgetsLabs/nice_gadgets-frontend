@@ -6,7 +6,7 @@
   "scripts": {
     "start": "vite --open",
     "dev": "vite --open",
-    "preview": "vite preview",
+    "preview": "vite preview --open",
     "build": "tsc -b && vite build",
     "lint:eslint": "eslint .",
     "lint:eslint:fix": "eslint . --fix",
@@ -21,8 +21,13 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
+    "radix-ui": "^1.5.0",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.17.0",
+    "sonner": "^2.0.7",
+    "swiper": "^12.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
@@ -60,6 +65,7 @@
     "stylelint-scss": "^7.2.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.60.1",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "vite-plugin-svgr": "^5.2.0"
   }
 }
