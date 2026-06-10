@@ -58,6 +58,11 @@
     display: flex;
     line-height: 48px;
     color: var.$color-secondary;
+    transition: color var.$transition-default;
+
+    &:hover {
+      color: var.$color-primary;
+    }
 
     &--active {
       color: var.$color-primary;
@@ -105,10 +110,15 @@
     background-repeat: no-repeat;
     background-position: center;
     box-shadow: -1px 0 0 0 var.$color-elements;
+    transition: background-color var.$transition-default;
 
     @include mixins.on-desktop {
       width: 64px;
       height: 64px;
+    }
+
+    &:hover {
+      background-color: var.$color-elements;
     }
 
     &--active {

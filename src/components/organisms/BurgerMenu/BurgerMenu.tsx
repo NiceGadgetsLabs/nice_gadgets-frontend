@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
@@ -14,15 +13,16 @@ const navItems = [
 ];
 
 type Props = {
-  setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
+  onClose: () => void;
 };
 
-export function BurgerMenu({ setIsMenuOpen }: Props) {
+export function BurgerMenu({ isOpen, onClose }: Props) {
   const { fav } = useContext(FavoritesContext);
   const { cart } = useContext(CartContext);
 
   return (
-    <aside className="burger-menu">
+    <aside className={clsx('burger-menu', { 'burger-menu--open': isOpen })} aria-hidden={!isOpen}>
       <nav className="burger-menu__nav">
         <ul className="burger-menu__nav-list">
           {navItems.map(({ to, label }) => (
@@ -34,7 +34,7 @@ export function BurgerMenu({ setIsMenuOpen }: Props) {
                     'burger-menu__nav-link--active': isActive,
                   })
                 }
-                onClick={() => setIsMenuOpen(false)}
+                onClick={onClose}
               >
                 {label}
               </NavLink>
@@ -54,7 +54,7 @@ export function BurgerMenu({ setIsMenuOpen }: Props) {
                   'burger-menu__actions-link--active': isActive,
                 })
               }
-              onClick={() => setIsMenuOpen(false)}
+              onClick={onClose}
             >
               {fav.length > 0 && (
                 <div className="burger-menu__counter">
@@ -73,7 +73,7 @@ export function BurgerMenu({ setIsMenuOpen }: Props) {
                   'burger-menu__actions-link--active': isActive,
                 })
               }
-              onClick={() => setIsMenuOpen(false)}
+              onClick={onClose}
             >
               {cart.length > 0 && (
                 <div className="burger-menu__counter">
