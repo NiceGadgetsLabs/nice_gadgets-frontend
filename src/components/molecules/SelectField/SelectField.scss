@@ -1,0 +1,111 @@
+@use '@/styles/utils/variables' as var;
+@use '@/styles/utils/typography';
+
+$box-shadow: 0px 2px 15px rgb(0 0 0 / 5%);
+
+.select-field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__label {
+    @extend %small;
+
+    color: var.$color-secondary;
+  }
+}
+
+.select {
+  display: block;
+  width: 100%;
+
+  &__trigger {
+    @extend %buttons;
+
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var.$color-primary;
+    border-radius: 0;
+    color: var.$color-primary;
+    background-color: var.$color-white;
+    outline: none;
+    transition: border-color var.$transition-default ease;
+
+    &:hover {
+      border-color: var.$color-primary;
+    }
+
+    &:focus,
+    &[data-state='open'] {
+      border: 1px solid var.$color-primary;
+      outline: none;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    color: var.$color-icons;
+    transition: transform var.$transition-default ease;
+  }
+
+  &__trigger[data-state='open'] &__icon {
+    transform: rotate(180deg);
+  }
+
+  &__content {
+    z-index: 100;
+    box-sizing: border-box;
+    width: max-content;
+    min-width: var(--radix-select-trigger-width);
+    max-width: calc(100vw - 20px);
+    border: 1px solid var.$color-elements;
+    border-radius: 0;
+    background-color: var.$color-white;
+    box-shadow: $box-shadow;
+
+    &[data-state='closed'] {
+      display: none;
+    }
+  }
+
+  &__viewport {
+    padding: 0;
+  }
+
+  &__item {
+    @extend %body;
+
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 12px;
+    color: var.$color-secondary;
+    white-space: nowrap;
+    background-color: var.$color-white;
+    outline: none;
+    transition:
+      background-color var.$transition-default ease,
+      color var.$transition-default ease;
+
+    &[data-highlighted] {
+      color: var.$color-primary;
+      background-color: var.$color-background;
+    }
+
+    &[data-state='selected'] {
+      font-weight: 600;
+      color: var.$color-primary;
+      background-color: transparent;
+    }
+  }
+}
