@@ -1,4 +1,4 @@
-import k2Image from './K2.png';
+import k2Image from '../assets/images/notFound.png';
 
 export const NotFoundPage = () => {
   return (
