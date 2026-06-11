@@ -7,6 +7,7 @@ import { CartPage } from './pages/CartPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { ProductPage } from './pages/ProductPage';
 import type { RouteObject } from 'react-router-dom';
+import { ItemCard } from './pages/ItemCard/ItemCard';
 
 const routes: RouteObject[] = [
   {
@@ -27,7 +28,7 @@ const routes: RouteObject[] = [
       },
       {
         path: 'phones/:productId',
-        element: <ProductPage />,
+        element: <ItemCard />,
       },
       {
         path: 'tablets',
