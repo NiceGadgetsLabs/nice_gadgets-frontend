@@ -1,3 +1,3 @@
 export const Gallery = () => {
-  return <div>{/* дописати код */}</div>;
+  return <div>{/* треба дописати код */}</div>;
 };
