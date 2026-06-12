@@ -1,23 +1,17 @@
-import { useContext } from 'react';
+import { useContext, type FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
 import { CartContext } from '../../../contexts/cart/CartContext';
+import { NAV_ITEMS } from '../../../constants/navigation';
 import './BurgerMenu.scss';
 
-const navItems = [
-  { to: '/', label: 'Home' },
-  { to: '/phones', label: 'Phones' },
-  { to: '/tablets', label: 'Tablets' },
-  { to: '/accessories', label: 'Accessories' },
-];
-
-type Props = {
+interface Props {
   isOpen: boolean;
   onClose: () => void;
-};
+}
 
-export function BurgerMenu({ isOpen, onClose }: Props) {
+export const BurgerMenu: FC<Props> = ({ isOpen, onClose }) => {
   const { fav } = useContext(FavoritesContext);
   const { cart } = useContext(CartContext);
 
@@ -25,7 +19,7 @@ export function BurgerMenu({ isOpen, onClose }: Props) {
     <aside className={clsx('burger-menu', { 'burger-menu--open': isOpen })} aria-hidden={!isOpen}>
       <nav className="burger-menu__nav">
         <ul className="burger-menu__nav-list">
-          {navItems.map(({ to, label }) => (
+          {NAV_ITEMS.map(({ to, label }) => (
             <li key={to} className="burger-menu__nav-item">
               <NavLink
                 to={to}
@@ -88,4 +82,4 @@ export function BurgerMenu({ isOpen, onClose }: Props) {
       </div>
     </aside>
   );
-}
+};

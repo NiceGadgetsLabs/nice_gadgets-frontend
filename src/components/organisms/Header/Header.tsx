@@ -5,16 +5,10 @@ import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
 import { CartContext } from '../../../contexts/cart/CartContext';
 import { Logo } from '../../atoms/Logo/Logo';
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu';
+import { NAV_ITEMS } from '../../../constants/navigation';
 import './Header.scss';
 
-const navItems = [
-  { to: '/', label: 'Home' },
-  { to: '/phones', label: 'Phones' },
-  { to: '/tablets', label: 'Tablets' },
-  { to: '/accessories', label: 'Accessories' },
-];
-
-export function Header() {
+export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { fav } = useContext(FavoritesContext);
   const { cart } = useContext(CartContext);
@@ -30,7 +24,7 @@ export function Header() {
 
         <nav className="header__nav">
           <ul className="header__nav-list">
-            {navItems.map(({ to, label }) => (
+            {NAV_ITEMS.map(({ to, label }) => (
               <li key={to} className="header__nav-item">
                 <NavLink
                   to={to}
@@ -103,4 +97,4 @@ export function Header() {
       <BurgerMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </>
   );
-}
+};
