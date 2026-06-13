@@ -62,7 +62,7 @@ $box-shadow: 0px 2px 15px rgb(0 0 0 / 5%);
   }
 
   &__content {
-    z-index: 100;
+    z-index: 200;
     box-sizing: border-box;
     width: max-content;
     min-width: var(--radix-select-trigger-width);

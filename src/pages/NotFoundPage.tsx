@@ -1,4 +1,4 @@
-import k2Image from '../assets/images/K2.png';
+import k2Image from '../assets/images/page-not-found-alt.webp';
 
 export const NotFoundPage = () => {
   return (

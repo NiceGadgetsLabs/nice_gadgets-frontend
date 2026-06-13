@@ -1,0 +1,97 @@
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/typography';
+
+.modal {
+  position: fixed;
+  z-index: 150;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgb(23 32 49 / 60%); // Внести в змінні?
+  backdrop-filter: blur(5px);
+}
+
+.modal__content {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  padding: 32px;
+  border-radius: 20px;
+  background: var.$color-white;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
+
+  h2 {
+    @extend %h2;
+
+    margin-bottom: 16px;
+    text-align: center;
+  }
+}
+
+.modal__message {
+  @extend %h4;
+
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.modal__section {
+  margin-bottom: 24px;
+
+  h3 {
+    @extend %h3;
+
+    margin-bottom: 8px;
+  }
+
+  &--info {
+    @extend %body;
+
+    color: var.$color-red;
+  }
+}
+
+.modal__section-summary {
+  padding: 16px;
+  border-radius: 12px;
+  background: var.$color-background;
+
+  p {
+    @extend %body;
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  hr {
+    margin: 12px 0;
+    border: none;
+    border-top: 1px solid var.$color-elements;
+  }
+
+  .total {
+    @extend %uppercase;
+
+    // font-weight: bold;
+    // color: var.$color-primary;
+  }
+}
+
+.modal__actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.modal__button {
+  cursor: pointer;
+  flex: 1;
+
+  // min-width: 150px;
+}
