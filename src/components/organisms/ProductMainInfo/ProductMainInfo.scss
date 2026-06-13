@@ -1,0 +1,24 @@
+@use '../../../styles/utils/variables' as var;
+
+.product-main-info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: var.$color-elements;
+  }
+}

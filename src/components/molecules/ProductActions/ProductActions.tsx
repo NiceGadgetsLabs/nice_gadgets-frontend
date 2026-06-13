@@ -8,9 +8,10 @@ import './ProductActions.scss';
 
 interface Props {
   product: Product;
+  height?: number;
 }
 
-export const ProductActions: FC<Props> = ({ product }) => {
+export const ProductActions: FC<Props> = ({ product, height = 40 }) => {
   const { addToCart, isInCart } = useContext(CartContext);
   const { toggleFavorite, isFavorite } = useContext(FavoritesContext);
 
@@ -24,6 +25,7 @@ export const ProductActions: FC<Props> = ({ product }) => {
         variant="primary"
         selected={inCart}
         onClick={() => addToCart(product)}
+        style={{ height }}
       >
         {inCart ? 'Added to cart' : 'Add to cart'}
       </Button>
@@ -33,6 +35,7 @@ export const ProductActions: FC<Props> = ({ product }) => {
         variant="icon"
         selected={inFavorites}
         onClick={() => toggleFavorite(product)}
+        style={{ height, width: height }}
       >
         <Icon type={inFavorites ? 'favorites-filled' : 'favorites'} width="16px" height="16px" />
       </Button>
