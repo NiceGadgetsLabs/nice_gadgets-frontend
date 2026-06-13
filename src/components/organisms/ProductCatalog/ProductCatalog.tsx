@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, type FC } from 'react';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { ProductList } from '../../organisms/ProductList/ProductList';
 import { SelectField, type SelectOption } from '../../molecules/SelectField/SelectField';
@@ -37,7 +37,7 @@ interface Props {
   products: Product[];
 }
 
-export function ProductCatalog({ products }: Props) {
+export const ProductCatalog: FC<Props> = ({ products }) => {
   console.log(products);
   const [searchParams, setSearchParams] = useSearchParams();
   const { category } = useParams();
@@ -126,4 +126,4 @@ export function ProductCatalog({ products }: Props) {
       </div>
     </>
   );
-}
+};

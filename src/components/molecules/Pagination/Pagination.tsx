@@ -1,15 +1,16 @@
+import type { FC } from 'react';
 import { Button } from '../../atoms/Button/Button';
 import { Icon } from '../../atoms/Icon/Icon';
 import { scrollToTop } from '../../../utils/scrollToTop';
 import './Pagination.scss';
 
-type PaginationProps = {
+interface Props {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-};
+}
 
-export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export const Pagination: FC<Props> = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   const getPaginationRange = () => {
@@ -94,4 +95,4 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       </Button>
     </div>
   );
-}
+};
