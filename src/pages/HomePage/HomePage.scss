@@ -1,0 +1,76 @@
+@use '../../styles/utils/variables' as var;
+@use '../../styles/utils/mixins';
+@use '../../styles/utils/typography';
+
+.home {
+  padding-top: var.$header-height-desktop;
+
+  @include mixins.on-tablet {
+    padding-top: var.$header-height-mobile-or-tablet;
+  }
+
+  @include mixins.on-mobile {
+    padding-top: var.$header-height-mobile-or-tablet;
+  }
+
+  &__content {
+    @include mixins.page-grid;
+
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__sr-only {
+    position: absolute;
+    top: auto;
+    left: -10000px;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+  }
+
+  &__title {
+    grid-column: 1 / -1;
+    margin-top: 56px;
+    margin-bottom: 56px;
+    font-family: Mont, sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    font-style: normal;
+    line-height: 1.1;
+    color: var.$color-primary;
+    letter-spacing: -0.01em;
+
+    @include mixins.on-tablet {
+      margin-inline: 24px;
+    }
+
+    @include mixins.on-mobile {
+      grid-column: 1 / -1;
+      margin-inline: 16px;
+      font-size: 32px;
+      line-height: 41px;
+      white-space: normal;
+    }
+  }
+
+  &__mainContent {
+    display: flex;
+    grid-column: 1 / -1;
+    flex-direction: column;
+    gap: 80px;
+    align-items: center;
+    margin-bottom: 80px;
+
+    @include mixins.on-tablet {
+      gap: 64px;
+    }
+
+    @include mixins.on-mobile {
+      gap: 56px;
+    }
+  }
+}
