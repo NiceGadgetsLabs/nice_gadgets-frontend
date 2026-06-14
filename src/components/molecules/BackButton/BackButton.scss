@@ -1,0 +1,13 @@
+@use '../../../styles/utils/variables' as var;
+
+.back-button {
+  width: fit-content;
+  font-family: Mont-Bold, Helvetica, sans-serif;
+  font-size: var.$font-size-xs;
+  font-weight: 700;
+  line-height: 16px;
+
+  &__icon {
+    color: var.$color-primary;
+  }
+}

@@ -10,7 +10,12 @@
   &__current {
     @extend %h3;
 
+    font-size: var.$font-size-xl;
     color: var.$color-primary;
+
+    &--large {
+      font-size: var.$font-size-2xl;
+    }
   }
 
   &__old {

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Header } from '../../components/organisms/Header/Header';
-import { Footer } from '../../components/organisms/Footer';
+import { Footer } from '../../components/organisms/Footer/Footer';
 import { Container } from '../../components/atoms/Container/Container';
 import './MainLayout.scss';
 

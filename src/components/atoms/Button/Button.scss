@@ -14,7 +14,7 @@
 
     padding-block: 8.5px;
     border: 1px solid transparent;
-    color: #fff;
+    color: var.$color-white;
     background-color: var.$color-primary;
 
     &:hover {
@@ -100,7 +100,7 @@
     border-radius: 50%;
     background-clip: content-box;
 
-    &:hover {
+    &:not(&--selected):hover {
       border-color: var.$color-icons;
     }
 
