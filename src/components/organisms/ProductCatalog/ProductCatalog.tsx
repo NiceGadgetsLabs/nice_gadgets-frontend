@@ -38,7 +38,6 @@ interface Props {
 }
 
 export const ProductCatalog: FC<Props> = ({ products }) => {
-  console.log(products);
   const [searchParams, setSearchParams] = useSearchParams();
   const { category } = useParams();
   const sortBy = searchParams.get('sort') || 'newest';
@@ -82,10 +81,10 @@ export const ProductCatalog: FC<Props> = ({ products }) => {
   const safePage = Math.min(currentPage, totalPages || 1);
 
   useEffect(() => {
-    if (safePage !== currentPage) {
+    if (totalPages > 0 && safePage !== currentPage) {
       updateParams({ page: safePage.toString() });
     }
-  }, [safePage, currentPage, updateParams]);
+  }, [safePage, currentPage, totalPages, updateParams]);
 
   const startIndex = (safePage - 1) * itemsPerPage;
   const paginatedProducts = sortedProducts.slice(startIndex, startIndex + itemsPerPage);
