@@ -1,3 +1,20 @@
-export const FavoritesPage = () => {
-  return <h1>FavoritesPage</h1>;
+import { useContext, type FC } from 'react';
+import { FavoritesContext } from '../contexts/favorites/FavoritesContext';
+import { FavoritesLayout } from '../layouts/FavoritesLayout/FavoritesLayout';
+import { ProductList } from '../components/organisms/ProductList/ProductList';
+import { EmptyState } from '../components/molecules/EmptyState/EmptyState';
+import favoritesEmptyImage from '../assets/images/product-not-found.webp';
+
+export const FavoritesPage: FC = () => {
+  const { fav } = useContext(FavoritesContext);
+
+  return (
+    <FavoritesLayout title="Favorites" count={fav.length}>
+      {fav.length === 0 ? (
+        <EmptyState title="There are no favorites yet..." image={favoritesEmptyImage} />
+      ) : (
+        <ProductList products={fav} />
+      )}
+    </FavoritesLayout>
+  );
 };

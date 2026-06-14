@@ -1,0 +1,32 @@
+@use '../../styles/utils/variables' as var;
+@use '../../styles/utils/mixins';
+@use '../../styles/utils/typography';
+
+.home-layout {
+  &__title {
+    @extend %h1;
+
+    margin-block: 32px;
+    color: var.$color-primary;
+
+    @include mixins.on-desktop {
+      margin-block: 56px;
+    }
+  }
+
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    margin-block-end: 64px;
+
+    @include mixins.on-tablet {
+      gap: 64px;
+    }
+
+    @include mixins.on-desktop {
+      gap: 80px;
+      margin-block-end: 80px;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@use '../../styles/utils/variables' as var;
+@use '../../styles/utils/typography';
+
+.favorites-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-block: 32px 64px;
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__title {
+    @extend %h1;
+
+    color: var.$color-primary;
+  }
+
+  &__count {
+    @extend %body;
+
+    color: var.$color-secondary;
+  }
+}
