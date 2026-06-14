@@ -7,6 +7,7 @@ import './SelectField.scss';
 export type SelectOption = {
   value: string;
   label: string;
+  icon?: string;
 };
 
 type CustomSelectProps = {
@@ -26,7 +27,7 @@ export function SelectField({
   placeholder = 'Select an option',
   className,
 }: CustomSelectProps) {
-  const selectedLabel = options.find((option) => option.value === value)?.label ?? placeholder;
+  const selectedOption = options.find((option) => option.value === value);
   const id = useId();
   const triggerId = `select-trigger-${id}`;
 
@@ -41,7 +42,12 @@ export function SelectField({
         <Select.Root value={value} onValueChange={onValueChange}>
           <Select.Trigger id={triggerId} className="select__trigger">
             <Select.Value placeholder={placeholder} aria-label={value}>
-              {selectedLabel}
+              <div className="select__value-container">
+                {selectedOption?.icon && (
+                  <img src={selectedOption?.icon} alt="logo" className="select__img" />
+                )}
+                <span>{selectedOption?.label ?? placeholder}</span>
+              </div>
             </Select.Value>
             <Select.Icon className="select__icon">
               <span className="select__arrow">
@@ -60,8 +66,9 @@ export function SelectField({
               collisionPadding={10}
             >
               <Select.Viewport className="select__viewport">
-                {options.map(({ value: optionValue, label: optionLabel }) => (
+                {options.map(({ value: optionValue, label: optionLabel, icon }) => (
                   <Select.Item className="select__item" value={optionValue} key={optionValue}>
+                    {icon && <img src={icon} alt="logo" className="select__img" />}
                     <Select.ItemText>{optionLabel}</Select.ItemText>
                   </Select.Item>
                 ))}

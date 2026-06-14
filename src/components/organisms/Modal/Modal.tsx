@@ -3,16 +3,20 @@ import { useEffect, useState } from 'react';
 import { Button } from '../../atoms/Button/Button';
 import './Modal.scss';
 import { SelectField } from '../../molecules/SelectField/SelectField';
+import ukrPoshtaLogo from '../../../assets/icons/UkrPoshta-logo.svg';
+import novaPoshtaLogo from '../../../assets/icons/NovaPoshta-logo.svg';
+import meestPoshtaLogo from '../../../assets/icons/MeestPoshta-logo.svg';
 
 interface DeliveryOption {
   id: string;
   label: string;
   price: number;
+  icon?: string;
 }
 const DELIVERY_OPTIONS: DeliveryOption[] = [
-  { id: 'standard', label: 'Standard Delivery', price: 5 },
-  { id: 'express', label: 'Express Delivery', price: 15 },
-  { id: 'overnight', label: 'Overnight Delivery', price: 25 },
+  { id: 'UkrPoshta', label: 'UkrPoshta', price: 10, icon: ukrPoshtaLogo },
+  { id: 'NovaPoshta', label: 'Nova Poshta', price: 15, icon: novaPoshtaLogo },
+  { id: 'MeestPoshta', label: 'Meest Poshta', price: 25, icon: meestPoshtaLogo },
 ];
 
 interface Props {
@@ -25,7 +29,7 @@ interface Props {
 }
 
 export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCount }: Props) => {
-  const [selectedDeliveryId, setselectedDeliveryId] = useState(DELIVERY_OPTIONS[0].id);
+  const [selectedDeliveryId, setselectedDeliveryId] = useState('');
 
   useEffect(() => {
     if (!isOpen) return;
@@ -42,13 +46,14 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
-  const selectedDelivery =
-    DELIVERY_OPTIONS.find((opt) => opt.id === selectedDeliveryId) ?? DELIVERY_OPTIONS[0];
-  const total = subtotal + selectedDelivery.price;
+  const selectedDelivery = DELIVERY_OPTIONS.find((opt) => opt.id === selectedDeliveryId);
+  const deliveryPrice = selectedDelivery ? selectedDelivery.price : 0;
+  const total = subtotal + deliveryPrice;
 
   const selectOptions = DELIVERY_OPTIONS.map((opt) => ({
     value: opt.id,
     label: `${opt.label} ($${opt.price})`,
+    icon: opt.icon,
   }));
 
   return (
@@ -73,15 +78,18 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
             options={selectOptions}
             value={selectedDeliveryId}
             onValueChange={setselectedDeliveryId}
+            placeholder="Choose delivery method"
           />
         </div>
 
         <div className="modal__section modal__section-summary">
-          <p>Items: {itemsCount}</p>
-          <p>Subtotal: ${subtotal}</p>
-          <p>Delivery cost: ${selectedDelivery.price}</p>
+          <p className="total">Order Summary</p>
+          <p>
+            You choose {itemsCount} items with worth ${Number(subtotal).toFixed(2)}
+          </p>
+          <p>Delivery cost: ${deliveryPrice}</p>
           <hr />
-          <p className="total">Total: ${total} </p>
+          <p className="total">Order total: ${Number(total).toFixed(2)} </p>
         </div>
 
         <p className="modal__section--info">

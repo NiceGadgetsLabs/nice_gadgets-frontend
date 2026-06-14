@@ -78,6 +78,8 @@
   .total {
     @extend %uppercase;
 
+    font-size: var.$font-size-sm;
+
     // font-weight: bold;
     // color: var.$color-primary;
   }
