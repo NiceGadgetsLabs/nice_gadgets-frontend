@@ -8,10 +8,14 @@
   padding-block: 8px;
 
   &__row {
-    @extend %small;
+    @extend %body;
 
     display: flex;
     justify-content: space-between;
+
+    &--bold {
+      @extend %small;
+    }
   }
 
   &__title {

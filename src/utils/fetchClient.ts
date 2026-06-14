@@ -1,4 +1,14 @@
-const BASE_URL = '/api';
+import { BASE_URL } from '../constants/api';
+
+export class ApiError extends Error {
+  status: number;
+
+  constructor(status: number, message?: string) {
+    super(message || `Request failed with status ${status}`);
+    this.name = 'ApiError';
+    this.status = status;
+  }
+}
 
 const wait = (delay: number) => {
   return new Promise((resolve) => {
@@ -27,7 +37,7 @@ async function request<T>(
   const response = await fetch(`${BASE_URL}${url}.json`, options);
 
   if (!response.ok) {
-    throw new Error();
+    throw new ApiError(response.status, response.statusText);
   }
 
   return response.json();
