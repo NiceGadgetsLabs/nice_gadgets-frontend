@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../atoms/Button/Button';
 import './Modal.scss';
 import { SelectField } from '../../molecules/SelectField/SelectField';
@@ -7,6 +7,18 @@ import ukrPoshtaLogo from '../../../assets/icons/UkrPoshta-logo.svg';
 import novaPoshtaLogo from '../../../assets/icons/NovaPoshta-logo.svg';
 import meestPoshtaLogo from '../../../assets/icons/MeestPoshta-logo.svg';
 
+interface FieldOption {
+  id: string;
+  name: 'lastName' | 'firstName' | 'middleName';
+  label: string;
+  placeholder: string;
+}
+
+const NAME_FIELDS: FieldOption[] = [
+  { id: 'lastName', name: 'lastName', label: 'Last Name', placeholder: 'Enter last name' },
+  { id: 'firstName', name: 'firstName', label: 'First Name', placeholder: 'Enter first name' },
+  { id: 'middleName', name: 'middleName', label: 'Middle Name', placeholder: 'Enter middle name' },
+];
 interface DeliveryOption {
   id: string;
   label: string;
@@ -29,6 +41,11 @@ interface Props {
 }
 
 export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCount }: Props) => {
+  const [fullName, setFullName] = useState({
+    lastName: '',
+    firstName: '',
+    middleName: '',
+  });
   const [selectedDeliveryId, setselectedDeliveryId] = useState('');
 
   useEffect(() => {
@@ -46,6 +63,16 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFullName((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const combinedName = `${fullName.lastName} ${fullName.firstName} ${fullName.middleName}`;
+
   const selectedDelivery = DELIVERY_OPTIONS.find((opt) => opt.id === selectedDeliveryId);
   const deliveryPrice = selectedDelivery ? selectedDelivery.price : 0;
   const total = subtotal + deliveryPrice;
@@ -69,7 +96,32 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
 
         <div className="modal__section">
           <h3>Ship to</h3>
-          <p className="modal__section--info">You need to log in and enter your delivery address</p>
+          <div className="modal__inputs-row">
+            {NAME_FIELDS.map((field) => (
+              <div className="modal__input-wrapper" key={field.id}>
+                <label htmlFor={field.id} className="modal__label">
+                  {field.label}
+                </label>
+                <input
+                  id={field.id}
+                  type="text"
+                  name={field.name}
+                  value={fullName[field.name]}
+                  onChange={handleNameChange}
+                  placeholder={field.placeholder}
+                  className="modal__input"
+                />
+              </div>
+            ))}
+          </div>
+
+          {combinedName ? (
+            <p className="modal__section--result">Order reciever: {combinedName}</p>
+          ) : (
+            <p className="modal__section--info">
+              You need to log in and enter your delivery address
+            </p>
+          )}
         </div>
 
         <div className="modal__section">
