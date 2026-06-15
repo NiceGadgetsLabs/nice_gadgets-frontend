@@ -12,7 +12,7 @@
   }
 
   @include mixins.on-desktop {
-    margin-block-end: 81px;
+    margin-block-end: 80px;
   }
 
   &__header {
@@ -50,9 +50,11 @@
     @include mixins.page-grid;
 
     row-gap: 24px;
+    margin-block-end: 56px;
 
     @include mixins.on-tablet {
       row-gap: 0;
+      margin-block-end: 64px;
     }
   }
 
@@ -60,10 +62,10 @@
     @include mixins.page-grid;
 
     row-gap: 32px;
-    margin-block-start: 56px;
+    margin-block-end: 56px;
 
     @include mixins.on-tablet {
-      margin-block-start: 64px;
+      margin-block-end: 64px;
     }
   }
 
