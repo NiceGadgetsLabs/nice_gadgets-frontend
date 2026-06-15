@@ -26,15 +26,6 @@
     }
   }
 
-  &__breadcrumbs {
-    display: flex;
-    height: 16px;
-    font-family: Mont-Semibold, Helvetica, sans-serif;
-    font-size: var.$font-size-xs;
-    font-weight: 600;
-    letter-spacing: var.$letter-spacing-normal;
-  }
-
   &__title {
     @extend %h2;
 
