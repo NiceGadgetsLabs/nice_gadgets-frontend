@@ -1,0 +1,86 @@
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/mixins';
+@use '../../../styles/utils/typography';
+
+.cart-item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid var.$color-elements;
+
+  @include mixins.on-tablet {
+    flex-direction: row;
+    align-items: center;
+    padding: 24px;
+  }
+
+  &__info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    @include mixins.on-tablet {
+      gap: 24px;
+    }
+  }
+
+  &__remove {
+    flex-shrink: 0;
+  }
+
+  &__image-link {
+    flex-shrink: 0;
+  }
+
+  &__image {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+
+  &__name {
+    @extend %body;
+
+    color: var.$color-primary;
+  }
+
+  &__controls {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    @include mixins.on-tablet {
+      width: auto;
+    }
+  }
+
+  &__quantity {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__count {
+    @extend %small;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    color: var.$color-primary;
+    text-align: center;
+  }
+
+  &__total {
+    @extend %h3;
+
+    min-width: 80px;
+    color: var.$color-primary;
+    text-align: right;
+  }
+}

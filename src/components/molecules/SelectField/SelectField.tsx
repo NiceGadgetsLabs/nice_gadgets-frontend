@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useId, type FC } from 'react';
 import * as Select from '@radix-ui/react-select';
 import clsx from 'clsx';
 import { Icon } from '../../atoms/Icon/Icon';
@@ -10,23 +10,23 @@ export type SelectOption = {
   icon?: string;
 };
 
-type CustomSelectProps = {
+interface Props {
   options: SelectOption[];
   value: string;
   label?: string;
   placeholder?: string;
   className?: string;
   onValueChange: (value: string) => void;
-};
+}
 
-export function SelectField({
+export const SelectField: FC<Props> = ({
   options,
   value,
   onValueChange,
   label,
   placeholder = 'Select an option',
   className,
-}: CustomSelectProps) {
+}) => {
   const selectedOption = options.find((option) => option.value === value);
   const id = useId();
   const triggerId = `select-trigger-${id}`;
@@ -79,4 +79,4 @@ export function SelectField({
       </div>
     </div>
   );
-}
+};

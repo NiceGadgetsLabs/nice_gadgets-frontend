@@ -1,0 +1,27 @@
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/mixins';
+@use '../../../styles/utils/typography';
+
+.capacity {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__title {
+    @extend %small;
+
+    color: var.$color-secondary;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  &__button {
+    max-width: 60px;
+    height: 32px;
+    padding-inline: 8px;
+  }
+}

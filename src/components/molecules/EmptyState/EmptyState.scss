@@ -1,0 +1,35 @@
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/mixins';
+@use '../../../styles/utils/typography';
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  margin-block: 40px;
+  text-align: center;
+
+  &__title {
+    @extend %h2;
+
+    color: var.$color-secondary;
+  }
+
+  &__image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+
+    @include mixins.on-tablet {
+      width: 288px;
+      height: 288px;
+    }
+
+    @include mixins.on-desktop {
+      width: 360px;
+      height: 360px;
+    }
+  }
+}

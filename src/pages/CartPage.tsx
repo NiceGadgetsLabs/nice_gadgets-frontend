@@ -1,60 +1,55 @@
-import { useState, useContext, useMemo } from 'react';
-import { CartContext } from '../contexts/cart/CartContext';
 import { Modal } from '../components/organisms/Modal/Modal';
-import { Button } from '../components/atoms/Button/Button';
+import { useContext, useState, type FC } from 'react';
+import { CartContext } from '../contexts/cart/CartContext';
+import { CartLayout } from '../layouts/CartLayout/CartLayout';
+import { CartList } from '../components/organisms/CartList/CartList';
+import { CartSummary } from '../components/molecules/CartSummary/CartSummary';
+import { EmptyState } from '../components/molecules/EmptyState/EmptyState';
+import { getCartTotals } from '../utils/getCartTotals';
+import { scrollToTop } from '../utils/scrollToTop';
+import cartEmptyImage from '../assets/images/cart-is-empty.webp';
 
-export const CartPage = () => {
+export const CartPage: FC = () => {
   const { cart, clearCart } = useContext(CartContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { subtotal, itemsCount } = useMemo(() => {
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const itemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    return { subtotal, itemsCount };
-  }, [cart]);
-
-  const handleCheckout = () => {
-    setIsModalOpen(true);
-  };
+  const { totalPrice, totalQuantity } = getCartTotals(cart);
 
   const handleConfirm = () => {
     clearCart();
     setIsModalOpen(false);
+    scrollToTop();
   };
 
   return (
-    <div className="cart-page">
-      <h1>Cart</h1>
-
-      {cart.length === 0 ? (
-        <p>Your cart is empty</p>
-      ) : (
-        <div className="cart-content">
-          <div className="cart-items">
-            {cart.map((item) => (
-              <div key={item.itemId}>
-                {item.name} - {item.quantity} шт. - ${item.price * item.quantity}
-              </div>
-            ))}
-          </div>
-
-          <div className="cart-summary">
-            <h2>Total: ${subtotal}</h2>
-            <Button variant="primary" onClick={handleCheckout}>
-              Checkout
-            </Button>
-          </div>
-        </div>
-      )}
-
-      <Modal
-        isOpen={isModalOpen}
-        message="Please enter recipient's details and select a delivery option"
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleConfirm}
-        subtotal={subtotal}
-        itemsCount={itemsCount}
+    <>
+      <CartLayout
+        title="Cart"
+        empty={
+          cart.length === 0 ? (
+            <EmptyState title="Your cart is empty..." image={cartEmptyImage} />
+          ) : undefined
+        }
+        list={<CartList />}
+        summary={
+          <CartSummary
+            totalPrice={totalPrice}
+            totalQuantity={totalQuantity}
+            onCheckout={() => setIsModalOpen(true)}
+          />
+        }
       />
-    </div>
+
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          message="Please enter recipient's details and select a delivery option"
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleConfirm}
+          subtotal={totalPrice}
+          itemsCount={totalQuantity}
+        />
+      )}
+    </>
   );
 };
