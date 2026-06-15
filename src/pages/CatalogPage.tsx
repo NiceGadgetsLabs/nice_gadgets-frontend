@@ -37,7 +37,7 @@ const getCategoryTitle = (categoryId?: string) => {
 
 export const CatalogPage: FC = () => {
   const { category } = useParams();
-  const { products } = useProducts();
+  const { products, isLoading } = useProducts();
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get('sort') || 'newest';
   const itemsPerPage = parseInt(searchParams.get('perPage') || '12', 10);
@@ -115,7 +115,13 @@ export const CatalogPage: FC = () => {
           />
         </>
       }
-      list={<ProductList products={paginatedProducts} />}
+      list={
+        <ProductList
+          products={paginatedProducts}
+          isLoading={isLoading}
+          skeletonCount={itemsPerPage}
+        />
+      }
       pagination={
         <Pagination
           currentPage={safePage}

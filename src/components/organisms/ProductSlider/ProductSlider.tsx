@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { ProductCard } from '../ProductCard/ProductCard';
+import { ProductCardSkeleton } from '../ProductCardSkeleton/ProductCardSkeleton';
 import { Button } from '../../atoms/Button/Button';
 import { Icon } from '../../atoms/Icon/Icon';
 import type { Product } from '../../../types/Products';
@@ -14,9 +15,16 @@ import 'swiper/css/navigation';
 interface Props {
   title: string;
   products: Product[];
+  isLoading?: boolean;
+  skeletonCount?: number;
 }
 
-export const ProductSlider: FC<Props> = ({ title, products }) => {
+export const ProductSlider: FC<Props> = ({
+  title,
+  products,
+  isLoading = false,
+  skeletonCount = 8,
+}) => {
   const swiperRef = useRef<SwiperInstance | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -35,7 +43,7 @@ export const ProductSlider: FC<Props> = ({ title, products }) => {
           <Button
             variant="icon"
             aria-label="Previous products"
-            disabled={isBeginning}
+            disabled={isBeginning || isLoading}
             style={{ width: 32, height: 32 }}
             onClick={() => swiperRef.current?.slidePrev()}
           >
@@ -45,7 +53,7 @@ export const ProductSlider: FC<Props> = ({ title, products }) => {
           <Button
             variant="icon"
             aria-label="Next products"
-            disabled={isEnd}
+            disabled={isEnd || isLoading}
             style={{ width: 32, height: 32 }}
             onClick={() => swiperRef.current?.slideNext()}
           >
@@ -74,11 +82,17 @@ export const ProductSlider: FC<Props> = ({ title, products }) => {
         onResize={syncNav}
         onBreakpoint={syncNav}
       >
-        {products.map((product) => (
-          <SwiperSlide key={product.id}>
-            <ProductCard product={product} />
-          </SwiperSlide>
-        ))}
+        {isLoading
+          ? Array.from({ length: skeletonCount }).map((_, index) => (
+              <SwiperSlide key={`skeleton-${index}`}>
+                <ProductCardSkeleton />
+              </SwiperSlide>
+            ))
+          : products.map((product) => (
+              <SwiperSlide key={product.id}>
+                <ProductCard product={product} />
+              </SwiperSlide>
+            ))}
       </Swiper>
     </section>
   );

@@ -37,14 +37,19 @@ export const Categories: FC<Props> = ({ products }) => {
 
       <div className="categories__list">
         {CATEGORY_CARDS.map(({ category, title, image }) => (
-          <Link className="categories__card" to={`/${category}`} key={category}>
-            <div className={clsx('categories__image-box', `categories__image-box--${category}`)}>
+          <div className="categories__card" key={category}>
+            <Link
+              to={`/${category}`}
+              className={clsx('categories__image-box', `categories__image-box--${category}`)}
+            >
               <img className="categories__image" src={image} alt={title} />
-            </div>
+            </Link>
 
-            <h3 className="categories__name">{title}</h3>
+            <Link to={`/${category}`}>
+              <h3 className="categories__name">{title}</h3>
+            </Link>
             <p className="categories__count">{countByCategory[category] ?? 0} models</p>
-          </Link>
+          </div>
         ))}
       </div>
     </section>

@@ -1,10 +1,10 @@
 import { type FC, type ReactNode } from 'react';
 import { BackButton } from '../../components/molecules/BackButton/BackButton';
 import './ProductLayout.scss';
-import { Breadcrumbs } from '../../components/molecules/Breadcrumbs/Breadcrumbs';
 
 interface Props {
-  title: string;
+  breadcrumbs: ReactNode;
+  title: ReactNode;
   gallery: ReactNode;
   info: ReactNode;
   about: ReactNode;
@@ -12,11 +12,19 @@ interface Props {
   recommended: ReactNode;
 }
 
-export const ProductLayout: FC<Props> = ({ title, gallery, info, about, specs, recommended }) => {
+export const ProductLayout: FC<Props> = ({
+  breadcrumbs,
+  title,
+  gallery,
+  info,
+  about,
+  specs,
+  recommended,
+}) => {
   return (
     <div className="product-layout">
       <header className="product-layout__header">
-        <Breadcrumbs />
+        {breadcrumbs}
         <BackButton />
       </header>
 
