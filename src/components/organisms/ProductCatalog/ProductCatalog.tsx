@@ -15,9 +15,9 @@ const sortOptions: SelectOption[] = [
 ];
 
 const pageSizeOptions: SelectOption[] = [
-  { value: '16', label: '16' },
+  { value: '12', label: '12' },
   { value: '24', label: '24' },
-  { value: '32', label: '32' },
+  { value: '36', label: '36' },
 ];
 
 const getCategoryTitle = (categoryId?: string) => {
@@ -41,7 +41,7 @@ export const ProductCatalog: FC<Props> = ({ products }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { category } = useParams();
   const sortBy = searchParams.get('sort') || 'newest';
-  const itemsPerPage = parseInt(searchParams.get('perPage') || '16', 10);
+  const itemsPerPage = parseInt(searchParams.get('perPage') || '12', 10);
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
   const updateParams = useCallback(
@@ -106,9 +106,9 @@ export const ProductCatalog: FC<Props> = ({ products }) => {
           className="catalog__select-sort"
         />
         <SelectField
-          label="Items on page"
+          label="Items per page"
           options={pageSizeOptions}
-          value={searchParams.get('perPage') || '16'}
+          value={searchParams.get('perPage') || '12'}
           onValueChange={handlePerPageChange}
           className="catalog__select-pages"
         />
