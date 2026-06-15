@@ -15,9 +15,9 @@ interface FieldOption {
 }
 
 const NAME_FIELDS: FieldOption[] = [
-  { id: 'lastName', name: 'lastName', label: 'Last Name', placeholder: 'Enter last name' },
   { id: 'firstName', name: 'firstName', label: 'First Name', placeholder: 'Enter first name' },
-  { id: 'middleName', name: 'middleName', label: 'Middle Name', placeholder: 'Enter middle name' },
+  { id: 'lastName', name: 'lastName', label: 'Last Name', placeholder: 'Enter last name' },
+  // { id: 'middleName', name: 'middleName', label: 'Middle Name', placeholder: 'Enter middle name' },
 ];
 
 interface AddressOption {
@@ -25,6 +25,7 @@ interface AddressOption {
   name: 'city' | 'address' | 'zip' | 'phone';
   label: string;
   placeholder: string;
+  type?: string;
 }
 
 const ADDRESS_FIELDS: AddressOption[] = [
@@ -36,7 +37,13 @@ const ADDRESS_FIELDS: AddressOption[] = [
     placeholder: 'Street, building, apt',
   },
   { id: 'zip', name: 'zip', label: 'ZIP / Postal Code', placeholder: '01001' },
-  { id: 'phone', name: 'phone', label: 'Phone Number', placeholder: '+380...' },
+  {
+    id: 'phone',
+    name: 'phone',
+    label: 'Phone Number',
+    placeholder: '+38 (0XX) XXX-XX-XX',
+    type: 'tel',
+  },
 ];
 interface DeliveryOption {
   id: string;
@@ -67,7 +74,7 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
     city: '',
     address: '',
     zip: '',
-    phone: '',
+    phone: '+38',
   });
   const [selectedDeliveryId, setselectedDeliveryId] = useState('');
 
@@ -89,11 +96,47 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    // 1. Валідація для ТЕЛЕФОНУ
+    if (name === 'phone') {
+      if (!value.startsWith('+38')) {
+        setShippingInfo((prev) => ({ ...prev, phone: '+38' }));
+        return;
+      }
+
+      const digitsAfterPrefix = value.slice(3);
+      if (isNaN(Number(digitsAfterPrefix))) return;
+      if (value.length > 13) return;
+      setShippingInfo((prev) => ({ ...prev, [name]: value }));
+      return;
+    }
+    // 2. Валідація для ПОШТОВОГО ІНДЕКСУ
+    if (name === 'zip') {
+      if (/^\d*$/.test(value) && value.length <= 5) {
+        setShippingInfo((prev) => ({ ...prev, [name]: value }));
+      }
+      return;
+    }
+    // 3. АВТО-КАПІТАЛІЗАЦІЯ для Ім'я та Прізвища
+    if (name === 'firstName' || name === 'lastName') {
+      if (value === '') {
+        setShippingInfo((prev) => ({ ...prev, [name]: '' }));
+        return;
+      }
+      const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
+      setShippingInfo((prev) => ({ ...prev, [name]: capitalizedValue }));
+      return;
+    }
+    // 3. Логіка для всіх інших полів (місто, адреса)
+    setShippingInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleClearField = (fieldName: string) => {
     setShippingInfo((prev) => ({
       ...prev,
-      [name]: value,
+      [fieldName]: fieldName === 'phone' ? '+38' : '',
     }));
   };
+
   const combinedName =
     `${shippingInfo.lastName} ${shippingInfo.firstName} ${shippingInfo.middleName}`.trim();
   const combinedAddress =
@@ -128,15 +171,27 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
                 <label htmlFor={field.id} className="modal__label">
                   {field.label}
                 </label>
-                <input
-                  id={field.id}
-                  type="text"
-                  name={field.name}
-                  value={shippingInfo[field.name]}
-                  onChange={handleInputChange}
-                  placeholder={field.placeholder}
-                  className="modal__input"
-                />
+                <div className="modal__input-container">
+                  <input
+                    id={field.id}
+                    type="text"
+                    name={field.name}
+                    value={shippingInfo[field.name]}
+                    onChange={handleInputChange}
+                    placeholder={field.placeholder}
+                    className="modal__input"
+                  />
+                  {shippingInfo[field.name] && (
+                    <button
+                      type="button"
+                      className="modal__clear-btn"
+                      onClick={() => handleClearField(field.name)}
+                      aria-label={`Clear ${field.label}`}
+                    >
+                      &times;
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -161,15 +216,39 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
                   <label htmlFor={field.id} className="modal__label">
                     {field.label}
                   </label>
-                  <input
-                    id={field.id}
-                    type="text"
-                    name={field.name}
-                    value={shippingInfo[field.name]}
-                    onChange={handleInputChange}
-                    placeholder={field.placeholder}
-                    className="modal__input"
-                  />
+
+                  <div className="modal__input-container">
+                    <input
+                      id={field.id}
+                      type={field.type || 'text'}
+                      name={field.name}
+                      value={shippingInfo[field.name]}
+                      onChange={handleInputChange}
+                      placeholder={field.placeholder}
+                      className="modal__input"
+                      required={field.name === 'phone' || field.name === 'zip'}
+                      minLength={field.name === 'phone' ? 13 : field.name === 'zip' ? 5 : undefined}
+                      maxLength={field.name === 'zip' ? 5 : undefined}
+                      pattern={
+                        field.name === 'phone'
+                          ? '\\+38\\d{10}'
+                          : field.name === 'zip'
+                            ? '\\d{5}'
+                            : undefined
+                      }
+                    />
+                    {((field.name !== 'phone' && shippingInfo[field.name]) ||
+                      (field.name === 'phone' && shippingInfo.phone.length > 3)) && (
+                      <button
+                        type="button"
+                        className="modal__clear-btn"
+                        onClick={() => handleClearField(field.name)}
+                        aria-label={`Clear ${field.label}`}
+                      >
+                        &times;
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -177,7 +256,7 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
             {shippingInfo.city || shippingInfo.address ? (
               <p className="modal__section--result modal__section--result-address">
                 <strong>Ship to:</strong> {combinedAddress} <br />
-                {shippingInfo.phone && <>Phone: {shippingInfo.phone}</>}
+                {shippingInfo.phone.length > 3 && <>Phone: {shippingInfo.phone}</>}
               </p>
             ) : null}
           </div>
