@@ -7,19 +7,21 @@ import { ProductMainInfo } from '../components/organisms/ProductMainInfo/Product
 import { ProductAbout } from '../components/organisms/ProductAbout/ProductAbout';
 import { ProductTechSpecs } from '../components/organisms/ProductTechSpecs/ProductTechSpecs';
 import { ProductSlider } from '../components/organisms/ProductSlider/ProductSlider';
+import { ProductDetailsSkeleton } from '../components/organisms/ProductDetailsSkeleton/ProductDetailsSkeleton';
 import { NotFoundPage } from './NotFoundPage';
+import { Breadcrumbs } from '../components/molecules/Breadcrumbs/Breadcrumbs';
 
 export const ProductPage: FC = () => {
   const { productDetails, product, productSpecs, errorMessage, isLoading } = useProductDetails();
-  const { products } = useProducts();
+  const { products, isLoading: isProductsLoading } = useProducts();
 
   //TODO: Add a recommendation algorithm
   const recommendedProducts = products.filter(
-    (recomendation) => recomendation.category !== product?.category,
+    (recommendation) => recommendation.category !== product?.category,
   );
 
   if (isLoading && !productDetails) {
-    return <p>Loading</p>;
+    return <ProductDetailsSkeleton />;
   }
 
   if (errorMessage || !productDetails || !product) {
@@ -28,12 +30,19 @@ export const ProductPage: FC = () => {
 
   return (
     <ProductLayout
+      breadcrumbs={<Breadcrumbs item={product.name} />}
       title={productDetails.name}
       gallery={<ProductGallery images={productDetails.images} alt={productDetails.name} />}
       info={<ProductMainInfo productDetails={productDetails} product={product} />}
       about={<ProductAbout description={productDetails.description} />}
       specs={<ProductTechSpecs specs={productSpecs} />}
-      recommended={<ProductSlider title="You may also like" products={recommendedProducts} />}
+      recommended={
+        <ProductSlider
+          title="You may also like"
+          products={recommendedProducts}
+          isLoading={isProductsLoading}
+        />
+      }
     />
   );
 };

@@ -1,27 +1,28 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type FC } from 'react';
+import clsx from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperInstance } from 'swiper';
-import clsx from 'clsx';
+import { Button } from '../../atoms/Button/Button';
+import { Icon } from '../../atoms/Icon/Icon';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './PictureSlider.scss';
-import { Button } from '../../atoms/Button/Button';
-import { Icon } from '../../atoms/Icon/Icon';
+import { Link } from 'react-router-dom';
 
-export const PictureSlider = () => {
+type Banner = {
+  link: string;
+  image: string;
+};
+
+interface Props {
+  banners: Banner[];
+}
+
+export const PictureSlider: FC<Props> = ({ banners }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperInstance | null>(null);
-
-  const images = [
-    { id: 1, link: './img/slider/img_1.jpg' },
-    { id: 2, link: './img/slider/img_2.png' },
-    { id: 3, link: './img/slider/img_3.avif' },
-    { id: 4, link: './img/slider/img_4.jpg' },
-    { id: 5, link: './img/slider/img_5.jpg' },
-    { id: 6, link: './img/slider/img_6.png' },
-  ];
 
   return (
     <div className="picture-slider">
@@ -53,11 +54,11 @@ export const PictureSlider = () => {
             }}
             className="picture-slider__swiper"
           >
-            {images.map(({ id, link }) => (
-              <SwiperSlide key={id} className="picture-slider__slide">
-                <div className="picture-slider__inner">
-                  <img src={link} alt="" className="picture-slider__image" />
-                </div>
+            {banners.map(({ link, image }) => (
+              <SwiperSlide key={link} className="picture-slider__slide">
+                <Link to={link} className="picture-slider__inner">
+                  <img src={image} alt="" className="picture-slider__image" />
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -75,7 +76,7 @@ export const PictureSlider = () => {
       </div>
 
       <div className="picture-slider__pagination">
-        {images.map((_, index) => (
+        {banners.map((_, index) => (
           <button
             key={index}
             type="button"
