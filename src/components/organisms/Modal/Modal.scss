@@ -211,3 +211,16 @@
     color: var.$color-primary;
   }
 }
+
+.modal__section--result-recipient {
+  text-transform: none;
+}
+
+.modal__recipient-prefix {
+  @extend %uppercase;
+}
+
+.modal__section--result-recipient strong {
+  font-weight: 600;
+  color: var.$color-primary;
+}

@@ -138,7 +138,7 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
   };
 
   const combinedName =
-    `${shippingInfo.lastName} ${shippingInfo.firstName} ${shippingInfo.middleName}`.trim();
+    `${shippingInfo.firstName} ${shippingInfo.lastName} ${shippingInfo.middleName}`.trim();
   const combinedAddress =
     `${shippingInfo.city}, ${shippingInfo.address}, ${shippingInfo.zip}`.trim();
 
@@ -197,7 +197,10 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
           </div>
 
           {combinedName ? (
-            <p className="modal__section--result">Order recipient: {combinedName}</p>
+            <p className="modal__section--result modal__section--result-recipient">
+              <span className="modal__recipient-prefix">Order recipient: </span>
+              <strong>{combinedName}</strong>
+            </p>
           ) : (
             <p className="modal__section--info">
               You need to enter recipient&apos;s details and address field will been shown
