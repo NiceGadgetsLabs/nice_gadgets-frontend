@@ -1,0 +1,41 @@
+@use '../../../styles/utils/variables' as var;
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding-block: 24px;
+  font-size: var.$font-size-xs;
+}
+
+.breadcrumbs-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.breadcrumbs-link {
+  color: var.$color-primary;
+  text-decoration: none;
+  transition: color var.$transition-default;
+
+  &:hover {
+    color: var.$color-secondary;
+  }
+}
+
+.breadcrumbs-current {
+  overflow: hidden;
+  max-width: 300px;
+  font-weight: 700;
+  color: var.$color-secondary;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  color: var.$color-primary;
+}

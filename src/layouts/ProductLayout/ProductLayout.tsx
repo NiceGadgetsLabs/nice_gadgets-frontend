@@ -15,7 +15,6 @@ export const ProductLayout: FC<Props> = ({ title, gallery, info, about, specs, r
   return (
     <div className="product-layout">
       <header className="product-layout__header">
-        <div className="product-layout__breadcrumbs">Breadcrumb navigation...</div>
         <BackButton />
       </header>
 

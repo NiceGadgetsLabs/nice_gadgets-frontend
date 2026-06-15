@@ -12,6 +12,9 @@ const routes: RouteObject[] = [
   {
     path: '/',
     element: <MainLayout />,
+    handle: {
+      breadcrumb: 'Home',
+    },
     children: [
       {
         index: true,
@@ -31,6 +34,9 @@ const routes: RouteObject[] = [
       },
       {
         path: ':category',
+        handle: {
+          breadcrumb: 'Category',
+        },
         children: [
           {
             index: true,
@@ -39,6 +45,9 @@ const routes: RouteObject[] = [
           {
             path: ':productId',
             element: <ProductPage />,
+            handle: {
+              breadcrumb: 'Product',
+            },
           },
         ],
       },
