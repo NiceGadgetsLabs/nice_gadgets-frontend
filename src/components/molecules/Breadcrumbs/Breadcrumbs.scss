@@ -2,17 +2,26 @@
 
 .breadcrumbs {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
   align-items: center;
-  padding-block: 24px;
+  height: 16px;
+  font-family: Mont-Semibold, Helvetica, sans-serif;
   font-size: var.$font-size-xs;
+  font-weight: 600;
+  letter-spacing: var.$letter-spacing-normal;
 }
 
 .breadcrumbs-item {
   display: flex;
+  flex-shrink: 0;
   gap: 8px;
   align-items: center;
+
+  &:last-child {
+    flex-shrink: 1;
+    min-width: 0;
+  }
 }
 
 .breadcrumbs-link {
@@ -27,14 +36,15 @@
 
 .breadcrumbs-current {
   overflow: hidden;
-  max-width: 300px;
+  min-width: 0;
   font-weight: 700;
   color: var.$color-secondary;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.icon {
+.breadcrumbs-icon {
+  flex-shrink: 0;
   width: 16px;
   height: 16px;
   color: var.$color-primary;

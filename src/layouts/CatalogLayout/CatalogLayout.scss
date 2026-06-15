@@ -1,34 +1,19 @@
-@use '../../../styles/utils/typography';
-@use '../../../styles/utils/variables' as var;
-@use '../../../styles/utils/mixins';
-
-.catalog__breadcrumbs {
-  @extend %small;
-
-  display: flex;
-  gap: 0;
-  align-items: center;
-  height: 16px;
-  margin-top: 24px;
-  color: var.$color-secondary;
-}
-
-.catalog__breadcrumbs span {
-  margin-left: 8px;
-}
+@use '../../styles/utils/typography';
+@use '../../styles/utils/variables' as var;
+@use '../../styles/utils/mixins';
 
 .catalog__header {
-  margin-block-end: 32px;
+  margin-block: 24px;
 
   @include mixins.on-tablet {
     margin-block-end: 40px;
   }
 }
 
-.catalog__header h1 {
+.catalog__title {
   @extend %h1;
 
-  margin: 40px 0 0;
+  margin-block-end: 8px;
   color: var.$color-primary;
   letter-spacing: var.$letter-spacing-tight;
 }
@@ -36,8 +21,12 @@
 .catalog__models-count {
   @extend %small;
 
-  margin-top: 8px;
+  margin-block-end: 32px;
   color: var.$color-secondary;
+
+  @include mixins.on-tablet {
+    margin-block-end: 40px;
+  }
 }
 
 .catalog__selects {

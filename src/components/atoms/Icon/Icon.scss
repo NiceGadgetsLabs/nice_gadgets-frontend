@@ -1,7 +1,7 @@
 @use '../../../styles/utils/variables' as var;
 
 .icon {
-  display: inline-flex;
+  display: flex;
   color: inherit;
   fill: currentcolor;
 }

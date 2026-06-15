@@ -1,6 +1,7 @@
 import { type FC, type ReactNode } from 'react';
 import { BackButton } from '../../components/molecules/BackButton/BackButton';
 import './ProductLayout.scss';
+import { Breadcrumbs } from '../../components/molecules/Breadcrumbs/Breadcrumbs';
 
 interface Props {
   title: string;
@@ -15,6 +16,7 @@ export const ProductLayout: FC<Props> = ({ title, gallery, info, about, specs, r
   return (
     <div className="product-layout">
       <header className="product-layout__header">
+        <Breadcrumbs />
         <BackButton />
       </header>
 

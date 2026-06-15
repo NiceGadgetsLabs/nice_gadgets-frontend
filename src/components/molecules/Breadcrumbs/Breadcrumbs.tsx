@@ -21,11 +21,11 @@ export const Breadcrumbs = () => {
 
   const getLabel = (label: string) => {
     if (label === 'Category' && category) {
-      return category;
+      return category.at(0)?.toUpperCase() + category.slice(1);
     }
 
     if (label === 'Product') {
-      return productDetails?.name ?? '...';
+      return productDetails?.name ?? 'Product';
     }
 
     return label;
@@ -41,7 +41,7 @@ export const Breadcrumbs = () => {
 
         return (
           <span key={match.pathname} className="breadcrumbs-item">
-            {!isFirst && <Icon type="arrow-right" />}
+            {!isFirst && <Icon type="arrow-right" className="breadcrumbs-icon" />}
 
             {isLast ? (
               <span className="breadcrumbs-current">{content}</span>

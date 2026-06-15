@@ -27,6 +27,9 @@ const routes: RouteObject[] = [
       {
         path: 'favorites',
         element: <FavoritesPage />,
+        handle: {
+          breadcrumb: 'Favorites',
+        },
       },
       {
         path: 'cart',
