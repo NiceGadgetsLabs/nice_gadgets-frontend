@@ -3,7 +3,8 @@ import { BackButton } from '../../components/molecules/BackButton/BackButton';
 import './ProductLayout.scss';
 
 interface Props {
-  title: string;
+  breadcrumbs: ReactNode;
+  title: ReactNode;
   gallery: ReactNode;
   info: ReactNode;
   about: ReactNode;
@@ -11,11 +12,19 @@ interface Props {
   recommended: ReactNode;
 }
 
-export const ProductLayout: FC<Props> = ({ title, gallery, info, about, specs, recommended }) => {
+export const ProductLayout: FC<Props> = ({
+  breadcrumbs,
+  title,
+  gallery,
+  info,
+  about,
+  specs,
+  recommended,
+}) => {
   return (
     <div className="product-layout">
       <header className="product-layout__header">
-        <div className="product-layout__breadcrumbs">Breadcrumb navigation...</div>
+        {breadcrumbs}
         <BackButton />
       </header>
 

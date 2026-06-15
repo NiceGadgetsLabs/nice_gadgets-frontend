@@ -1,5 +1,14 @@
 @use '../../styles/utils/variables' as var;
 @use '../../styles/utils/typography';
+@use '../../styles/utils/mixins';
+
+.favorites-header {
+  margin-block: 24px;
+
+  @include mixins.on-tablet {
+    margin-block-end: 40px;
+  }
+}
 
 .favorites-layout {
   display: flex;
