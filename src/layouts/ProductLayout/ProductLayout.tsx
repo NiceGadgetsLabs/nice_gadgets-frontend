@@ -8,9 +8,10 @@ interface Props {
   info: ReactNode;
   about: ReactNode;
   specs: ReactNode;
+  recommended: ReactNode;
 }
 
-export const ProductLayout: FC<Props> = ({ title, gallery, info, about, specs }) => {
+export const ProductLayout: FC<Props> = ({ title, gallery, info, about, specs, recommended }) => {
   return (
     <div className="product-layout">
       <header className="product-layout__header">
@@ -29,6 +30,8 @@ export const ProductLayout: FC<Props> = ({ title, gallery, info, about, specs })
         <div className="product-layout__about">{about}</div>
         <div className="product-layout__specs">{specs}</div>
       </section>
+
+      <div className="product-layout__recommended">{recommended}</div>
     </div>
   );
 };
