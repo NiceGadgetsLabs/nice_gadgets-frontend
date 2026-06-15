@@ -49,7 +49,7 @@ export const CartPage = () => {
 
       <Modal
         isOpen={isModalOpen}
-        message="Please review your order and select a delivery option"
+        message="Please enter recipient's details and select a delivery option"
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}
         subtotal={subtotal}

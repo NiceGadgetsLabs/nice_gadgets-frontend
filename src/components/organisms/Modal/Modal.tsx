@@ -19,6 +19,25 @@ const NAME_FIELDS: FieldOption[] = [
   { id: 'firstName', name: 'firstName', label: 'First Name', placeholder: 'Enter first name' },
   { id: 'middleName', name: 'middleName', label: 'Middle Name', placeholder: 'Enter middle name' },
 ];
+
+interface AddressOption {
+  id: string;
+  name: 'city' | 'address' | 'zip' | 'phone';
+  label: string;
+  placeholder: string;
+}
+
+const ADDRESS_FIELDS: AddressOption[] = [
+  { id: 'city', name: 'city', label: 'City', placeholder: 'Enter city' },
+  {
+    id: 'address',
+    name: 'address',
+    label: 'Delivery Address',
+    placeholder: 'Street, building, apt',
+  },
+  { id: 'zip', name: 'zip', label: 'ZIP / Postal Code', placeholder: '01001' },
+  { id: 'phone', name: 'phone', label: 'Phone Number', placeholder: '+380...' },
+];
 interface DeliveryOption {
   id: string;
   label: string;
@@ -41,10 +60,14 @@ interface Props {
 }
 
 export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCount }: Props) => {
-  const [fullName, setFullName] = useState({
+  const [shippingInfo, setShippingInfo] = useState({
     lastName: '',
     firstName: '',
     middleName: '',
+    city: '',
+    address: '',
+    zip: '',
+    phone: '',
   });
   const [selectedDeliveryId, setselectedDeliveryId] = useState('');
 
@@ -64,14 +87,17 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
 
   if (!isOpen) return null;
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFullName((prev) => ({
+    setShippingInfo((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-  const combinedName = `${fullName.lastName} ${fullName.firstName} ${fullName.middleName}`;
+  const combinedName =
+    `${shippingInfo.lastName} ${shippingInfo.firstName} ${shippingInfo.middleName}`.trim();
+  const combinedAddress =
+    `${shippingInfo.city}, ${shippingInfo.address}, ${shippingInfo.zip}`.trim();
 
   const selectedDelivery = DELIVERY_OPTIONS.find((opt) => opt.id === selectedDeliveryId);
   const deliveryPrice = selectedDelivery ? selectedDelivery.price : 0;
@@ -106,8 +132,8 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
                   id={field.id}
                   type="text"
                   name={field.name}
-                  value={fullName[field.name]}
-                  onChange={handleNameChange}
+                  value={shippingInfo[field.name]}
+                  onChange={handleInputChange}
                   placeholder={field.placeholder}
                   className="modal__input"
                 />
@@ -116,13 +142,46 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
           </div>
 
           {combinedName ? (
-            <p className="modal__section--result">Order reciever: {combinedName}</p>
+            <p className="modal__section--result">Order recipient: {combinedName}</p>
           ) : (
             <p className="modal__section--info">
-              You need to log in and enter your delivery address
+              You need to enter recipient&apos;s details and address field will been shown
             </p>
           )}
         </div>
+
+        {combinedName && (
+          <div className="modal__address-section">
+            <hr className="modal__divider" />
+            <h3 className="modal__subsection-title">Delivery Address:</h3>
+
+            <div className="modal__address-grid">
+              {ADDRESS_FIELDS.map((field) => (
+                <div className="modal__input-wrapper" key={field.id}>
+                  <label htmlFor={field.id} className="modal__label">
+                    {field.label}
+                  </label>
+                  <input
+                    id={field.id}
+                    type="text"
+                    name={field.name}
+                    value={shippingInfo[field.name]}
+                    onChange={handleInputChange}
+                    placeholder={field.placeholder}
+                    className="modal__input"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {shippingInfo.city || shippingInfo.address ? (
+              <p className="modal__section--result modal__section--result-address">
+                <strong>Ship to:</strong> {combinedAddress} <br />
+                {shippingInfo.phone && <>Phone: {shippingInfo.phone}</>}
+              </p>
+            ) : null}
+          </div>
+        )}
 
         <div className="modal__section">
           <h3>Delivery options</h3>
@@ -145,15 +204,15 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
         </div>
 
         <p className="modal__section--info">
-          Checkout is not implemented yet. Do you want to clear the Cart?
+          Whole checkout is not implemented yet. Do you want to return or clear the Cart?
         </p>
 
         <div className="modal__actions">
           <Button variant="page" className="modal__button" onClick={onClose}>
-            Cancel
+            Return to the Cart
           </Button>
           <Button variant="primary" className="modal__button" onClick={onConfirm}>
-            Confirm
+            Clear the Cart
           </Button>
         </div>
       </div>

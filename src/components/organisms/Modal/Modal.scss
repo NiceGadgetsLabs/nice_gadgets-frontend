@@ -42,8 +42,6 @@
   &__section--result {
     @extend %uppercase;
 
-    // font-size: var.$font-size-sm;
-    // color: var.$color-primary;
     margin-top: 8px;
     padding: 8px 12px;
     border-radius: 4px;
@@ -66,7 +64,7 @@
   h2 {
     @extend %h2;
 
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     text-align: center;
   }
 }
@@ -74,12 +72,12 @@
 .modal__message {
   @extend %h4;
 
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   text-align: center;
 }
 
 .modal__section {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 
   h3 {
     @extend %h3;
@@ -117,9 +115,6 @@
     @extend %uppercase;
 
     font-size: var.$font-size-sm;
-
-    // font-weight: bold;
-    // color: var.$color-primary;
   }
 }
 
@@ -140,6 +135,10 @@
   gap: 12px;
   width: 100%;
   margin-bottom: 12px;
+
+  @media (width <= 600px) {
+    flex-direction: column;
+  }
 }
 
 .modal__input-wrapper {
@@ -148,4 +147,38 @@
   flex-direction: column;
   gap: 4px;
   min-width: 0;
+}
+
+.modal__address-section {
+  margin-top: 1px;
+}
+
+.modal__subsection-title {
+  @extend %uppercase;
+
+  margin-bottom: 12px;
+  color: var.$color-primary;
+}
+
+.modal__divider {
+  margin: 16px 0;
+  border: none;
+  border-top: 1px dashed var.$color-elements;
+}
+
+.modal__address-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+
+  @media (width <= 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal__section--result-address {
+  margin-bottom: 12px;
+  line-height: 1.5;
+  background-color: var.$color-background;
 }
