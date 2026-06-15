@@ -32,7 +32,7 @@ async function request<T>(
     };
   }
 
-  await wait(0);
+  await wait(150);
 
   const response = await fetch(`${BASE_URL}${url}.json`, options);
 
