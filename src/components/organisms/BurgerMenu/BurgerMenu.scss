@@ -135,17 +135,13 @@
     &--active::after {
       transform: scaleX(1);
     }
-
-    &--fav {
-      background-image: url('/src/assets/icons/Favorites.svg');
-    }
-
-    &--cart {
-      background-image: url('/src/assets/icons/Cart.svg');
-    }
   }
 
   &__counter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
@@ -167,7 +163,7 @@
     font-size: 9px;
     font-weight: 700;
     line-height: 100%;
-    color: var.$color-background;
+    color: #fff;
     letter-spacing: 0;
     background-color: var.$color-red;
     animation: counter-pop var.$transition-default ease-in-out;
