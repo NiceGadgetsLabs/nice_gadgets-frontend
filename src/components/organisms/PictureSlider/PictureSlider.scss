@@ -39,6 +39,16 @@
     min-width: 0;
   }
 
+  &__viewport-skeleton {
+    width: 100%;
+    min-height: 320px;
+
+    @include mixins.on-tablet {
+      aspect-ratio: 1104 / 400;
+      min-height: 0;
+    }
+  }
+
   &__swiper {
     width: 100%;
     margin: 0;
@@ -96,6 +106,10 @@
 
     &--active::after {
       background-color: var.$color-primary;
+    }
+
+    &--skeleton::after {
+      content: none;
     }
   }
 }

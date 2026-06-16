@@ -18,6 +18,11 @@ const GallerySkeleton: FC = () => (
 
 const InfoSkeleton: FC = () => (
   <div className="details-skeleton__info" aria-hidden="true">
+    <Skeleton
+      className="details-skeleton__text details-skeleton__product-id"
+      width={36}
+      height={21}
+    />
     <div className="details-skeleton__options">
       <div className="details-skeleton__picker">
         <Skeleton className="details-skeleton__text" height={21} width="40%" />

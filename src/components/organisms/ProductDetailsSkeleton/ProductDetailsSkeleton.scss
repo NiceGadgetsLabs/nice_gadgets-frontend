@@ -92,6 +92,11 @@ $thumb-size-desktop: 80px;
     }
   }
 
+  &__product-id {
+    position: absolute;
+    right: 0;
+  }
+
   &__info {
     display: flex;
     flex-direction: column;

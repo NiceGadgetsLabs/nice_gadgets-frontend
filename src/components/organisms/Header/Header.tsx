@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
 import { CartContext } from '../../../contexts/cart/CartContext';
@@ -14,6 +14,22 @@ export const Header = () => {
   const { cart } = useContext(CartContext);
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  useEffect(() => {
+    const tabletQuery = window.matchMedia('(min-width: 640px)');
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    tabletQuery.addEventListener('change', handleChange);
+
+    return () => {
+      tabletQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
 
   return (
     <>
@@ -55,7 +71,9 @@ export const Header = () => {
               >
                 {fav.length > 0 && (
                   <div className="header__counter">
-                    <span className="header__counter-value">{fav.length}</span>
+                    <span className="header__counter-value" key={fav.length}>
+                      {fav.length}
+                    </span>
                   </div>
                 )}
               </NavLink>
@@ -73,7 +91,9 @@ export const Header = () => {
               >
                 {cartCount > 0 && (
                   <div className="header__counter">
-                    <span className="header__counter-value">{cartCount}</span>
+                    <span className="header__counter-value" key={cartCount}>
+                      {cartCount}
+                    </span>
                   </div>
                 )}
               </NavLink>
@@ -84,6 +104,7 @@ export const Header = () => {
                 type="button"
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
+                aria-controls="burger-menu"
                 className={clsx('header__actions-link', 'header__actions-link--menu', {
                   'header__actions-link--menu-open': isMenuOpen,
                 })}

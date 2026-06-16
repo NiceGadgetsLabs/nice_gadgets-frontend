@@ -59,23 +59,30 @@
     color: var.$color-secondary;
     transition: color var.$transition-default;
 
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform-origin: center;
+      transform: scaleX(0);
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: var.$color-primary;
+      transition: transform var.$transition-default ease-in-out;
+    }
+
     &:hover {
       color: var.$color-primary;
     }
 
+    &--active::after {
+      transform: scaleX(1);
+    }
+
     &--active {
       color: var.$color-primary;
-
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: 3px;
-        background-color: var.$color-primary;
-      }
     }
 
     @include mixins.on-desktop {
@@ -108,8 +115,9 @@
     height: 48px;
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 16px;
     box-shadow: -1px 0 0 0 var.$color-elements;
-    transition: background-color var.$transition-default;
+    transition: background-color var.$transition-default ease-in-out;
 
     @include mixins.on-desktop {
       width: 64px;
@@ -120,17 +128,23 @@
       background-color: var.$color-elements;
     }
 
-    &--active {
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: 3px;
-        background-color: var.$color-primary;
-      }
+    &--favorites::after,
+    &--cart::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform-origin: center;
+      transform: scaleX(0);
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: var.$color-primary;
+      transition: transform var.$transition-default ease-in-out;
+    }
+
+    &--active::after {
+      transform: scaleX(1);
     }
 
     &--favorites {
@@ -155,14 +169,46 @@
       border: none;
       text-decoration: none;
       background-color: var.$color-background;
-      background-image: url('/src/assets/icons/Menu.svg');
+      background-image: none;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 16px;
+        transition:
+          opacity var.$transition-default ease,
+          transform var.$transition-default ease;
+      }
+
+      &::before {
+        opacity: 1;
+        background-image: url('/src/assets/icons/Menu.svg');
+      }
+
+      &::after {
+        transform: rotate(-90deg);
+        opacity: 0;
+        background-image: url('/src/assets/icons/Close.svg');
+      }
 
       @include mixins.on-tablet {
         display: none;
       }
 
       &-open {
-        background-image: url('/src/assets/icons/Close.svg');
+        &::before {
+          transform: rotate(90deg);
+          opacity: 0;
+        }
+
+        &::after {
+          transform: rotate(0deg);
+          opacity: 1;
+        }
       }
     }
   }
@@ -192,5 +238,20 @@
     color: var.$color-background;
     letter-spacing: 0;
     background-color: var.$color-red;
+    animation: counter-pop var.$transition-default ease-out;
+  }
+}
+
+@keyframes counter-pop {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
