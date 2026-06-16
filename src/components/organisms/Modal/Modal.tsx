@@ -182,14 +182,15 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
                     className="modal__input"
                   />
                   {shippingInfo[field.name] && (
-                    <button
+                    <Button
                       type="button"
+                      variant="icon"
                       className="modal__clear-btn"
                       onClick={() => handleClearField(field.name)}
                       aria-label={`Clear ${field.label}`}
                     >
                       &times;
-                    </button>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -242,14 +243,15 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
                     />
                     {((field.name !== 'phone' && shippingInfo[field.name]) ||
                       (field.name === 'phone' && shippingInfo.phone.length > 3)) && (
-                      <button
+                      <Button
                         type="button"
+                        variant="icon"
                         className="modal__clear-btn"
                         onClick={() => handleClearField(field.name)}
                         aria-label={`Clear ${field.label}`}
                       >
                         &times;
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </div>

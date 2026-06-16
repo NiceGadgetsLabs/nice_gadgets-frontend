@@ -44,6 +44,11 @@
     &:focus {
       border-color: var.$color-primary;
     }
+
+    &[name='firstName'],
+    &[name='lastName'] {
+      text-transform: capitalize;
+    }
   }
 
   &__section--result {
@@ -199,6 +204,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: auto;
+  height: auto;
   padding: 0;
   border: none;
   font-size: 20px;
@@ -209,11 +216,17 @@
 
   &:hover {
     color: var.$color-primary;
+    background: none;
   }
 }
 
 .modal__section--result-recipient {
   text-transform: none;
+
+  strong {
+    font-weight: 600;
+    color: var.$color-primary;
+  }
 }
 
 .modal__recipient-prefix {
