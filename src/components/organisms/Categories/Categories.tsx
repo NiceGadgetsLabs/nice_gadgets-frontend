@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import type { Category } from '../../../types/Category';
 import type { Product } from '../../../types/Products';
-import categoryPhones from '../../../assets/images/category-phones.webp';
-import categoryTablets from '../../../assets/images/category-tablets.webp';
-import categoryAccessories from '../../../assets/images/category-accessories.webp';
+import categoryPhones from '../../../assets/images/category-phones.avif';
+import categoryTablets from '../../../assets/images/category-tablets.avif';
+import categoryAccessories from '../../../assets/images/category-accessories.avif';
 import './Categories.scss';
 
 interface CategoryCard {
@@ -40,9 +40,10 @@ export const Categories: FC<Props> = ({ products }) => {
           <div className="categories__card" key={category}>
             <Link
               to={`/${category}`}
+              tabIndex={-1}
               className={clsx('categories__image-box', `categories__image-box--${category}`)}
             >
-              <img className="categories__image" src={image} alt={title} />
+              <img decoding="async" className="categories__image" src={image} alt={title} />
             </Link>
 
             <Link to={`/${category}`}>

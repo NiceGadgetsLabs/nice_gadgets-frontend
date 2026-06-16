@@ -40,6 +40,7 @@
   &__top {
     @include mixins.page-grid;
 
+    position: relative;
     row-gap: 24px;
     margin-block-end: 56px;
 

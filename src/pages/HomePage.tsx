@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { useProducts } from '../hooks/useProducts';
 import { sortProducts } from '../utils/sortProducts';
 import { HomeLayout } from '../layouts/HomeLayout/HomeLayout';
@@ -8,6 +8,10 @@ import { Categories } from '../components/organisms/Categories/Categories';
 
 export const HomePage: FC = () => {
   const { products, isLoading } = useProducts();
+
+  useEffect(() => {
+    document.title = 'Home';
+  }, []);
 
   const newestProducts = sortProducts(products, 'newest').filter(
     (product) => Number(product.year) >= 2021,

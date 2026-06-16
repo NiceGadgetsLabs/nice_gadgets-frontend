@@ -50,6 +50,7 @@ export const ProductMainInfo: FC<Props> = ({ productDetails, product }) => {
 
   return (
     <section className="product-main-info">
+      <span className="product-main-info__product-id">Id: {product.id}</span>
       <div className="product-main-info__options">
         <ColorPicker colors={colorsAvailable} selected={color} onSelect={handleSelectColor} />
         <hr className="product-main-info__divider" />
