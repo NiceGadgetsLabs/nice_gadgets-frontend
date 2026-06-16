@@ -15,7 +15,7 @@ export const ColorPicker: FC<Props> = ({ colors, selected, onSelect }) => {
       <h3 className="colors__title">Available colors</h3>
 
       <div className="colors__buttons">
-        {colors.map((color) => (
+        {colors.sort().map((color) => (
           <Button
             key={color}
             type="button"

@@ -43,6 +43,11 @@ export const CatalogPage: FC = () => {
   const itemsPerPage = parseInt(searchParams.get('perPage') || '12', 10);
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
+  useEffect(() => {
+    if (!category) return;
+    document.title = category.at(0)?.toUpperCase() + category.slice(1);
+  }, [category]);
+
   const updateParams = useCallback(
     (updates: Record<string, string | null>) => {
       setSearchParams((prevParams) => {

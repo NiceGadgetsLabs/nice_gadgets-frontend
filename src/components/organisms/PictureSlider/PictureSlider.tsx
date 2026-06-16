@@ -57,7 +57,7 @@ export const PictureSlider: FC<Props> = ({ banners }) => {
             {banners.map(({ link, image }) => (
               <SwiperSlide key={link} className="picture-slider__slide">
                 <Link to={link} className="picture-slider__inner">
-                  <img src={image} alt="" className="picture-slider__image" />
+                  <img decoding="async" src={image} alt="" className="picture-slider__image" />
                 </Link>
               </SwiperSlide>
             ))}

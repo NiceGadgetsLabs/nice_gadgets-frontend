@@ -31,7 +31,7 @@ export const Breadcrumbs: FC<Props> = ({ item = undefined }) => {
   };
 
   return (
-    <nav className="breadcrumbs" aria-label="Breadcrumb">
+    <nav className="breadcrumbs" aria-label="Breadcrumbs">
       {crumbs.map((match, index) => {
         const isFirst = index === 0;
         const isLast = index === crumbs.length - 1;

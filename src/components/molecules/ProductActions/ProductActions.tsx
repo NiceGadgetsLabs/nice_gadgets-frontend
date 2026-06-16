@@ -36,6 +36,7 @@ export const ProductActions: FC<Props> = ({ product, height = 40 }) => {
         selected={inFavorites}
         onClick={() => toggleFavorite(product)}
         style={{ height, width: height }}
+        aria-label="Add to favorites"
       >
         <Icon type={inFavorites ? 'favorites-filled' : 'favorites'} width="16px" height="16px" />
       </Button>
