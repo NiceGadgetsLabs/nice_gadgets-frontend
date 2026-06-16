@@ -3,15 +3,26 @@ import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
 import { CartContext } from '../../../contexts/cart/CartContext';
+import { ThemeContext } from '../../../contexts/theme/ThemeContext';
 import { Logo } from '../../atoms/Logo/Logo';
+import { Icon } from '../../atoms/Icon/Icon';
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu';
 import { NAV_ITEMS } from '../../../constants/navigation';
+import type { IconType } from '../../atoms/Icon/Icon';
+import type { ThemeMode } from '../../../contexts/theme/ThemeContext';
 import './Header.scss';
+
+const THEME_ICON: Record<ThemeMode, IconType> = {
+  auto: 'auto',
+  light: 'sun',
+  dark: 'moon',
+};
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { fav } = useContext(FavoritesContext);
   const { cart } = useContext(CartContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -60,6 +71,17 @@ export const Header = () => {
         <div className="header__actions">
           <ul className="header__actions-list">
             <li className="header__actions-item">
+              <button
+                type="button"
+                aria-label={`Theme: ${theme}`}
+                className="header__actions-link header__actions-link--theme"
+                onClick={toggleTheme}
+              >
+                <Icon type={THEME_ICON[theme]} />
+              </button>
+            </li>
+
+            <li className="header__actions-item">
               <NavLink
                 to="/favorites"
                 aria-label="Favorites"
@@ -69,6 +91,8 @@ export const Header = () => {
                   })
                 }
               >
+                <Icon type="favorites" />
+
                 {fav.length > 0 && (
                   <div className="header__counter">
                     <span className="header__counter-value" key={fav.length}>
@@ -89,6 +113,8 @@ export const Header = () => {
                   })
                 }
               >
+                <Icon type="cart" />
+
                 {cartCount > 0 && (
                   <div className="header__counter">
                     <span className="header__counter-value" key={cartCount}>

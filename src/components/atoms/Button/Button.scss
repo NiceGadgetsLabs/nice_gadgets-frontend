@@ -18,7 +18,7 @@
     background-color: var.$color-primary;
 
     &:hover {
-      box-shadow: 0 3px 13px 0 rgb(23 32 49 / 40%);
+      box-shadow: var.$shadow-button;
     }
 
     &--selected {
