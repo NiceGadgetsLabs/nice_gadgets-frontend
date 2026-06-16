@@ -28,7 +28,7 @@ export const HomePage: FC = () => {
 
   return (
     <HomeLayout title="Welcome to Nice Gadgets store!">
-      <PictureSlider banners={banners} />
+      <PictureSlider banners={banners} isLoading={isLoading} />
       <ProductSlider title="Brand new models" products={newestProducts} isLoading={isLoading} />
       <Categories products={products} />
       <ProductSlider title="Hot prices" products={hotPriceProducts} isLoading={isLoading} />
