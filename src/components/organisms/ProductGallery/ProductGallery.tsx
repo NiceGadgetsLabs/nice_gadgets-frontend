@@ -27,7 +27,7 @@ export const ProductGallery: FC<Props> = ({ images, alt }) => {
       >
         {images.map((image, index) => (
           <SwiperSlide key={image} className="gallery__slide">
-            <img src={`/${image}`} alt={`${alt} view ${index + 1}`} />
+            <img decoding="async" src={`/${image}`} alt={`${alt} view ${index + 1}`} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -43,7 +43,7 @@ export const ProductGallery: FC<Props> = ({ images, alt }) => {
             onClick={() => mainSwiper?.slideTo(index)}
             aria-label={`Show ${alt} view ${index + 1}`}
           >
-            <img src={`/${image}`} alt={`${alt} thumbnail ${index + 1}`} />
+            <img decoding="async" src={`/${image}`} alt={`${alt} thumbnail ${index + 1}`} />
           </Button>
         ))}
       </div>

@@ -26,7 +26,12 @@ export const CartItem: FC<Props> = ({ item }) => {
         </Button>
 
         <Link className="cart-item__image-link" to={`/${item.category}/${item.itemId}`}>
-          <img className="cart-item__image" src={`/${item.image}`} alt={item.name} />
+          <img
+            className="cart-item__image"
+            decoding="async"
+            src={`/${item.image}`}
+            alt={item.name}
+          />
         </Link>
 
         <Link to={`/${item.category}/${item.itemId}`}>

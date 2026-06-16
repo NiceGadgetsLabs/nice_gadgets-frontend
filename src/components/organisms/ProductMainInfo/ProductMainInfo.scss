@@ -1,9 +1,19 @@
 @use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/typography';
 
 .product-main-info {
   display: flex;
   flex-direction: column;
   gap: 32px;
+
+  &__product-id {
+    @extend %small;
+
+    position: absolute;
+    right: 0;
+    color: var.$color-icons;
+    text-transform: uppercase;
+  }
 
   &__options {
     display: flex;

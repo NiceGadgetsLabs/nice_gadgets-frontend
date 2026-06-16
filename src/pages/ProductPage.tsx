@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { useProductDetails } from '../hooks/useProductDetails';
 import { useProducts } from '../hooks/useProducts';
 import { ProductLayout } from '../layouts/ProductLayout/ProductLayout';
@@ -15,6 +15,11 @@ export const ProductPage: FC = () => {
   const { productDetails, product, productSpecs, errorMessage, isLoading } = useProductDetails();
   const { products, isLoading: isProductsLoading } = useProducts();
 
+  useEffect(() => {
+    if (!product) return;
+    document.title = product.name;
+  }, [product]);
+
   //TODO: Add a recommendation algorithm
   const recommendedProducts = products.filter(
     (recommendation) => recommendation.category !== product?.category,
@@ -25,7 +30,7 @@ export const ProductPage: FC = () => {
   }
 
   if (errorMessage || !productDetails || !product) {
-    return <NotFoundPage />;
+    return <NotFoundPage variant="product" />;
   }
 
   return (
