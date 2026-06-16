@@ -56,23 +56,30 @@
     text-align: center;
     transition: color var.$transition-default;
 
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform-origin: center;
+      transform: scaleX(0);
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var.$color-primary;
+      transition: transform var.$transition-default ease-in-out;
+    }
+
     &:hover {
       color: var.$color-primary;
     }
 
+    &--active::after {
+      transform: scaleX(1);
+    }
+
     &--active {
       color: var.$color-primary;
-
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: var.$color-primary;
-      }
     }
   }
 
@@ -104,23 +111,29 @@
     background-position: center;
     background-size: 16px;
     box-shadow: -1px 0 0 0 var.$color-elements;
-    transition: background-color var.$transition-default;
+    transition: background-color var.$transition-default ease-in-out;
 
     &:hover {
       background-color: var.$color-elements;
     }
 
-    &--active {
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: var.$color-primary;
-      }
+    &--fav::after,
+    &--cart::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform-origin: center;
+      transform: scaleX(0);
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var.$color-primary;
+      transition: transform var.$transition-default ease-in-out;
+    }
+
+    &--active::after {
+      transform: scaleX(1);
     }
 
     &--fav {
@@ -150,11 +163,27 @@
     padding: 0;
     border: 1px solid var.$color-background;
     border-radius: 14px;
+    font-family: Mont-SemiBold, Arial, Helvetica, sans-serif;
     font-size: 9px;
     font-weight: 700;
     line-height: 100%;
     color: var.$color-background;
     letter-spacing: 0;
     background-color: var.$color-red;
+    animation: counter-pop var.$transition-default ease-in-out;
+  }
+}
+
+@keyframes counter-pop {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }

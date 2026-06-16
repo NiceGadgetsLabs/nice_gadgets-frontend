@@ -1,0 +1,49 @@
+@use '../../../styles/utils/mixins';
+
+.card-skeleton {
+  &.card:hover {
+    box-shadow: none;
+  }
+
+  &__image {
+    height: 130px;
+    margin-block-end: 16px;
+
+    @include mixins.on-tablet {
+      height: 196px;
+    }
+  }
+
+  &__price {
+    min-height: 33px;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__specs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-block: 8px;
+  }
+
+  &__specs-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 21px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__button {
+    flex-grow: 1;
+  }
+}

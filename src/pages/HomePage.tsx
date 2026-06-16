@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { useProducts } from '../hooks/useProducts';
 import { sortProducts } from '../utils/sortProducts';
 import { HomeLayout } from '../layouts/HomeLayout/HomeLayout';
@@ -7,7 +7,11 @@ import { ProductSlider } from '../components/organisms/ProductSlider/ProductSlid
 import { Categories } from '../components/organisms/Categories/Categories';
 
 export const HomePage: FC = () => {
-  const { products } = useProducts();
+  const { products, isLoading } = useProducts();
+
+  useEffect(() => {
+    document.title = 'Home';
+  }, []);
 
   const newestProducts = sortProducts(products, 'newest').filter(
     (product) => Number(product.year) >= 2021,
@@ -15,12 +19,19 @@ export const HomePage: FC = () => {
 
   const hotPriceProducts = sortProducts(products, 'discountDesc');
 
+  const banners = [
+    { link: '/phones', image: './img/slider/phones.avif' },
+    { link: '/tablets', image: './img/slider/tablets.avif' },
+    { link: '/accessories', image: './img/slider/accessories.avif' },
+    { link: '/phones/apple-iphone-14-pro-256gb-spaceblack', image: './img/slider/product.avif' },
+  ];
+
   return (
     <HomeLayout title="Welcome to Nice Gadgets store!">
-      <PictureSlider />
-      <ProductSlider title="Brand new models" products={newestProducts} />
+      <PictureSlider banners={banners} isLoading={isLoading} />
+      <ProductSlider title="Brand new models" products={newestProducts} isLoading={isLoading} />
       <Categories products={products} />
-      <ProductSlider title="Hot prices" products={hotPriceProducts} />
+      <ProductSlider title="Hot prices" products={hotPriceProducts} isLoading={isLoading} />
     </HomeLayout>
   );
 };

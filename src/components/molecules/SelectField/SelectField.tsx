@@ -1,5 +1,6 @@
-import { useId, type FC } from 'react';
+import { useId, useState, useRef, type FC } from 'react';
 import * as Select from '@radix-ui/react-select';
+import * as Label from '@radix-ui/react-label';
 import clsx from 'clsx';
 import { Icon } from '../../atoms/Icon/Icon';
 import './SelectField.scss';
@@ -30,17 +31,50 @@ export const SelectField: FC<Props> = ({
   const selectedOption = options.find((option) => option.value === value);
   const id = useId();
   const triggerId = `select-trigger-${id}`;
+  const labelId = `select-label-${id}`;
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const isClosingRef = useRef(false);
+
+  const handleLabelMouseDown = () => {
+    if (isOpen) {
+      isClosingRef.current = true;
+    }
+  };
+
+  const handleLabelClick = () => {
+    if (isClosingRef.current) {
+      isClosingRef.current = false;
+      return;
+    }
+    setIsOpen(true);
+  };
 
   return (
     <div className={clsx('select-field-wrapper', className)}>
       {label && (
-        <label className="select-field-wrapper__label" htmlFor={triggerId}>
+        <Label.Root
+          id={labelId}
+          className="select-field-wrapper__label"
+          onMouseDown={handleLabelMouseDown}
+          onClick={handleLabelClick}
+        >
           {label}
-        </label>
+        </Label.Root>
       )}
       <div className="select">
-        <Select.Root value={value} onValueChange={onValueChange}>
-          <Select.Trigger id={triggerId} className="select__trigger">
+        <Select.Root
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          value={value}
+          onValueChange={onValueChange}
+        >
+          <Select.Trigger
+            id={triggerId}
+            aria-labelledby={label ? labelId : undefined}
+            className="select__trigger"
+          >
             <Select.Value placeholder={placeholder} aria-label={value}>
               <div className="select__value-container">
                 {selectedOption?.icon && (

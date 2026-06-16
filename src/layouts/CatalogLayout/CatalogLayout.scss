@@ -1,0 +1,61 @@
+@use '../../styles/utils/typography';
+@use '../../styles/utils/variables' as var;
+@use '../../styles/utils/mixins';
+
+.catalog__header {
+  margin-block: 24px;
+
+  @include mixins.on-tablet {
+    margin-block-end: 40px;
+  }
+}
+
+.catalog__title {
+  @extend %h1;
+
+  margin-block-end: 8px;
+  color: var.$color-primary;
+  letter-spacing: var.$letter-spacing-tight;
+}
+
+.catalog__models-count {
+  @extend %small;
+
+  margin-block-end: 32px;
+  color: var.$color-secondary;
+
+  @include mixins.on-tablet {
+    margin-block-end: 40px;
+  }
+}
+
+.catalog__selects {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-block-end: 24px;
+}
+
+.catalog__select-sort {
+  width: 100%;
+
+  @include mixins.on-tablet {
+    width: 187px;
+  }
+}
+
+.catalog__select-pages {
+  width: 100%;
+
+  @include mixins.on-tablet {
+    width: 136px;
+  }
+}
+
+.catalog__pagination {
+  margin-block-end: 64px;
+
+  @include mixins.on-tablet {
+    margin-block-end: 80px;
+  }
+}

@@ -1,5 +1,5 @@
 import { Modal } from '../components/organisms/Modal/Modal';
-import { useContext, useState, type FC } from 'react';
+import { useContext, useEffect, useState, type FC } from 'react';
 import { CartContext } from '../contexts/cart/CartContext';
 import { CartLayout } from '../layouts/CartLayout/CartLayout';
 import { CartList } from '../components/organisms/CartList/CartList';
@@ -7,13 +7,17 @@ import { CartSummary } from '../components/molecules/CartSummary/CartSummary';
 import { EmptyState } from '../components/molecules/EmptyState/EmptyState';
 import { getCartTotals } from '../utils/getCartTotals';
 import { scrollToTop } from '../utils/scrollToTop';
-import cartEmptyImage from '../assets/images/cart-is-empty.webp';
+import cartEmptyImage from '../assets/images/cart-is-empty.avif';
 
 export const CartPage: FC = () => {
   const { cart, clearCart } = useContext(CartContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { totalPrice, totalQuantity } = getCartTotals(cart);
+
+  useEffect(() => {
+    document.title = 'Cart';
+  }, []);
 
   const handleConfirm = () => {
     clearCart();

@@ -1,27 +1,72 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type FC } from 'react';
+import clsx from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperInstance } from 'swiper';
-import clsx from 'clsx';
+import { Button } from '../../atoms/Button/Button';
+import { Icon } from '../../atoms/Icon/Icon';
+import { Skeleton } from '../../atoms/Skeleton/Skeleton';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './PictureSlider.scss';
-import { Button } from '../../atoms/Button/Button';
-import { Icon } from '../../atoms/Icon/Icon';
+import { Link } from 'react-router-dom';
 
-export const PictureSlider = () => {
+type Banner = {
+  link: string;
+  image: string;
+};
+
+interface Props {
+  banners: Banner[];
+  isLoading?: boolean;
+}
+
+const PictureSliderSkeleton: FC = () => (
+  <div className="picture-slider" aria-hidden="true">
+    <div className="picture-slider__slider">
+      <Button
+        type="button"
+        variant="icon"
+        className="picture-slider__button"
+        aria-label="Previous slide"
+        disabled
+      >
+        <Icon type="arrow-left" width="16px" height="16px" />
+      </Button>
+
+      <div className="picture-slider__viewport">
+        <Skeleton className="picture-slider__viewport-skeleton" />
+      </div>
+
+      <Button
+        type="button"
+        variant="icon"
+        className="picture-slider__button"
+        aria-label="Next slide"
+        disabled
+      >
+        <Icon type="arrow-right" width="16px" height="16px" />
+      </Button>
+    </div>
+
+    <div className="picture-slider__pagination">
+      {Array.from({ length: 4 }).map((_, index) => (
+        <span key={index} className="picture-slider__dot picture-slider__dot--skeleton">
+          <Skeleton width={14} height={4} />
+        </span>
+      ))}
+    </div>
+  </div>
+);
+
+export const PictureSlider: FC<Props> = ({ banners, isLoading = false }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperInstance | null>(null);
 
-  const images = [
-    { id: 1, link: './img/slider/img_1.jpg' },
-    { id: 2, link: './img/slider/img_2.png' },
-    { id: 3, link: './img/slider/img_3.avif' },
-    { id: 4, link: './img/slider/img_4.jpg' },
-    { id: 5, link: './img/slider/img_5.jpg' },
-    { id: 6, link: './img/slider/img_6.png' },
-  ];
+  if (isLoading) {
+    return <PictureSliderSkeleton />;
+  }
 
   return (
     <div className="picture-slider">
@@ -53,11 +98,11 @@ export const PictureSlider = () => {
             }}
             className="picture-slider__swiper"
           >
-            {images.map(({ id, link }) => (
-              <SwiperSlide key={id} className="picture-slider__slide">
-                <div className="picture-slider__inner">
-                  <img src={link} alt="" className="picture-slider__image" />
-                </div>
+            {banners.map(({ link, image }) => (
+              <SwiperSlide key={link} className="picture-slider__slide">
+                <Link to={link} className="picture-slider__inner">
+                  <img decoding="async" src={image} alt="" className="picture-slider__image" />
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -75,7 +120,7 @@ export const PictureSlider = () => {
       </div>
 
       <div className="picture-slider__pagination">
-        {images.map((_, index) => (
+        {banners.map((_, index) => (
           <button
             key={index}
             type="button"

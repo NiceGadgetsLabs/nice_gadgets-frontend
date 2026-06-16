@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "radix-ui": "^1.5.0",
+    "focus-trap-react": "^12.0.2",
+    "radix-ui": "^1.6.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.17.0",
@@ -49,11 +50,11 @@
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
+    "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.6.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.4",
     "sass-embedded": "^1.100.0",
     "stylelint": "^17.12.0",
     "stylelint-config-clean-order": "^10.0.0",
@@ -64,7 +65,7 @@
     "stylelint-prettier": "^5.0.3",
     "stylelint-scss": "^7.2.0",
     "typescript": "~6.0.2",
-    "typescript-eslint": "^8.60.1",
+    "typescript-eslint": "^8.61.1",
     "vite": "^8.0.12",
     "vite-plugin-svgr": "^5.2.0"
   }
