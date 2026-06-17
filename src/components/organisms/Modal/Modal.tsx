@@ -6,6 +6,7 @@ import { SelectField } from '../../molecules/SelectField/SelectField';
 import ukrPoshtaLogo from '../../../assets/icons/UkrPoshta-logo.svg';
 import novaPoshtaLogo from '../../../assets/icons/NovaPoshta-logo.svg';
 import meestPoshtaLogo from '../../../assets/icons/MeestPoshta-logo.svg';
+import { FocusTrap } from 'focus-trap-react';
 
 interface FieldOption {
   id: string;
@@ -159,90 +160,37 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div className="modal__content" role="dialog" aria-modal="true">
-        <h2>Checkout</h2>
-        <p className="modal__message">{message}</p>
+      <FocusTrap
+        // active={isOpen}
+        focusTrapOptions={{
+          escapeDeactivates: false,
+          clickOutsideDeactivates: false,
+          allowOutsideClick: true,
+        }}
+      >
+        <div className="modal__content" role="dialog" aria-modal="true">
+          <h2>Checkout</h2>
+          <p className="modal__message">{message}</p>
 
-        <div className="modal__section">
-          <h3>Ship to</h3>
-          <div className="modal__inputs-row">
-            {NAME_FIELDS.map((field) => (
-              <div className="modal__input-wrapper" key={field.id}>
-                <label htmlFor={field.id} className="modal__label">
-                  {field.label}
-                </label>
-                <div className="modal__input-container">
-                  <input
-                    id={field.id}
-                    type="text"
-                    name={field.name}
-                    value={shippingInfo[field.name]}
-                    onChange={handleInputChange}
-                    placeholder={field.placeholder}
-                    className="modal__input"
-                  />
-                  {shippingInfo[field.name] && (
-                    <Button
-                      type="button"
-                      variant="icon"
-                      className="modal__clear-btn"
-                      onClick={() => handleClearField(field.name)}
-                      aria-label={`Clear ${field.label}`}
-                    >
-                      &times;
-                    </Button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {combinedName ? (
-            <p className="modal__section--result modal__section--result-recipient">
-              <span className="modal__recipient-prefix">Order recipient: </span>
-              <strong>{combinedName}</strong>
-            </p>
-          ) : (
-            <p className="modal__section--info">
-              You need to enter recipient&apos;s details and address field will been shown
-            </p>
-          )}
-        </div>
-
-        {combinedName && (
-          <div className="modal__address-section">
-            <hr className="modal__divider" />
-            <h3 className="modal__subsection-title">Delivery Address:</h3>
-
-            <div className="modal__address-grid">
-              {ADDRESS_FIELDS.map((field) => (
+          <div className="modal__section">
+            <h3>Ship to</h3>
+            <div className="modal__inputs-row">
+              {NAME_FIELDS.map((field) => (
                 <div className="modal__input-wrapper" key={field.id}>
                   <label htmlFor={field.id} className="modal__label">
                     {field.label}
                   </label>
-
                   <div className="modal__input-container">
                     <input
                       id={field.id}
-                      type={field.type || 'text'}
+                      type="text"
                       name={field.name}
                       value={shippingInfo[field.name]}
                       onChange={handleInputChange}
                       placeholder={field.placeholder}
                       className="modal__input"
-                      required={field.name === 'phone' || field.name === 'zip'}
-                      minLength={field.name === 'phone' ? 13 : field.name === 'zip' ? 5 : undefined}
-                      maxLength={field.name === 'zip' ? 5 : undefined}
-                      pattern={
-                        field.name === 'phone'
-                          ? '\\+38\\d{10}'
-                          : field.name === 'zip'
-                            ? '\\d{5}'
-                            : undefined
-                      }
                     />
-                    {((field.name !== 'phone' && shippingInfo[field.name]) ||
-                      (field.name === 'phone' && shippingInfo.phone.length > 3)) && (
+                    {shippingInfo[field.name] && (
                       <Button
                         type="button"
                         variant="icon"
@@ -258,48 +206,112 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
               ))}
             </div>
 
-            {shippingInfo.city || shippingInfo.address ? (
-              <p className="modal__section--result modal__section--result-address">
-                <strong>Ship to:</strong> {combinedAddress} <br />
-                {shippingInfo.phone.length > 3 && <>Phone: {shippingInfo.phone}</>}
+            {combinedName ? (
+              <p className="modal__section--result modal__section--result-recipient">
+                <span className="modal__recipient-prefix">Order recipient: </span>
+                <strong>{combinedName}</strong>
               </p>
-            ) : null}
+            ) : (
+              <p className="modal__section--info">
+                You need to enter recipient&apos;s details and address field will been shown
+              </p>
+            )}
           </div>
-        )}
 
-        <div className="modal__section">
-          <h3>Delivery options</h3>
-          <SelectField
-            options={selectOptions}
-            value={selectedDeliveryId}
-            onValueChange={setselectedDeliveryId}
-            placeholder="Choose delivery method"
-          />
-        </div>
+          {combinedName && (
+            <div className="modal__address-section">
+              <hr className="modal__divider" />
+              <h3 className="modal__subsection-title">Delivery Address:</h3>
 
-        <div className="modal__section modal__section-summary">
-          <p className="total">Order Summary</p>
-          <p>
-            You choose {itemsCount} items with worth ${Number(subtotal).toFixed(2)}
+              <div className="modal__address-grid">
+                {ADDRESS_FIELDS.map((field) => (
+                  <div className="modal__input-wrapper" key={field.id}>
+                    <label htmlFor={field.id} className="modal__label">
+                      {field.label}
+                    </label>
+
+                    <div className="modal__input-container">
+                      <input
+                        id={field.id}
+                        type={field.type || 'text'}
+                        name={field.name}
+                        value={shippingInfo[field.name]}
+                        onChange={handleInputChange}
+                        placeholder={field.placeholder}
+                        className="modal__input"
+                        required={field.name === 'phone' || field.name === 'zip'}
+                        minLength={
+                          field.name === 'phone' ? 13 : field.name === 'zip' ? 5 : undefined
+                        }
+                        maxLength={field.name === 'zip' ? 5 : undefined}
+                        pattern={
+                          field.name === 'phone'
+                            ? '\\+38\\d{10}'
+                            : field.name === 'zip'
+                              ? '\\d{5}'
+                              : undefined
+                        }
+                      />
+                      {((field.name !== 'phone' && shippingInfo[field.name]) ||
+                        (field.name === 'phone' && shippingInfo.phone.length > 3)) && (
+                        <Button
+                          type="button"
+                          variant="icon"
+                          className="modal__clear-btn"
+                          onClick={() => handleClearField(field.name)}
+                          aria-label={`Clear ${field.label}`}
+                        >
+                          &times;
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {shippingInfo.city || shippingInfo.address ? (
+                <p className="modal__section--result modal__section--result-address">
+                  <strong>Ship to:</strong> {combinedAddress} <br />
+                  {shippingInfo.phone.length > 3 && <>Phone: {shippingInfo.phone}</>}
+                </p>
+              ) : null}
+            </div>
+          )}
+
+          <div className="modal__section">
+            <h3>Delivery options</h3>
+            <SelectField
+              options={selectOptions}
+              value={selectedDeliveryId}
+              onValueChange={setselectedDeliveryId}
+              placeholder="Choose delivery method"
+            />
+          </div>
+
+          <div className="modal__section modal__section-summary">
+            <p className="total">Order Summary</p>
+            <p>
+              You choose {itemsCount} items with worth ${Number(subtotal).toFixed(2)}
+            </p>
+            <p>Delivery cost: ${deliveryPrice}</p>
+            <hr />
+            <p className="total">Order total: ${Number(total).toFixed(2)} </p>
+          </div>
+
+          <p className="modal__section--info">
+            Whole checkout is not implemented yet. Do you want to return or clear the Cart?
           </p>
-          <p>Delivery cost: ${deliveryPrice}</p>
-          <hr />
-          <p className="total">Order total: ${Number(total).toFixed(2)} </p>
-        </div>
 
-        <p className="modal__section--info">
-          Whole checkout is not implemented yet. Do you want to return or clear the Cart?
-        </p>
-
-        <div className="modal__actions">
-          <Button variant="page" className="modal__button" onClick={onClose}>
-            Return to the Cart
-          </Button>
-          <Button variant="primary" className="modal__button" onClick={onConfirm}>
-            Clear the Cart
-          </Button>
+          <div className="modal__actions">
+            <Button variant="page" className="modal__button" onClick={onClose}>
+              Return to the Cart
+            </Button>
+            <Button variant="primary" className="modal__button" onClick={onConfirm}>
+              Clear the Cart
+            </Button>
+          </div>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 };
