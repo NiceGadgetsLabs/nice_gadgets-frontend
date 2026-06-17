@@ -1,0 +1,46 @@
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/typography';
+
+.order-success {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+  text-align: center;
+
+  &__icon {
+    aspect-ratio: 1;
+    width: 120px;
+    color: var.$color-green;
+  }
+
+  &__check {
+    stroke: currentcolor;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 3;
+    animation: order-success-check var.$transition-smooth ease-out forwards;
+  }
+
+  &__title {
+    @extend %h2;
+  }
+
+  &__message {
+    @extend %body;
+
+    max-width: 360px;
+    margin-block-end: 8px;
+    color: var.$color-secondary;
+  }
+}
+
+@keyframes order-success-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

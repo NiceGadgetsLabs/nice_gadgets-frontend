@@ -1,9 +1,9 @@
+import { Modal } from '../components/organisms/Modal/Modal';
 import { useContext, useEffect, useState, type FC } from 'react';
 import { CartContext } from '../contexts/cart/CartContext';
 import { CartLayout } from '../layouts/CartLayout/CartLayout';
 import { CartList } from '../components/organisms/CartList/CartList';
 import { CartSummary } from '../components/molecules/CartSummary/CartSummary';
-import { ConfirmDialog } from '../components/molecules/ConfirmDialog/ConfirmDialog';
 import { EmptyState } from '../components/molecules/EmptyState/EmptyState';
 import { getCartTotals } from '../utils/getCartTotals';
 import { scrollToTop } from '../utils/scrollToTop';
@@ -11,7 +11,7 @@ import cartEmptyImage from '../assets/images/cart-is-empty.avif';
 
 export const CartPage: FC = () => {
   const { cart, clearCart } = useContext(CartContext);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { totalPrice, totalQuantity } = getCartTotals(cart);
 
@@ -21,7 +21,10 @@ export const CartPage: FC = () => {
 
   const handleConfirm = () => {
     clearCart();
-    setIsConfirmOpen(false);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
     scrollToTop();
   };
 
@@ -39,20 +42,21 @@ export const CartPage: FC = () => {
           <CartSummary
             totalPrice={totalPrice}
             totalQuantity={totalQuantity}
-            onCheckout={() => setIsConfirmOpen(true)}
+            onCheckout={() => setIsModalOpen(true)}
           />
         }
       />
 
-      <ConfirmDialog
-        open={isConfirmOpen}
-        onOpenChange={setIsConfirmOpen}
-        title="Checkout"
-        description="Checkout is not implemented yet. Do you want to clear the Cart?"
-        confirmLabel="Clear cart"
-        cancelLabel="Cancel"
-        onConfirm={handleConfirm}
-      />
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          message="Please enter recipient's details and select a delivery option"
+          onClose={handleClose}
+          onConfirm={handleConfirm}
+          subtotal={totalPrice}
+          itemsCount={totalQuantity}
+        />
+      )}
     </>
   );
 };

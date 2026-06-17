@@ -60,7 +60,7 @@
   }
 
   &__content {
-    z-index: 100;
+    z-index: 200;
     box-sizing: border-box;
     width: max-content;
     min-width: var(--radix-select-trigger-width);
@@ -84,6 +84,7 @@
 
     cursor: default;
     display: flex;
+    gap: 8px;
     align-items: center;
     height: 32px;
     padding: 0 12px;
@@ -105,5 +106,18 @@
       color: var.$color-primary;
       background-color: transparent;
     }
+  }
+
+  &__value-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__img {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
   }
 }
