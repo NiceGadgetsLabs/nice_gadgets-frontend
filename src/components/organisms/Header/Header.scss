@@ -147,18 +147,14 @@
       transform: scaleX(1);
     }
 
-    &--favorites {
-      display: none;
-      background-image: url('/src/assets/icons/Favorites.svg');
-
-      @include mixins.on-tablet {
-        display: flex;
-      }
+    &--theme {
+      border: none;
+      color: var.$color-primary;
     }
 
+    &--favorites,
     &--cart {
       display: none;
-      background-image: url('/src/assets/icons/Cart.svg');
 
       @include mixins.on-tablet {
         display: flex;
@@ -168,7 +164,6 @@
     &--menu {
       border: none;
       text-decoration: none;
-      background-color: var.$color-background;
       background-image: none;
 
       &::before,
@@ -176,9 +171,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 16px;
+        background-color: currentcolor;
         transition:
           opacity var.$transition-default ease,
           transform var.$transition-default ease;
@@ -186,13 +179,13 @@
 
       &::before {
         opacity: 1;
-        background-image: url('/src/assets/icons/Menu.svg');
+        mask: url('/src/assets/icons/Menu.svg') center / 16px no-repeat;
       }
 
       &::after {
         transform: rotate(-90deg);
         opacity: 0;
-        background-image: url('/src/assets/icons/Close.svg');
+        mask: url('/src/assets/icons/Close.svg') center / 16px no-repeat;
       }
 
       @include mixins.on-tablet {
@@ -214,6 +207,10 @@
   }
 
   &__counter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
@@ -235,10 +232,10 @@
     font-size: 9px;
     font-weight: 700;
     line-height: 100%;
-    color: var.$color-background;
+    color: #fff;
     letter-spacing: 0;
     background-color: var.$color-red;
-    animation: counter-pop var.$transition-default ease-out;
+    animation: counter-pop var.$transition-default ease-in-out;
   }
 }
 

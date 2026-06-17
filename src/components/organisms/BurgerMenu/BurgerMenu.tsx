@@ -4,6 +4,7 @@ import { FocusTrap } from 'focus-trap-react';
 import clsx from 'clsx';
 import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
 import { CartContext } from '../../../contexts/cart/CartContext';
+import { Icon } from '../../atoms/Icon/Icon';
 import { NAV_ITEMS } from '../../../constants/navigation';
 import './BurgerMenu.scss';
 
@@ -82,6 +83,8 @@ export const BurgerMenu: FC<Props> = ({ isOpen, onClose }) => {
                 }
                 onClick={onClose}
               >
+                <Icon type="favorites" />
+
                 {fav.length > 0 && (
                   <div className="burger-menu__counter">
                     <p className="burger-menu__counter-value" key={fav.length}>
@@ -103,6 +106,8 @@ export const BurgerMenu: FC<Props> = ({ isOpen, onClose }) => {
                 }
                 onClick={onClose}
               >
+                <Icon type="cart" />
+
                 {cartCount > 0 && (
                   <div className="burger-menu__counter">
                     <p className="burger-menu__counter-value" key={cartCount}>
