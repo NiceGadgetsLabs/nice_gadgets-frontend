@@ -21,6 +21,9 @@ export const CartPage: FC = () => {
 
   const handleConfirm = () => {
     clearCart();
+  };
+
+  const handleClose = () => {
     setIsModalOpen(false);
     scrollToTop();
   };
@@ -48,7 +51,7 @@ export const CartPage: FC = () => {
         <Modal
           isOpen={isModalOpen}
           message="Please enter recipient's details and select a delivery option"
-          onClose={() => setIsModalOpen(false)}
+          onClose={handleClose}
           onConfirm={handleConfirm}
           subtotal={totalPrice}
           itemsCount={totalQuantity}

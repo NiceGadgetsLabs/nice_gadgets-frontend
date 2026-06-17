@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgb(23 32 49 / 60%); // Внести в змінні?
+  background: var.$color-overlay;
   backdrop-filter: blur(5px);
 
   &__label {
@@ -104,6 +104,14 @@
   }
 }
 
+.modal__error {
+  @extend %small;
+
+  margin-block-start: 4px;
+  font-size: var.$font-size-xs;
+  color: var.$color-red;
+}
+
 .modal__section-summary {
   padding: 16px;
   border-radius: 12px;
@@ -137,7 +145,6 @@
 }
 
 .modal__button {
-  cursor: pointer;
   flex: 1;
 }
 
