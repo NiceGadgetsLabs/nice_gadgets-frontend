@@ -1,18 +1,34 @@
 @use '../../../styles/utils/variables' as var;
 @use '../../../styles/utils/typography';
 
+$color-star: #ffb800;
+
+.feedback-overlay {
+  position: fixed;
+  z-index: 150;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var.$color-overlay;
+  backdrop-filter: blur(5px);
+}
+
 .feedback {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 24px;
-  border: 1px solid var.$color-primary;
-  border-radius: 12px;
+  gap: 20px;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 24px;
+  background: var.$color-white;
+  box-shadow: var.$shadow-card;
 
   &__title {
-    margin: 0;
+    @extend %h2;
+
+    color: var.$color-primary;
     text-align: center;
   }
 
@@ -24,50 +40,64 @@
 
   &__star {
     cursor: pointer;
+    padding: 0;
     border: none;
-    font-size: 32px;
-    opacity: 0.4;
+    font-size: 36px;
+    line-height: 1;
+    color: var.$color-elements;
     background: transparent;
-    transition: 0.2s;
-
-    &--active {
-      opacity: 1;
-    }
+    transition:
+      color var.$transition-default ease,
+      transform var.$transition-default ease;
 
     &:hover {
-      opacity: 0.8;
+      transform: scale(1.15);
+    }
+
+    &--active {
+      color: $color-star;
     }
   }
 
   &__textarea {
+    @extend %body;
+
     resize: vertical;
     min-height: 120px;
     padding: 12px;
-    border: 1px solid var.$color-primary;
-    border-radius: 8px;
+    border: 1px solid var.$color-elements;
+    color: var.$color-primary;
+    background-color: var.$color-white;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color var.$transition-default ease;
+
+    &::placeholder {
+      color: var.$color-icons;
+    }
 
     &:focus {
-      border-color: var.$color-overlay;
+      border-color: var.$color-primary;
     }
   }
 
   &__submit {
+    @extend %buttons;
+
     cursor: pointer;
-    padding: 12px 20px;
+    padding: 14px 20px;
     border: none;
-    font-weight: 500;
-    color: var.$color-background;
-    background-color: var.$color-secondary;
-    transition: 0.2s ease;
+    color: var.$color-white;
+    background-color: var.$color-primary;
+    transition:
+      opacity var.$transition-default ease,
+      transform var.$transition-default ease;
 
     &:hover {
-      background-color: var.$color-primary;
+      opacity: 0.85;
     }
 
     &:active {
-      transform: scale(0.1);
+      transform: scale(0.98);
     }
 
     &:disabled {

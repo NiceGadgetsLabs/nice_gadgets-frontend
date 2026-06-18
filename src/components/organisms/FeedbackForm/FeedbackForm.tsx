@@ -1,57 +1,108 @@
-import { useState } from 'react';
+/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
+import { useCallback, useEffect, useState, type FC } from 'react';
+import { FocusTrap } from 'focus-trap-react';
+import { notify } from '../../../utils/notify';
 import './FeedbackForm.scss';
 
-export const FeedbackForm = () => {
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const FeedbackForm: FC<Props> = ({ isOpen, onClose }) => {
   const [rating, setRating] = useState<number>(0);
   const [feedback, setFeedback] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleClose = useCallback(() => {
+    setRating(0);
+    setFeedback('');
+    onClose();
+  }, [onClose]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        handleClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, handleClose]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
 
   const handleSubmit = () => {
-    console.log({
-      rating,
-      feedback,
-    });
-
-    setIsSubmitted(true);
+    notify.feedbackSubmitted(rating);
+    handleClose();
   };
 
-  if (isSubmitted) {
-    return (
-      <section className="feedback">
-        <h2 className="feedback__title">Thank you for your feedback!</h2>
-      </section>
-    );
-  }
-
   return (
-    <section className="feedback">
-      <h2 className="feedback__title">Rate your experience</h2>
+    <div
+      className="feedback-overlay"
+      onClick={(event) => {
+        if (event.target === event.currentTarget) handleClose();
+      }}
+    >
+      <FocusTrap
+        active={isOpen}
+        focusTrapOptions={{
+          escapeDeactivates: false,
+          clickOutsideDeactivates: false,
+          allowOutsideClick: true,
+        }}
+      >
+        <section className="feedback" role="dialog" aria-modal="true">
+          <h2 className="feedback__title">Rate your experience</h2>
 
-      <div className="feedback__rating">
-        {[1, 2, 3, 4, 5].map((star) => (
+          <div className="feedback__rating">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                className={`feedback__star ${rating >= star ? 'feedback__star--active' : ''}`}
+                aria-label={`${star} star${star > 1 ? 's' : ''}`}
+                onClick={() => setRating(star)}
+              >
+                ★
+              </button>
+            ))}
+          </div>
+
+          {rating > 0 && rating <= 3 && (
+            <textarea
+              className="feedback__textarea"
+              placeholder="What can we improve?"
+              value={feedback}
+              onChange={(event) => setFeedback(event.target.value)}
+            />
+          )}
+
           <button
-            key={star}
             type="button"
-            className={`feedback__star ${rating >= star ? 'feedback__star--active' : ''}`}
-            onClick={() => setRating(star)}
+            className="feedback__submit"
+            disabled={!rating}
+            onClick={handleSubmit}
           >
-            ★
+            Submit Feedback
           </button>
-        ))}
-      </div>
-
-      {rating > 0 && rating <= 3 && (
-        <textarea
-          className="feedback__textarea"
-          placeholder="What can we improve?"
-          value={feedback}
-          onChange={(event) => setFeedback(event.target.value)}
-        />
-      )}
-
-      <button type="button" className="feedback__submit" disabled={!rating} onClick={handleSubmit}>
-        Submit Feedback
-      </button>
-    </section>
+        </section>
+      </FocusTrap>
+    </div>
   );
 };

@@ -6,14 +6,20 @@ import './Toast.scss';
 
 export type ToastVariant = 'success' | 'error' | 'info';
 
+export interface ToastAction {
+  label: string;
+  onClick: () => void;
+}
+
 interface Props {
   id: string | number;
   variant: ToastVariant;
   title: string;
   description?: string;
+  action?: ToastAction;
 }
 
-export const Toast: FC<Props> = ({ id, variant, title, description }) => (
+export const Toast: FC<Props> = ({ id, variant, title, description, action }) => (
   <div className={`toast toast--${variant}`} role="status">
     <div className="toast__main">
       <div className="toast__content">
@@ -30,5 +36,18 @@ export const Toast: FC<Props> = ({ id, variant, title, description }) => (
         <Icon type="close" width="16px" height="16px" />
       </Button>
     </div>
+
+    {action && (
+      <Button
+        variant="ghost"
+        className="toast__action"
+        onClick={() => {
+          action.onClick();
+          toast.dismiss(id);
+        }}
+      >
+        {action.label}
+      </Button>
+    )}
   </div>
 );

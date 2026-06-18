@@ -79,4 +79,13 @@
       color: var.$color-primary;
     }
   }
+
+  &__action {
+    align-self: flex-start;
+    color: var.$color-secondary;
+
+    &:hover {
+      color: var.$color-green;
+    }
+  }
 }

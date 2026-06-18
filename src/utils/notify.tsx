@@ -43,4 +43,49 @@ export const notify = {
       { duration: DURATION },
     );
   },
+
+  orderPlaced(onLeaveFeedback: () => void) {
+    toast.custom(
+      (id) => (
+        <Toast
+          id={id}
+          variant="info"
+          title="How was your experience?"
+          description="Your order is on its way — tell us how we did."
+          action={{ label: 'Leave feedback', onClick: onLeaveFeedback }}
+        />
+      ),
+      { duration: DURATION * 2 },
+    );
+  },
+
+  feedbackSubmitted(rating: number) {
+    if (rating >= 4) {
+      toast.custom(
+        (id) => (
+          <Toast
+            id={id}
+            variant="success"
+            title="Thank you! 🎉"
+            description="We're glad you enjoyed shopping with Nice Gadgets."
+          />
+        ),
+        { duration: DURATION },
+      );
+
+      return;
+    }
+
+    toast.custom(
+      (id) => (
+        <Toast
+          id={id}
+          variant="info"
+          title="Thanks for your feedback"
+          description="We're sorry it wasn't perfect — we'll use your notes to do better."
+        />
+      ),
+      { duration: DURATION },
+    );
+  },
 };
