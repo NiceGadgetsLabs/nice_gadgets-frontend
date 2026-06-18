@@ -1,10 +1,10 @@
 import { useEffect, type FC } from 'react';
 import { useProducts } from '../hooks/useProducts';
-import { sortProducts } from '../utils/sortProducts';
 import { HomeLayout } from '../layouts/HomeLayout/HomeLayout';
 import { PictureSlider } from '../components/organisms/PictureSlider/PictureSlider';
 import { ProductSlider } from '../components/organisms/ProductSlider/ProductSlider';
 import { Categories } from '../components/organisms/Categories/Categories';
+import { getHotPriceProducts, getNewestProducts } from '../utils/productCollections';
 import { notify } from '../utils/notify';
 
 const BANNERS = [
@@ -25,11 +25,9 @@ export const HomePage: FC = () => {
     if (errorMessage) notify.error(errorMessage);
   }, [errorMessage]);
 
-  const newestProducts = sortProducts(products, 'newest').filter(
-    (product) => Number(product.year) >= 2021,
-  );
+  const newestProducts = getNewestProducts(products);
 
-  const hotPriceProducts = sortProducts(products, 'discountDesc');
+  const hotPriceProducts = getHotPriceProducts(products);
 
   return (
     <HomeLayout title="Welcome to Nice Gadgets store!">

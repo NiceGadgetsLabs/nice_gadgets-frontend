@@ -10,6 +10,7 @@ import { ProductSlider } from '../components/organisms/ProductSlider/ProductSlid
 import { ProductDetailsSkeleton } from '../components/organisms/ProductDetailsSkeleton/ProductDetailsSkeleton';
 import { Breadcrumbs } from '../components/molecules/Breadcrumbs/Breadcrumbs';
 import { notify } from '../utils/notify';
+import { getRecommendedProducts } from '../utils/productCollections';
 import { NotFoundPage } from './NotFoundPage';
 
 export const ProductPage: FC = () => {
@@ -25,10 +26,7 @@ export const ProductPage: FC = () => {
     if (errorMessage) notify.error(errorMessage);
   }, [errorMessage]);
 
-  //TODO: Add a recommendation algorithm
-  const recommendedProducts = products.filter(
-    (recommendation) => recommendation.category !== product?.category,
-  );
+  const recommendedProducts = getRecommendedProducts(products, product);
 
   if (isLoading && !productDetails) {
     return <ProductDetailsSkeleton />;
