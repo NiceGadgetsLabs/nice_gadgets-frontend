@@ -17,6 +17,7 @@ import ArrowLeftIcon from '../../../assets/icons/Arrow-left.svg?react';
 import SunIcon from '../../../assets/icons/Theme-light.svg?react';
 import MoonIcon from '../../../assets/icons/Theme-dark.svg?react';
 import AutoIcon from '../../../assets/icons/Theme-auto.svg?react';
+import RefreshIcon from '../../../assets/icons/Refresh.svg?react';
 import './Icon.scss';
 
 const ICONS_MAP = {
@@ -37,6 +38,7 @@ const ICONS_MAP = {
   sun: SunIcon,
   moon: MoonIcon,
   auto: AutoIcon,
+  refresh: RefreshIcon,
 } as const;
 
 export type IconType = keyof typeof ICONS_MAP;

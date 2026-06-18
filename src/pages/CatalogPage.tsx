@@ -4,6 +4,7 @@ import { CatalogLayout } from '../layouts/CatalogLayout/CatalogLayout';
 import { ProductList } from '../components/organisms/ProductList/ProductList';
 import { SelectField, type SelectOption } from '../components/molecules/SelectField/SelectField';
 import { Pagination } from '../components/molecules/Pagination/Pagination';
+import { ErrorState } from '../components/molecules/ErrorState/ErrorState';
 import { useProducts } from '../hooks/useProducts';
 import { sortProducts } from '../utils/sortProducts';
 import { isCategory } from '../utils/isCategory';
@@ -101,6 +102,10 @@ export const CatalogPage: FC = () => {
 
   if (!isCategory(category)) {
     return <NotFoundPage />;
+  }
+
+  if (errorMessage) {
+    return <ErrorState />;
   }
 
   return (
