@@ -43,7 +43,7 @@
   }
 
   &__nav-item {
-    margin-right: 32px;
+    margin-right: 28px;
 
     @include mixins.on-desktop {
       margin-right: 64px;
@@ -147,9 +147,14 @@
       transform: scaleX(1);
     }
 
-    &--theme {
+    &--theme,
+    &--search {
       border: none;
       color: var.$color-primary;
+    }
+
+    &--search {
+      display: flex;
     }
 
     &--favorites,

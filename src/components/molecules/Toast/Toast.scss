@@ -1,0 +1,91 @@
+@use '../../../styles/utils/variables' as var;
+@use '../../../styles/utils/typography';
+@use '../../../styles/utils/mixins';
+
+.toast {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  padding-inline-start: 18px;
+  border: 1px solid var.$color-elements;
+  background-color: var.$color-white;
+  box-shadow: var.$shadow-card;
+
+  @include mixins.on-tablet {
+    width: 320px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background-color: var.$color-secondary;
+  }
+
+  &--success::before {
+    background-color: var.$color-green;
+  }
+
+  &--error::before {
+    background-color: var.$color-red;
+  }
+
+  &--info::before {
+    background-color: var.$color-secondary;
+  }
+
+  &__main {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  &__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  &__title {
+    @extend %small;
+
+    font-size: var.$font-size-sm;
+    color: var.$color-primary;
+  }
+
+  &__description {
+    @extend %body;
+
+    font-size: var.$font-size-xs;
+    color: var.$color-secondary;
+  }
+
+  &__close {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var.$color-icons;
+    transition: color var.$transition-default ease-in-out;
+
+    &:hover {
+      color: var.$color-primary;
+    }
+  }
+
+  &__action {
+    align-self: flex-start;
+    color: var.$color-secondary;
+
+    &:hover {
+      color: var.$color-green;
+    }
+  }
+}

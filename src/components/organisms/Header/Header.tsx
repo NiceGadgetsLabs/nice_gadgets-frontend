@@ -7,6 +7,7 @@ import { ThemeContext } from '../../../contexts/theme/ThemeContext';
 import { Logo } from '../../atoms/Logo/Logo';
 import { Icon } from '../../atoms/Icon/Icon';
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu';
+import { ProductSearchWidget } from '../ProductSearchWidget/ProductSearchWidget';
 import { NAV_ITEMS } from '../../../constants/navigation';
 import type { IconType } from '../../atoms/Icon/Icon';
 import type { ThemeMode } from '../../../contexts/theme/ThemeContext';
@@ -70,6 +71,10 @@ export const Header = () => {
 
         <div className="header__actions">
           <ul className="header__actions-list">
+            <li className="header__actions-item">
+              <ProductSearchWidget />
+            </li>
+
             <li className="header__actions-item">
               <button
                 type="button"
