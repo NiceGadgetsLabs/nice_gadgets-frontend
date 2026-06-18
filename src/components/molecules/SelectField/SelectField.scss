@@ -20,7 +20,7 @@
   &__trigger {
     @extend %buttons;
 
-    cursor: default;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -83,7 +83,7 @@
   &__item {
     @extend %body;
 
-    cursor: default;
+    cursor: pointer;
     display: flex;
     gap: 8px;
     align-items: center;
