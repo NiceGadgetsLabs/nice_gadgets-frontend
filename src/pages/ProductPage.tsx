@@ -9,13 +9,18 @@ import { ProductTechSpecs } from '../components/organisms/ProductTechSpecs/Produ
 import { ProductSlider } from '../components/organisms/ProductSlider/ProductSlider';
 import { ProductDetailsSkeleton } from '../components/organisms/ProductDetailsSkeleton/ProductDetailsSkeleton';
 import { Breadcrumbs } from '../components/molecules/Breadcrumbs/Breadcrumbs';
+import { ErrorState } from '../components/molecules/ErrorState/ErrorState';
 import { notify } from '../utils/notify';
 import { getRecommendedProducts } from '../utils/productCollections';
 import { NotFoundPage } from './NotFoundPage';
 
 export const ProductPage: FC = () => {
   const { productDetails, product, productSpecs, errorMessage, isLoading } = useProductDetails();
-  const { products, isLoading: isProductsLoading } = useProducts();
+  const {
+    products,
+    errorMessage: productsErrorMessage,
+    isLoading: isProductsLoading,
+  } = useProducts();
 
   useEffect(() => {
     if (!product) return;
@@ -32,7 +37,11 @@ export const ProductPage: FC = () => {
     return <ProductDetailsSkeleton />;
   }
 
-  if (errorMessage || !productDetails || !product) {
+  if (errorMessage || productsErrorMessage) {
+    return <ErrorState />;
+  }
+
+  if (!productDetails || !product) {
     return <NotFoundPage variant="product" />;
   }
 
