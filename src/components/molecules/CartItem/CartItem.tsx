@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CartContext, type CartItem as CartItemType } from '../../../contexts/cart/CartContext';
 import { Button } from '../../atoms/Button/Button';
 import { Icon } from '../../atoms/Icon/Icon';
+import { notify } from '../../../utils/notify';
 import './CartItem.scss';
 
 interface Props {
@@ -12,6 +13,11 @@ interface Props {
 export const CartItem: FC<Props> = ({ item }) => {
   const { removeFromCart, increaseQuantity, decreaseQuantity } = useContext(CartContext);
 
+  const handleRemoveFromCart = () => {
+    notify.removedFromCart(item);
+    removeFromCart(item.itemId);
+  };
+
   return (
     <article className="cart-item">
       <div className="cart-item__info">
@@ -20,7 +26,7 @@ export const CartItem: FC<Props> = ({ item }) => {
           variant="ghost"
           aria-label={`Remove ${item.name} from cart`}
           style={{ width: 16, height: 16 }}
-          onClick={() => removeFromCart(item.itemId)}
+          onClick={handleRemoveFromCart}
         >
           <Icon type="close" width="16px" height="16px" />
         </Button>

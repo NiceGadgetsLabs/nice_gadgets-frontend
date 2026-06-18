@@ -8,8 +8,9 @@ import { ProductAbout } from '../components/organisms/ProductAbout/ProductAbout'
 import { ProductTechSpecs } from '../components/organisms/ProductTechSpecs/ProductTechSpecs';
 import { ProductSlider } from '../components/organisms/ProductSlider/ProductSlider';
 import { ProductDetailsSkeleton } from '../components/organisms/ProductDetailsSkeleton/ProductDetailsSkeleton';
-import { NotFoundPage } from './NotFoundPage';
 import { Breadcrumbs } from '../components/molecules/Breadcrumbs/Breadcrumbs';
+import { notify } from '../utils/notify';
+import { NotFoundPage } from './NotFoundPage';
 
 export const ProductPage: FC = () => {
   const { productDetails, product, productSpecs, errorMessage, isLoading } = useProductDetails();
@@ -19,6 +20,10 @@ export const ProductPage: FC = () => {
     if (!product) return;
     document.title = product.name;
   }, [product]);
+
+  useEffect(() => {
+    if (errorMessage) notify.error(errorMessage);
+  }, [errorMessage]);
 
   //TODO: Add a recommendation algorithm
   const recommendedProducts = products.filter(
