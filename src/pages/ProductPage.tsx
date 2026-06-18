@@ -8,28 +8,40 @@ import { ProductAbout } from '../components/organisms/ProductAbout/ProductAbout'
 import { ProductTechSpecs } from '../components/organisms/ProductTechSpecs/ProductTechSpecs';
 import { ProductSlider } from '../components/organisms/ProductSlider/ProductSlider';
 import { ProductDetailsSkeleton } from '../components/organisms/ProductDetailsSkeleton/ProductDetailsSkeleton';
-import { NotFoundPage } from './NotFoundPage';
 import { Breadcrumbs } from '../components/molecules/Breadcrumbs/Breadcrumbs';
+import { ErrorState } from '../components/molecules/ErrorState/ErrorState';
+import { notify } from '../utils/notify';
+import { getRecommendedProducts } from '../utils/productCollections';
+import { NotFoundPage } from './NotFoundPage';
 
 export const ProductPage: FC = () => {
   const { productDetails, product, productSpecs, errorMessage, isLoading } = useProductDetails();
-  const { products, isLoading: isProductsLoading } = useProducts();
+  const {
+    products,
+    errorMessage: productsErrorMessage,
+    isLoading: isProductsLoading,
+  } = useProducts();
 
   useEffect(() => {
     if (!product) return;
     document.title = product.name;
   }, [product]);
 
-  //TODO: Add a recommendation algorithm
-  const recommendedProducts = products.filter(
-    (recommendation) => recommendation.category !== product?.category,
-  );
+  useEffect(() => {
+    if (errorMessage) notify.error(errorMessage);
+  }, [errorMessage]);
+
+  const recommendedProducts = getRecommendedProducts(products, product);
 
   if (isLoading && !productDetails) {
     return <ProductDetailsSkeleton />;
   }
 
-  if (errorMessage || !productDetails || !product) {
+  if (errorMessage || productsErrorMessage) {
+    return <ErrorState />;
+  }
+
+  if (!productDetails || !product) {
     return <NotFoundPage variant="product" />;
   }
 
