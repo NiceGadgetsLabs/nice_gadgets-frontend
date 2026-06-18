@@ -23,7 +23,7 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 3;
-    animation: order-success-check var.$transition-smooth ease-out forwards;
+    animation: order-success-check var.$transition-smooth ease-out 1s forwards;
   }
 
   &__title {
@@ -36,6 +36,12 @@
     max-width: 360px;
     margin-block-end: 8px;
     color: var.$color-secondary;
+  }
+
+  &__button {
+    width: 40%;
+    min-width: 140px;
+    margin-top: 12px;
   }
 }
 
