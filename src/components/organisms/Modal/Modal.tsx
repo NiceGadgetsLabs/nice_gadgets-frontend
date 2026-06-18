@@ -27,8 +27,6 @@ const DELIVERY_OPTIONS: DeliveryOption[] = [
 type FieldName = 'firstName' | 'lastName' | 'city' | 'address' | 'zip' | 'phone';
 type FormErrors = Partial<Record<FieldName | 'delivery', string>>;
 
-// const FIELD_ORDER: FieldName[] = ['firstName', 'lastName', 'city', 'address', 'zip', 'phone'];
-
 interface ModalProps {
   isOpen: boolean;
   message: string;
@@ -57,7 +55,6 @@ export const Modal = ({
   });
   const [selectedDeliveryId, setSelectedDeliveryId] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
-  // const [isSuccess, setIsSuccess] = useState(false);
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
   useEffect(() => {

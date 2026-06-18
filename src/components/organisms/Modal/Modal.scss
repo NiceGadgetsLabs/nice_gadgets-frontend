@@ -283,6 +283,8 @@
 }
 
 .modal__step-circle {
+  @extend %small;
+
   display: flex;
   align-items: center;
   justify-content: center;

@@ -6,11 +6,24 @@ interface FieldOption {
   name: 'lastName' | 'firstName' | 'middleName';
   label: string;
   placeholder: string;
+  autoComplete: string;
 }
 
 const NAME_FIELDS: FieldOption[] = [
-  { id: 'firstName', name: 'firstName', label: 'First Name', placeholder: 'Enter first name' },
-  { id: 'lastName', name: 'lastName', label: 'Last Name', placeholder: 'Enter last name' },
+  {
+    id: 'firstName',
+    name: 'firstName',
+    label: 'First Name',
+    placeholder: 'Enter first name',
+    autoComplete: 'given-name',
+  },
+  {
+    id: 'lastName',
+    name: 'lastName',
+    label: 'Last Name',
+    placeholder: 'Enter last name',
+    autoComplete: 'family-name',
+  },
 ];
 
 interface RecipientSectionProps {
@@ -48,6 +61,7 @@ export const RecipientSection = ({
             error={errors[field.name]}
             showClearBtn={!!shippingInfo[field.name]}
             onClear={() => onClearField(field.name)}
+            autoComplete={field.autoComplete}
           />
         ))}
       </div>
