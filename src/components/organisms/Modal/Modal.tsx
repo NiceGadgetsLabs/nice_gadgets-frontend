@@ -27,7 +27,7 @@ const DELIVERY_OPTIONS: DeliveryOption[] = [
 type FieldName = 'firstName' | 'lastName' | 'city' | 'address' | 'zip' | 'phone';
 type FormErrors = Partial<Record<FieldName | 'delivery', string>>;
 
-const FIELD_ORDER: FieldName[] = ['firstName', 'lastName', 'city', 'address', 'zip', 'phone'];
+// const FIELD_ORDER: FieldName[] = ['firstName', 'lastName', 'city', 'address', 'zip', 'phone'];
 
 interface ModalProps {
   isOpen: boolean;
@@ -57,7 +57,8 @@ export const Modal = ({
   });
   const [selectedDeliveryId, setSelectedDeliveryId] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
-  const [isSuccess, setIsSuccess] = useState(false);
+  // const [isSuccess, setIsSuccess] = useState(false);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -140,17 +141,46 @@ export const Modal = ({
     }
   };
 
-  const validateAll = (): FormErrors => {
+  const validateStep1 = (): boolean => {
     const newErrors: FormErrors = {};
+    const step1Fields: FieldName[] = ['firstName', 'lastName'];
 
-    FIELD_ORDER.forEach((name) => {
+    step1Fields.forEach((name) => {
       const fieldMessage = validateField(name);
       if (fieldMessage) newErrors[name] = fieldMessage;
     });
 
     if (!selectedDeliveryId) newErrors.delivery = 'Please choose a delivery method';
 
-    return newErrors;
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      const firstInvalid = step1Fields.find((name) => newErrors[name]);
+      if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateStep2 = (): boolean => {
+    const newErrors: FormErrors = {};
+    const step2Fields: FieldName[] = ['city', 'address', 'zip', 'phone'];
+
+    step2Fields.forEach((name) => {
+      const fieldMessage = validateField(name);
+      if (fieldMessage) newErrors[name] = fieldMessage;
+    });
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      const firstInvalid = step2Fields.find((name) => newErrors[name]);
+      if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+      return false;
+    }
+
+    return true;
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -158,18 +188,35 @@ export const Modal = ({
     setErrors((prev) => ({ ...prev, [name]: validateField(name) }));
   };
 
-  const handlePlaceOrder = () => {
-    const newErrors = validateAll();
-    setErrors(newErrors);
+  const handleNextStep = () => {
+    if (validateStep1()) {
+      setErrors({});
+      setStep(2);
+    }
+  };
 
-    if (Object.keys(newErrors).length > 0) {
-      const firstInvalid = FIELD_ORDER.find((name) => newErrors[name]);
-      if (firstInvalid) document.getElementById(firstInvalid)?.focus();
-      return;
+  const handlePrevStep = () => {
+    setErrors({});
+    setStep(1);
+  };
+
+  const handlePlaceOrder = () => {
+    if (validateStep2()) {
+      onConfirm();
+      setStep(3);
     }
 
-    onConfirm();
-    setIsSuccess(true);
+    // const newErrors = validateAll();
+    // setErrors(newErrors);
+
+    // if (Object.keys(newErrors).length > 0) {
+    //   const firstInvalid = FIELD_ORDER.find((name) => newErrors[name]);
+    //   if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+    //   return;
+    // }
+
+    // onConfirm();
+    // setIsSuccess(true);
   };
 
   const handleClearField = (fieldName: string) => {
@@ -185,7 +232,7 @@ export const Modal = ({
     .filter((part) => part.trim() !== '')
     .join(', ');
 
-  const hasFullName = shippingInfo.firstName !== '' && shippingInfo.lastName !== '';
+  // const hasFullName = shippingInfo.firstName !== '' && shippingInfo.lastName !== '';
 
   const selectedDelivery = DELIVERY_OPTIONS.find((opt) => opt.id === selectedDeliveryId);
   const deliveryPrice = selectedDelivery ? selectedDelivery.price : 0;
@@ -213,67 +260,83 @@ export const Modal = ({
         }}
       >
         <div className="modal__content" role="dialog" aria-modal="true">
-          {isSuccess ? (
+          {step === 3 ? (
             <OrderSuccess onClose={onClose} />
           ) : (
             <>
               <h2>Checkout</h2>
               <p className="modal__message">{message}</p>
 
-              <RecipientSection
-                shippingInfo={shippingInfo}
-                errors={errors}
-                combinedName={combinedName}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                onClearField={handleClearField}
-              />
+              {step === 1 && (
+                <>
+                  <RecipientSection
+                    shippingInfo={shippingInfo}
+                    errors={errors}
+                    combinedName={combinedName}
+                    onChange={handleInputChange}
+                    onBlur={handleBlur}
+                    onClearField={handleClearField}
+                  />
 
-              {hasFullName && (
-                <AddressSection
-                  shippingInfo={shippingInfo}
-                  errors={errors}
-                  combinedAddress={combinedAddress}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  onClearField={handleClearField}
-                />
+                  <div className="modal__section">
+                    <h3>Delivery options</h3>
+                    <SelectField
+                      options={selectOptions}
+                      value={selectedDeliveryId}
+                      onValueChange={(value) => {
+                        setSelectedDeliveryId(value);
+                        setErrors((prev) => ({ ...prev, delivery: undefined }));
+                      }}
+                      placeholder="Choose delivery method"
+                    />
+                    {errors.delivery && (
+                      <span className="modal__error" role="alert">
+                        {errors.delivery}
+                      </span>
+                    )}
+                  </div>
+
+                  <OrderSummary
+                    itemsCount={itemsCount}
+                    subtotal={subtotal}
+                    deliveryPrice={deliveryPrice}
+                    total={total}
+                  />
+
+                  <div className="modal__actions">
+                    <Button variant="page" className="modal__button" onClick={onClose}>
+                      Return to the Cart
+                    </Button>
+
+                    <Button variant="primary" className="modal__button" onClick={handleNextStep}>
+                      Continue to Delivery
+                    </Button>
+                  </div>
+                </>
               )}
 
-              <div className="modal__section">
-                <h3>Delivery options</h3>
-                <SelectField
-                  options={selectOptions}
-                  value={selectedDeliveryId}
-                  onValueChange={(value) => {
-                    setSelectedDeliveryId(value);
-                    setErrors((prev) => ({ ...prev, delivery: undefined }));
-                  }}
-                  placeholder="Choose delivery method"
-                />
-                {errors.delivery && (
-                  <span className="modal__error" role="alert">
-                    {errors.delivery}
-                  </span>
-                )}
-              </div>
+              {step === 2 && (
+                <>
+                  <AddressSection
+                    shippingInfo={shippingInfo}
+                    errors={errors}
+                    combinedAddress={combinedAddress}
+                    onChange={handleInputChange}
+                    onBlur={handleBlur}
+                    onClearField={handleClearField}
+                  />
 
-              <OrderSummary
-                itemsCount={itemsCount}
-                subtotal={subtotal}
-                deliveryPrice={deliveryPrice}
-                total={total}
-              />
+                  <div className="modal__actions">
+                    <Button variant="page" className="modal__button" onClick={handlePrevStep}>
+                      Back to Personal Info
+                    </Button>
 
-              <div className="modal__actions">
-                <Button variant="page" className="modal__button" onClick={onClose}>
-                  Return to the Cart
-                </Button>
-
-                <Button variant="primary" className="modal__button" onClick={handlePlaceOrder}>
-                  Place the order
-                </Button>
-              </div>
+                    <Button variant="primary" className="modal__button" onClick={handlePlaceOrder}>
+                      Place the order
+                    </Button>
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
