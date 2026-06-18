@@ -78,13 +78,13 @@
   @include mixins.on-tablet {
     height: 640px;
     max-height: 90vh;
-    padding: 32px;
+    padding: 24px 32px;
   }
 
   h2 {
     @extend %h2;
 
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     text-align: center;
   }
 }
@@ -92,17 +92,17 @@
 .modal__message {
   @extend %h4;
 
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   text-align: center;
 }
 
 .modal__section {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 
   h3 {
     @extend %h3;
 
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   &--info {
@@ -261,4 +261,88 @@
 .modal__section--result-recipient strong {
   font-weight: 600;
   color: var.$color-primary;
+}
+
+.modal__stepper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 0 8px;
+
+  @include mixins.on-tablet {
+    padding: 0 40px;
+  }
+}
+
+.modal__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.modal__step-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var.$color-elements;
+  border-radius: 50%;
+  font-size: var.$font-size-sm;
+  font-weight: 600;
+  color: var.$color-icons;
+  background-color: var.$color-white;
+  transition: all var.$transition-default ease;
+}
+
+.modal__step-label {
+  @extend %small;
+
+  margin-top: 8px;
+  font-size: var.$font-size-xs;
+  color: var.$color-icons;
+  white-space: nowrap;
+  transition: color var.$transition-default ease;
+}
+
+.modal__step-line {
+  flex: 1;
+  height: 2px;
+  margin-top: 15px;
+  margin-inline: 8px;
+  background-color: var.$color-elements;
+  transition: background-color var.$transition-default ease;
+}
+
+.modal__step--active .modal__step-circle {
+  border-color: var.$color-primary;
+  color: var.$color-primary;
+}
+
+.modal__step--active .modal__step-label {
+  font-weight: 600;
+  color: var.$color-primary;
+}
+
+.modal__step--completed .modal__step-circle {
+  border-color: var.$color-primary;
+  color: var.$color-white;
+  background-color: var.$color-secondary;
+}
+
+.modal__step--completed .modal__step-label {
+  color: var.$color-primary;
+}
+
+.modal__step-line--active {
+  background-color: var.$color-primary;
+}
+
+.modal__step:last-child.modal__step--completed .modal__step-circle {
+  transition:
+    background-color 1s ease-in-out 1s,
+    border-color 1s ease-in-out 1s,
+    color 1s ease-in-out 1s;
 }
