@@ -50,7 +50,7 @@ export const CartPage: FC = () => {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          message="Please enter recipient's details and select a delivery option"
+          message="Please enter recipient's details and select a delivery options"
           onClose={handleClose}
           onConfirm={handleConfirm}
           subtotal={totalPrice}

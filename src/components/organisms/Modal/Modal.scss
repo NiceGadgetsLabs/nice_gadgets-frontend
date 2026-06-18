@@ -1,5 +1,6 @@
 @use '../../../styles/utils/variables' as var;
 @use '../../../styles/utils/typography';
+@use '../../../styles/utils/mixins';
 
 .modal {
   position: fixed;
@@ -67,11 +68,18 @@
   flex-direction: column;
   width: 100%;
   max-width: 800px;
-  max-height: 90vh;
-  padding: 32px;
+  height: auto;
+  max-height: 95vh;
+  padding: 20px;
   border-radius: 0;
   background: var.$color-white;
   box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
+
+  @include mixins.on-tablet {
+    height: 640px;
+    max-height: 90vh;
+    padding: 32px;
+  }
 
   h2 {
     @extend %h2;
@@ -141,7 +149,7 @@
 .modal__actions {
   display: flex;
   gap: 16px;
-  margin-top: 32px;
+  margin-top: auto;
 }
 
 .modal__button {
@@ -150,13 +158,13 @@
 
 .modal__inputs-row {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 12px;
   width: 100%;
   margin-bottom: 12px;
 
-  @media (width <= 600px) {
-    flex-direction: column;
+  @include mixins.on-tablet {
+    flex-direction: row;
   }
 }
 
@@ -170,6 +178,10 @@
 
 .modal__address-section {
   margin-top: 1px;
+
+  @include mixins.on-tablet {
+    margin-top: 32px;
+  }
 }
 
 .modal__subsection-title {
@@ -177,6 +189,10 @@
 
   margin-bottom: 12px;
   color: var.$color-primary;
+
+  @include mixins.on-tablet {
+    margin-bottom: 24px;
+  }
 }
 
 .modal__divider {
@@ -187,12 +203,14 @@
 
 .modal__address-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 12px;
   margin-bottom: 12px;
 
-  @media (width <= 600px) {
-    grid-template-columns: 1fr;
+  @include mixins.on-tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 20px;
+    margin-bottom: 40px;
   }
 }
 
