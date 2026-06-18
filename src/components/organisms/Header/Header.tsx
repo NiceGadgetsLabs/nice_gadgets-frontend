@@ -1,5 +1,6 @@
-import { NavLink } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { FocusTrap } from 'focus-trap-react';
 import clsx from 'clsx';
 import { FavoritesContext } from '../../../contexts/favorites/FavoritesContext';
 import { CartContext } from '../../../contexts/cart/CartContext';
@@ -21,11 +22,19 @@ const THEME_ICON: Record<ThemeMode, IconType> = {
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [headerElement, setHeaderElement] = useState<HTMLElement | null>(null);
+  const [menuElement, setMenuElement] = useState<HTMLElement | null>(null);
   const { fav } = useContext(FavoritesContext);
   const { cart } = useContext(CartContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const containerElements = [headerElement, menuElement].filter(
+    (element): element is HTMLElement => element !== null,
+  );
 
   useEffect(() => {
     const tabletQuery = window.matchMedia('(min-width: 640px)');
@@ -45,7 +54,19 @@ export const Header = () => {
 
   return (
     <>
-      <header className="header">
+      <FocusTrap
+        active={isMenuOpen}
+        containerElements={containerElements}
+        focusTrapOptions={{
+          onDeactivate: closeMenu,
+          escapeDeactivates: true,
+          allowOutsideClick: true,
+          returnFocusOnDeactivate: true,
+          fallbackFocus: '#burger-menu',
+        }}
+      />
+
+      <header ref={setHeaderElement} className="header">
         <div className="header__logo">
           <Logo type="header" />
         </div>
@@ -146,7 +167,7 @@ export const Header = () => {
         </div>
       </header>
 
-      <BurgerMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <BurgerMenu isOpen={isMenuOpen} onClose={closeMenu} containerRef={setMenuElement} />
     </>
   );
 };

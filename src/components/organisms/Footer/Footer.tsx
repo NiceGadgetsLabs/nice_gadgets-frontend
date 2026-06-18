@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { Container } from '../../atoms/Container/Container';
 import { Logo } from '../../atoms/Logo/Logo';
 import { Icon } from '../../atoms/Icon/Icon';
+import { scrollToTop } from '../../../utils/scrollToTop';
 import './Footer.scss';
 
 const LINKS = [
@@ -11,7 +12,7 @@ const LINKS = [
   },
   {
     name: 'Contacts',
-    link: 'https://github.com/NiceGadgetsLabs/nice_gadgets-frontend',
+    link: 'https://github.com/NiceGadgetsLabs',
   },
   {
     name: 'Rights',
@@ -20,10 +21,6 @@ const LINKS = [
 ];
 
 export const Footer: FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <footer className="footer">
       <Container>
@@ -54,8 +51,8 @@ export const Footer: FC = () => {
             aria-label="Scroll to top of the page"
           >
             Back to top
-            <span className="footer__top-button-icon">
-              <Icon width={32} height={32} type="arrow-up" />
+            <span className="footer__top-button-frame">
+              <Icon className="footer__top-button-icon" width={16} height={16} type="arrow-up" />
             </span>
           </button>
         </div>

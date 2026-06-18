@@ -71,12 +71,18 @@
     }
   }
 
-  &__top-button-icon {
+  &__top-button-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    width: 32px;
     border: 1px solid var.$color-icons;
+    color: var.$color-primary;
     transition: border-color var.$transition-default;
   }
 }
 
-.footer__top-button:hover .footer__top-button-icon {
+.footer__top-button:hover .footer__top-button-frame {
   border-color: var.$color-primary;
 }

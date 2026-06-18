@@ -9,10 +9,14 @@ import { getHotPriceProducts, getNewestProducts } from '../utils/productCollecti
 import { notify } from '../utils/notify';
 
 const BANNERS = [
-  { link: '/phones', image: './img/slider/phones.avif' },
-  { link: '/tablets', image: './img/slider/tablets.avif' },
-  { link: '/accessories', image: './img/slider/accessories.avif' },
-  { link: '/phones/apple-iphone-14-pro-256gb-spaceblack', image: './img/slider/product.avif' },
+  { link: '/phones', image: './img/slider/phones.avif', alt: 'Phones' },
+  { link: '/tablets', image: './img/slider/tablets.avif', alt: 'Tablets' },
+  { link: '/accessories', image: './img/slider/accessories.avif', alt: 'Accessories' },
+  {
+    link: '/phones/apple-iphone-14-pro-256gb-spaceblack',
+    image: './img/slider/product.avif',
+    alt: 'Apple iPhone 14 Pro',
+  },
 ];
 
 export const HomePage: FC = () => {
