@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 type Banner = {
   link: string;
   image: string;
+  alt: string;
 };
 
 interface Props {
@@ -98,10 +99,10 @@ export const PictureSlider: FC<Props> = ({ banners, isLoading = false }) => {
             }}
             className="picture-slider__swiper"
           >
-            {banners.map(({ link, image }) => (
+            {banners.map(({ link, image, alt }) => (
               <SwiperSlide key={link} className="picture-slider__slide">
                 <Link to={link} className="picture-slider__inner">
-                  <img decoding="async" src={image} alt="" className="picture-slider__image" />
+                  <img decoding="async" src={image} alt={alt} className="picture-slider__image" />
                 </Link>
               </SwiperSlide>
             ))}

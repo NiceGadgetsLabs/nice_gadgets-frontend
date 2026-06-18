@@ -39,14 +39,11 @@
 
     @include mixins.on-tablet {
       display: flex;
+      gap: 28px;
     }
-  }
-
-  &__nav-item {
-    margin-right: 28px;
 
     @include mixins.on-desktop {
-      margin-right: 64px;
+      gap: 64px;
     }
   }
 
