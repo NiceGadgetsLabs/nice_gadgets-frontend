@@ -7,6 +7,7 @@ import { Pagination } from '../components/molecules/Pagination/Pagination';
 import { useProducts } from '../hooks/useProducts';
 import { sortProducts } from '../utils/sortProducts';
 import { isCategory } from '../utils/isCategory';
+import { notify } from '../utils/notify';
 import { NotFoundPage } from './NotFoundPage';
 
 const sortOptions: SelectOption[] = [
@@ -37,7 +38,7 @@ const getCategoryTitle = (categoryId?: string) => {
 
 export const CatalogPage: FC = () => {
   const { category } = useParams();
-  const { products, isLoading } = useProducts();
+  const { products, errorMessage, isLoading } = useProducts();
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get('sort') || 'newest';
   const itemsPerPage = parseInt(searchParams.get('perPage') || '12', 10);
@@ -47,6 +48,10 @@ export const CatalogPage: FC = () => {
     if (!category) return;
     document.title = category.at(0)?.toUpperCase() + category.slice(1);
   }, [category]);
+
+  useEffect(() => {
+    if (errorMessage) notify.error(errorMessage);
+  }, [errorMessage]);
 
   const updateParams = useCallback(
     (updates: Record<string, string | null>) => {
