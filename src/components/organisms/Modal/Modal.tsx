@@ -5,47 +5,13 @@ import './Modal.scss';
 import { FocusTrap } from 'focus-trap-react';
 import { SelectField } from '../../molecules/SelectField/SelectField';
 import { OrderSuccess } from '../../molecules/OrderSuccess/OrderSuccess';
+import { RecipientSection } from './RecipientSection';
+import { AddressSection } from './AddressSection';
+import { OrderSummary } from './OrderSummary';
 import ukrPostLogo from '../../../assets/icons/UkrPost-logo.svg';
 import novaPostLogo from '../../../assets/icons/NovaPost-logo.svg';
 import meestExpressLogo from '../../../assets/icons/MeestExpress-logo.svg';
 
-interface FieldOption {
-  id: string;
-  name: 'lastName' | 'firstName' | 'middleName';
-  label: string;
-  placeholder: string;
-}
-
-const NAME_FIELDS: FieldOption[] = [
-  { id: 'firstName', name: 'firstName', label: 'First Name', placeholder: 'Enter first name' },
-  { id: 'lastName', name: 'lastName', label: 'Last Name', placeholder: 'Enter last name' },
-];
-
-interface AddressOption {
-  id: string;
-  name: 'city' | 'address' | 'zip' | 'phone';
-  label: string;
-  placeholder: string;
-  type?: string;
-}
-
-const ADDRESS_FIELDS: AddressOption[] = [
-  { id: 'city', name: 'city', label: 'City', placeholder: 'Enter city' },
-  {
-    id: 'address',
-    name: 'address',
-    label: 'Delivery Address',
-    placeholder: 'Street, building, apt',
-  },
-  { id: 'zip', name: 'zip', label: 'ZIP / Postal Code', placeholder: '01001' },
-  {
-    id: 'phone',
-    name: 'phone',
-    label: 'Phone Number',
-    placeholder: '+38 (0XX) XXX-XX-XX',
-    type: 'tel',
-  },
-];
 interface DeliveryOption {
   id: string;
   label: string;
@@ -61,9 +27,7 @@ const DELIVERY_OPTIONS: DeliveryOption[] = [
 type FieldName = 'firstName' | 'lastName' | 'city' | 'address' | 'zip' | 'phone';
 type FormErrors = Partial<Record<FieldName | 'delivery', string>>;
 
-const FIELD_ORDER: FieldName[] = ['firstName', 'lastName', 'city', 'address', 'zip', 'phone'];
-
-interface Props {
+interface ModalProps {
   isOpen: boolean;
   message: string;
   onClose: () => void;
@@ -72,7 +36,14 @@ interface Props {
   itemsCount: number;
 }
 
-export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCount }: Props) => {
+export const Modal = ({
+  isOpen,
+  message,
+  onClose,
+  onConfirm,
+  subtotal,
+  itemsCount,
+}: ModalProps) => {
   const [shippingInfo, setShippingInfo] = useState({
     lastName: '',
     firstName: '',
@@ -84,7 +55,7 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
   });
   const [selectedDeliveryId, setSelectedDeliveryId] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -167,17 +138,46 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
     }
   };
 
-  const validateAll = (): FormErrors => {
+  const validateStep1 = (): boolean => {
     const newErrors: FormErrors = {};
+    const step1Fields: FieldName[] = ['firstName', 'lastName'];
 
-    FIELD_ORDER.forEach((name) => {
-      const message = validateField(name);
-      if (message) newErrors[name] = message;
+    step1Fields.forEach((name) => {
+      const fieldMessage = validateField(name);
+      if (fieldMessage) newErrors[name] = fieldMessage;
     });
 
     if (!selectedDeliveryId) newErrors.delivery = 'Please choose a delivery method';
 
-    return newErrors;
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      const firstInvalid = step1Fields.find((name) => newErrors[name]);
+      if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateStep2 = (): boolean => {
+    const newErrors: FormErrors = {};
+    const step2Fields: FieldName[] = ['city', 'address', 'zip', 'phone'];
+
+    step2Fields.forEach((name) => {
+      const fieldMessage = validateField(name);
+      if (fieldMessage) newErrors[name] = fieldMessage;
+    });
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      const firstInvalid = step2Fields.find((name) => newErrors[name]);
+      if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+      return false;
+    }
+
+    return true;
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -185,18 +185,23 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
     setErrors((prev) => ({ ...prev, [name]: validateField(name) }));
   };
 
-  const handlePlaceOrder = () => {
-    const newErrors = validateAll();
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) {
-      const firstInvalid = FIELD_ORDER.find((name) => newErrors[name]);
-      if (firstInvalid) document.getElementById(firstInvalid)?.focus();
-      return;
+  const handleNextStep = () => {
+    if (validateStep1()) {
+      setErrors({});
+      setStep(2);
     }
+  };
 
-    onConfirm();
-    setIsSuccess(true);
+  const handlePrevStep = () => {
+    setErrors({});
+    setStep(1);
+  };
+
+  const handlePlaceOrder = () => {
+    if (validateStep2()) {
+      onConfirm();
+      setStep(3);
+    }
   };
 
   const handleClearField = (fieldName: string) => {
@@ -211,8 +216,6 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
   const combinedAddress = [shippingInfo.city, shippingInfo.address, shippingInfo.zip]
     .filter((part) => part.trim() !== '')
     .join(', ');
-
-  const hasFullName = shippingInfo.firstName !== '' && shippingInfo.lastName !== '';
 
   const selectedDelivery = DELIVERY_OPTIONS.find((opt) => opt.id === selectedDeliveryId);
   const deliveryPrice = selectedDelivery ? selectedDelivery.price : 0;
@@ -240,134 +243,43 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
         }}
       >
         <div className="modal__content" role="dialog" aria-modal="true">
-          {isSuccess ? (
-            <OrderSuccess onClose={onClose} />
-          ) : (
+          <h2>Checkout</h2>
+          <p className="modal__message">{message}</p>
+
+          <div className="modal__stepper">
+            <div
+              className={`modal__step ${step === 1 ? 'modal__step--active' : ''} ${step > 1 ? 'modal__step--completed' : ''}`}
+            >
+              <div className="modal__step-circle">{step > 1 ? '✓' : '1'}</div>
+              <span className="modal__step-label">Information</span>
+            </div>
+            <div className={`modal__step-line ${step > 1 ? 'modal__step-line--active' : ''}`}></div>
+
+            <div
+              className={`modal__step ${step === 2 ? 'modal__step--active' : ''} ${step > 2 ? 'modal__step--completed' : ''}`}
+            >
+              <div className="modal__step-circle">{step > 2 ? '✓' : '2'}</div>
+              <span className="modal__step-label">Delivery</span>
+            </div>
+
+            <div className={`modal__step-line ${step > 2 ? 'modal__step-line--active' : ''}`}></div>
+
+            <div className={`modal__step ${step === 3 ? 'modal__step--completed' : ''}`}>
+              <div className="modal__step-circle">{step === 3 ? '✓' : '3'}</div>
+              <span className="modal__step-label">Confirmation</span>
+            </div>
+          </div>
+
+          {step === 1 && (
             <>
-              <h2>Checkout</h2>
-              <p className="modal__message">{message}</p>
-
-              <div className="modal__section">
-                <h3>Ship to</h3>
-                <div className="modal__inputs-row">
-                  {NAME_FIELDS.map((field) => (
-                    <div className="modal__input-wrapper" key={field.id}>
-                      <label htmlFor={field.id} className="modal__label">
-                        {field.label}
-                      </label>
-                      <div className="modal__input-container">
-                        <input
-                          id={field.id}
-                          type="text"
-                          name={field.name}
-                          value={shippingInfo[field.name]}
-                          onChange={handleInputChange}
-                          onBlur={handleBlur}
-                          placeholder={field.placeholder}
-                          className="modal__input"
-                          aria-invalid={Boolean(errors[field.name as FieldName])}
-                          aria-describedby={
-                            errors[field.name as FieldName] ? `${field.id}-error` : undefined
-                          }
-                        />
-                        {shippingInfo[field.name] && (
-                          <Button
-                            type="button"
-                            variant="icon"
-                            className="modal__clear-btn"
-                            onClick={() => handleClearField(field.name)}
-                            aria-label={`Clear ${field.label}`}
-                          >
-                            &times;
-                          </Button>
-                        )}
-                      </div>
-                      {errors[field.name as FieldName] && (
-                        <span id={`${field.id}-error`} className="modal__error" role="alert">
-                          {errors[field.name as FieldName]}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                {combinedName && (
-                  <p className="modal__section--result modal__section--result-recipient">
-                    <span className="modal__recipient-prefix">Order recipient: </span>
-                    <strong>{combinedName}</strong>
-                  </p>
-                )}
-              </div>
-
-              {hasFullName && (
-                <div className="modal__address-section">
-                  <hr className="modal__divider" />
-                  <h3 className="modal__subsection-title">Delivery Address:</h3>
-
-                  <div className="modal__address-grid">
-                    {ADDRESS_FIELDS.map((field) => (
-                      <div className="modal__input-wrapper" key={field.id}>
-                        <label htmlFor={field.id} className="modal__label">
-                          {field.label}
-                        </label>
-
-                        <div className="modal__input-container">
-                          <input
-                            id={field.id}
-                            type={field.type || 'text'}
-                            name={field.name}
-                            value={shippingInfo[field.name]}
-                            onChange={handleInputChange}
-                            onBlur={handleBlur}
-                            placeholder={field.placeholder}
-                            className="modal__input"
-                            required={field.name === 'phone' || field.name === 'zip'}
-                            minLength={
-                              field.name === 'phone' ? 13 : field.name === 'zip' ? 5 : undefined
-                            }
-                            maxLength={field.name === 'zip' ? 5 : undefined}
-                            pattern={
-                              field.name === 'phone'
-                                ? '\\+38\\d{10}'
-                                : field.name === 'zip'
-                                  ? '\\d{5}'
-                                  : undefined
-                            }
-                            aria-invalid={Boolean(errors[field.name as FieldName])}
-                            aria-describedby={
-                              errors[field.name as FieldName] ? `${field.id}-error` : undefined
-                            }
-                          />
-                          {((field.name !== 'phone' && shippingInfo[field.name]) ||
-                            (field.name === 'phone' && shippingInfo.phone.length > 3)) && (
-                            <Button
-                              type="button"
-                              variant="icon"
-                              className="modal__clear-btn"
-                              onClick={() => handleClearField(field.name)}
-                              aria-label={`Clear ${field.label}`}
-                            >
-                              &times;
-                            </Button>
-                          )}
-                        </div>
-                        {errors[field.name as FieldName] && (
-                          <span id={`${field.id}-error`} className="modal__error" role="alert">
-                            {errors[field.name as FieldName]}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  {shippingInfo.city || shippingInfo.address ? (
-                    <p className="modal__section--result modal__section--result-address">
-                      <strong>Ship to:</strong> {combinedAddress} <br />
-                      {shippingInfo.phone.length > 3 && <>Phone: {shippingInfo.phone}</>}
-                    </p>
-                  ) : null}
-                </div>
-              )}
+              <RecipientSection
+                shippingInfo={shippingInfo}
+                errors={errors}
+                combinedName={combinedName}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                onClearField={handleClearField}
+              />
 
               <div className="modal__section">
                 <h3>Delivery options</h3>
@@ -387,19 +299,39 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
                 )}
               </div>
 
-              <div className="modal__section modal__section-summary">
-                <p className="total">Order Summary</p>
-                <p>
-                  You choose {itemsCount} items with worth ${Number(subtotal).toFixed(2)}
-                </p>
-                <p>Delivery cost: ${deliveryPrice}</p>
-                <hr />
-                <p className="total">Order total: ${Number(total).toFixed(2)} </p>
-              </div>
+              <OrderSummary
+                itemsCount={itemsCount}
+                subtotal={subtotal}
+                deliveryPrice={deliveryPrice}
+                total={total}
+              />
 
               <div className="modal__actions">
                 <Button variant="page" className="modal__button" onClick={onClose}>
                   Return to the Cart
+                </Button>
+
+                <Button variant="primary" className="modal__button" onClick={handleNextStep}>
+                  Continue to Delivery
+                </Button>
+              </div>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <AddressSection
+                shippingInfo={shippingInfo}
+                errors={errors}
+                combinedAddress={combinedAddress}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                onClearField={handleClearField}
+              />
+
+              <div className="modal__actions">
+                <Button variant="page" className="modal__button" onClick={handlePrevStep}>
+                  Back to Personal Info
                 </Button>
 
                 <Button variant="primary" className="modal__button" onClick={handlePlaceOrder}>
@@ -408,6 +340,8 @@ export const Modal = ({ isOpen, message, onClose, onConfirm, subtotal, itemsCoun
               </div>
             </>
           )}
+
+          {step === 3 && <OrderSuccess onClose={onClose} />}
         </div>
       </FocusTrap>
     </div>
