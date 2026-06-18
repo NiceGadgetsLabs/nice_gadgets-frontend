@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { Container } from '../../atoms/Container/Container';
 import { Logo } from '../../atoms/Logo/Logo';
 import { Icon } from '../../atoms/Icon/Icon';
@@ -16,7 +15,7 @@ const LINKS = [
   },
   {
     name: 'Rights',
-    link: 'https://github.com/NiceGadgetsLabs/nice_gadgets-frontend',
+    link: 'https://github.com/NiceGadgetsLabs/nice_gadgets-frontend/blob/main/LICENSE',
   },
 ];
 
@@ -35,9 +34,14 @@ export const Footer: FC = () => {
             <ul className="footer__list">
               {LINKS.map((link) => (
                 <li key={link.name} className="footer__item">
-                  <Link className="footer__link" to={link.link} target="_blank">
+                  <a
+                    className="footer__link"
+                    href={link.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {link.name}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
