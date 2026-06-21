@@ -93,7 +93,7 @@ export const Header = () => {
         <div className="header__actions">
           <ul className="header__actions-list">
             <li className="header__actions-item">
-              <ProductSearchWidget />
+              <ProductSearchWidget onOpen={closeMenu} />
             </li>
 
             <li className="header__actions-item">

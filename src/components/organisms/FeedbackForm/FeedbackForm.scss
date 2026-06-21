@@ -13,6 +13,7 @@ $color-star: #ffb800;
   padding: 20px;
   background: var.$color-overlay;
   backdrop-filter: blur(5px);
+  animation: modal-fade var.$transition-default ease;
 }
 
 .feedback {
@@ -24,6 +25,7 @@ $color-star: #ffb800;
   padding: 32px 24px;
   background: var.$color-white;
   box-shadow: var.$shadow-card;
+  animation: modal-pop var.$transition-default ease;
 
   &__title {
     @extend %h2;

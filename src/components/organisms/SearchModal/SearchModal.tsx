@@ -44,12 +44,14 @@ const SearchModal: React.FC<SearchModalProps> = ({
       if (event.key === 'Escape') onClose();
     };
 
+    const previousOverflow = document.body.style.overflow;
+
     document.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
     };
   }, [isOpen, onClose]);
 

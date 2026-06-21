@@ -42,13 +42,23 @@ const buildResults = (query: string, allProducts: Product[]): SearchResults => {
   };
 };
 
-export const ProductSearchWidget: React.FC = () => {
+interface ProductSearchWidgetProps {
+  onOpen?: () => void;
+}
+
+export const ProductSearchWidget: React.FC<ProductSearchWidgetProps> = ({ onOpen }) => {
   const { products, isLoading } = useProducts();
   const [isOpen, setIsOpen] = useState(false);
   const [rawQuery, setRawQuery] = useState('');
 
   const debouncedQuery = useDebounce(rawQuery, 350);
-  useSearchShortcut(() => setIsOpen(true));
+
+  const openSearch = () => {
+    onOpen?.();
+    setIsOpen(true);
+  };
+
+  useSearchShortcut(openSearch);
 
   const effectiveQuery = rawQuery.trim() ? debouncedQuery : '';
   const results = useMemo(() => buildResults(effectiveQuery, products), [effectiveQuery, products]);
@@ -65,7 +75,7 @@ export const ProductSearchWidget: React.FC = () => {
         className="header__actions-link header__actions-link--search"
         aria-label="Search"
         title="Search (Ctrl+K)"
-        onClick={() => setIsOpen(true)}
+        onClick={openSearch}
       >
         <Icon type="search" />
       </button>
